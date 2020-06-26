@@ -1,0 +1,7 @@
+# Project exclude paths
+/admin/target/
+/eureka/target/
+/product/target/
+/shop/target/
+/target/
+/user/target/
