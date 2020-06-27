@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="user" />
+        <module name="gateway" />
         <module name="product" />
         <module name="eureka" />
         <module name="shop" />
@@ -14,6 +15,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="getaway" target="1.8" />
       <module name="relation" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -21,6 +23,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="admin" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+      <module name="getaway" options="-parameters" />
       <module name="product" options="-parameters" />
       <module name="relation" options="-parameters" />
       <module name="shop" options="-parameters" />

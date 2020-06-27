@@ -1,0 +1,65 @@
+server:
+  port: 8000
+eureka:
+  client:
+    serviceUrl:
+        defaultZone: http://localhost:3000/eureka/  #eureka服务端提供的注册地址 参考服务端配置的这个路径
+  instance:
+    instance-id: gateway-0 #此实例注册到eureka服务端的唯一的实例ID
+    prefer-ip-address: true #是否显示IP地址
+    leaseRenewalIntervalInSeconds: 10 #eureka客户需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒 (与下面配置的单位都是秒)
+    leaseExpirationDurationInSeconds: 40 #Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒
+spring:
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    timeout: 5000
+  application:
+    name: service-gateway #此实例注册到eureka服务端的name
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: user
+          uri: lb://SERVER-USER
+          predicates:
+            - Path=/user/**
+        - id: admin
+          uri: lb://SERVER-ADMIN
+          predicates:
+            - Path=/admin/**,/menu/**
+        - id: product
+          uri: lb://SERVER-PRODUCT
+          predicates:
+            - Path=/product/**
+        - id: shop
+          uri: lb://SERVER-SHOP
+          predicates:
+            - Path=/shop/**
+#            - Query=name,1
+#            - Query=age
+#
+#          filters:
+#            - name: Hystrix
+#              args:
+#                name: fallbackcmd
+#                fallbackUri: forward:/fallback
+#            - name: RequestRateLimiter
+#              KeyResolver: userKey
+#              args:
+#                redis-rate-limiter.replenishRate: 1
+#                redis-rate-limiter.burstCapacity: 2
+
+
+#hystrix:
+#  command:
+#    fallbackcmd:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 1000
+#      circuitBreaker:
+#        requestVolumeThreshold: 5
+#        sleepWindowInMilliseconds : 5000   时间
