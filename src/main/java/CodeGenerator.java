@@ -14,11 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * 需要咨询java高级VIP课程的同学可以加安其拉老师的QQ：3164703201
- * 需要往期视频资料的同学可以加木兰老师的QQ:2746251334
- * author：鲁班学院-商鞅老师
- */
+
 public class CodeGenerator {
     /**
      * <p>
@@ -47,7 +43,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         gc.setEntityName("%sEntity");
 
-        final String projectPath = System.getProperty("user.dir")+"/"+scanner("输入文件目录名");
+        final String projectPath = System.getProperty("user.dir") + "/" + scanner("输入文件目录名");
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("");
         gc.setOpen(false);
@@ -57,7 +53,7 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://192.168.0.109:3306/sg?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://192.168.0.109:3306/together?useUnicode=true&useSSL=false&characterEncoding=utf8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
