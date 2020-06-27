@@ -26,24 +26,9 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
-    /**
-     * 分页查询
-     * @param page
-     * @param productEntity
-     * @return
-     */
-    @GetMapping("/getProductPage")
-    public R getProductPage(Page page, ProductEntity productEntity){
-//        Page page1 = new Page();
-        return R.ok(productService.page(page, Wrappers.query(productEntity)));
-    }
-
-
-    @RequestMapping("/getProductPage1")
-    public  R getProductPage1(@RequestBody Map<String,Object> map) throws Exception {
-
+    @RequestMapping("/getProductPage")
+    public R getProductPage(@RequestBody Map<String,Object> map) throws Exception {
         Page page = new Page((int)map.get("page"),(int)map.get("limit"));
-//        Wrappers.
         ProductEntity productEntity = new ProductEntity();
         Map2JavaBeanUtil.transMap2Bean(map,productEntity);
         return R.ok(productService.page(page, Wrappers.query(productEntity)));

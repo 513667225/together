@@ -32,7 +32,7 @@ public class ShopController {
         Map<String,Object> map = new HashMap<>();
         map.put("page",1);
         map.put("limit",2);
-        System.out.println(productServiceClient.getProductPage1(map));
+        System.out.println(productServiceClient.getProductPage(map));
         return R.success();
     }
 

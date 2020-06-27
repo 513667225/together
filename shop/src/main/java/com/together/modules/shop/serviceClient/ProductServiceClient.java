@@ -15,7 +15,7 @@ public interface ProductServiceClient {
 //    public R getProductPage(Page page, ProductEntity productEntity)
 
 
-    @RequestMapping(value = "/getProductPage1" )
-    public R getProductPage1(@RequestBody Map<String,Object> map);
+    @RequestMapping(value = "/getProductPage" )
+    public R getProductPage(@RequestBody Map<String,Object> map);
 
 }
