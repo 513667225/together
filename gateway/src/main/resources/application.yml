@@ -37,7 +37,7 @@ spring:
         - id: shop
           uri: lb://SERVER-SHOP
           predicates:
-            - Path=/shop/**
+            - Path=/shop/**,/shopMenu/**
 #            - Query=name,1
 #            - Query=age
 #

@@ -12,9 +12,6 @@ import java.util.Map;
 @RequestMapping("/product")
 public interface ProductServiceClient {
 
-//    public R getProductPage(Page page, ProductEntity productEntity)
-
-
     @RequestMapping(value = "/getProductPage" )
     public R getProductPage(@RequestBody Map<String,Object> map);
 

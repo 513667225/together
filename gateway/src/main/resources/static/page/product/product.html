@@ -2,54 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>所有商品页面</title>
-</head>
-<link rel="stylesheet" href="/js/layui/css/layui.css">
-<script src="/js/layui/css/layui.js"></script>
-<style rel="stylesheet">
-    td {text-align:center}
-</style>
-<script>
+    <title>所有用户</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
 
-</script>
+</head>
 <body>
 <br>
-&nbsp;<select name="city" lay-verify="required"style="width: 60px;height: 33px;border-radius:7px;">
-    <option value="0">编号</option>
-    <option value="1">名称</option>
-    <option value="2">描述</option>
-</select>
-<input type="text" placeholder="请输入查询的内容" style="height: 32px;border-radius: 7px;width: 250px">
-<button class="layui-btn layui-btn-warm"style="border-radius: 7px">查询</button><button class="layui-btn layui-btn-warm"style="border-radius: 7px">增加</button><br>
-<div class="layui-form">
-    <table id="demo" class="layui-table">
-        <colgroup>
-            <col width="200">
-            <col width="200">
-            <col>
-        </colgroup>
-        <thead>
-        <tr >
-            <td>商品编号</td>
-            <td>商品名称</td>
-            <td>商品简介</td>
-            <td>商品图片</td>
-            <td>编&nbsp;辑</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>0AB42</td>
-            <td>BF风夏季凉鞋</td>
-            <td>非常好看，牛逼！</td>
-            <td>没有！</td>
-            <td><button class="layui-btn layui-btn-danger"style="border-radius: 7px">删除</button>&nbsp;
-                <button class="layui-btn layui-btn-warm"style="border-radius: 7px">编辑</button></td>
-        </tr>
 
-        </tbody>
-    </table>
-</div>
+<table class="layui-hide" id="productTable" lay-skin="line" ></table>
+<script src="/js/layui/layui.all.js"></script>
+<script>
+    layui.use('table',function () {
+        var $ = layui.jquery;
+        var table =  layui.table;
+        table.render({
+            elem: '#productTable'
+            ,url:'/product/getProductPage'
+            ,method: 'get'
+            ,cols: [[
+                {type:'checkbox'}
+                ,{field:'productId', width:80, title: 'id', sort: true}
+                ,{field:'productName', width:80, title: '名称'}
+                ,{field:'productPrice', width:80, title: '价格', sort: true}
+                ,{field:'productDiscount', width:80, title: '折扣'}
+                ,{field:'productStock', title: '优惠卷', minWidth: 100}
+                ,{field:'shopId', width:80, title: '店铺id', sort: true}
+                ,{field:'productSales', width:80, title: '销售额', sort: true}
+                ,{field:'productImg', width:80, title: '图片'}
+                ,{field:'productDetails', width:135, title: '详情', sort: true}
+            ]]
+            ,page: true
+            ,limits : [2,4,8,10]
+            ,limit : 2
+            ,loading:true
+            ,count:1000
+            ,parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.records //解析数据列表
+                };
+            },
+            request: {
+                pageName: 'page' // 页码的参数名称，默认：page
+                , limitName: 'size' //每页数据量的参数名，默认：limit
+            },
 
+        });
+    })
+
+</script>
 </body>
 </html>

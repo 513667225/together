@@ -10,6 +10,8 @@ import com.together.util.Map2JavaBeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,12 +29,25 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
-    @RequestMapping("/getProductPage")
-    public R getProductPage(@RequestBody Map<String,Object> map) throws Exception {
-        Page page = new Page((int)map.get("page"),(int)map.get("limit"));
+    @GetMapping("/getProductPage")
+    public R getProductPage(Map<String,Object> map) throws Exception {
+        int pageNum = 1;
+        int limit = 10;
+        if (map.get("page")!=null) {
+            pageNum = (int) map.get("page");
+        }
+        if (map.get("limit")!=null) {
+            limit = (int) map.get("limit");
+        }
+        Page page = new Page(pageNum,limit);
         ProductEntity productEntity = new ProductEntity();
         Map2JavaBeanUtil.transMap2Bean(map,productEntity);
         return R.ok(productService.page(page, Wrappers.query(productEntity)));
+    }
+
+    @GetMapping("/getProductList")
+    public R getProductList(){
+        return R.ok(productService.list());
     }
 
     /**

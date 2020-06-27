@@ -27,18 +27,13 @@ public class ShopMenuController {
 
     @RequestMapping("/getMenu")
     public R getMenu(){
-
         return iShopMenuService.getMenu();
     }
 
-
     @RequestMapping("/getOrder")
     public R getOrder(@RequestParam Map<String,Object> map){
-
         return iShopMenuService.getOrder(map);
     }
-
-
 
 
 }
