@@ -52,7 +52,7 @@ public class MyBatisConfig {
     public DataSource dataSource()  {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(Driver.class.getName());
-        dataSource.setPassword("1234");
+        dataSource.setPassword("root");
         dataSource.setUsername("root");
         dataSource.setUrl("jdbc:mysql://192.168.0.109:3306/togethers");
         return dataSource;
