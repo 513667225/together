@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有商品页面</title>
+</head>
+<link rel="stylesheet" href="/js/layui/css/layui.css">
+<script src="/js/layui/css/layui.js"></script>
+<style rel="stylesheet">
+    td {text-align:center}
+</style>
+<script>
+
+</script>
+<body>
+<br>
+&nbsp;<select name="city" lay-verify="required"style="width: 60px;height: 33px;border-radius:7px;">
+    <option value="0">编号</option>
+    <option value="1">名称</option>
+    <option value="2">描述</option>
+</select>
+<input type="text" placeholder="请输入查询的内容" style="height: 32px;border-radius: 7px;width: 250px">
+<button class="layui-btn layui-btn-warm"style="border-radius: 7px">查询</button><button class="layui-btn layui-btn-warm"style="border-radius: 7px">增加</button><br>
+<div class="layui-form">
+    <table id="demo" class="layui-table">
+        <colgroup>
+            <col width="200">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+        <tr >
+            <td>商品编号</td>
+            <td>商品名称</td>
+            <td>商品简介</td>
+            <td>商品图片</td>
+            <td>编&nbsp;辑</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0AB42</td>
+            <td>BF风夏季凉鞋</td>
+            <td>非常好看，牛逼！</td>
+            <td>没有！</td>
+            <td><button class="layui-btn layui-btn-danger"style="border-radius: 7px">删除</button>&nbsp;
+                <button class="layui-btn layui-btn-warm"style="border-radius: 7px">编辑</button></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
