@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有用户</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+
+</head>
+<body>
+<br>
+
+<!--<div class="layui-layout layui-layout-admin">-->
+<!--    <div class="layui-header" style="background-color: white;line-height: 6">-->
+<!--        &nbsp;<input type="text" placeholder="请输入查询的内容" style="height: 25px;width: 230px;">-->
+<!--        <button class="layui-btn layui-btn-sm layui-btn-warm"style="border-radius: 20px" onclick="">查询</button>-->
+<!--        <button class="layui-btn layui-btn-sm layui-btn-warm"style="border-radius: 20px" onclick="">增加</button><br>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <table class="layui-table" lay-filter="table" id="usertable" style="text-align: center;width: 100%">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>id</th>-->
+<!--                <th>名称</th>-->
+<!--                <th>账号</th>-->
+<!--                <th>密码</th>-->
+<!--                <th>电话</th>-->
+<!--                <th>vip编号</th>-->
+<!--                <th>佣金</th>-->
+<!--                <th>奖金</th>-->
+<!--                <th>积分</th>-->
+<!--                <th>操作</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr>-->
+<!--                <td style="width: 8%">贤心</td>-->
+<!--                <td style="width: 10%">贤心</td>-->
+<!--                <td style="width: 10%">贤心</td>-->
+<!--                <td style="width: 10%">贤心</td>-->
+<!--                <td style="width: 10%">贤心</td>-->
+<!--                <td style="width: 10%">贤心</td>-->
+<!--                <td style="width: 10%">贤心</td>-->
+<!--                <td style="width: 10%">贤心</td>-->
+<!--                <td style="width: 10%">贤心</td>-->
+<!--                <td style="width: 12%">-->
+<!--                    <button class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" style="border-radius: 8px">删除</button>-->
+<!--                    <button class="layui-btn layui-btn-xs" lay-event="edit" style="border-radius: 8px">编辑</i></button>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--    <table class="layui-hide" id="usertable"></table>-->
+
+<!--</div>-->
+
+<table class="layui-hide" id="demo"></table>
+<script src="/js/layui/layui.all.js"></script>
+<script>
+    layui.use('table',function () {
+        var $ = layui.jquery;
+       var table =  layui.table;
+
+            $.ajax({
+                url:'/user/user-entity/getUserPage',
+                type:'get',
+                dataType:'json',
+                success:function (data) {
+                    debugger;
+                    console.log(data);
+                    table.render({
+                        elem:'#demo',
+                        cols: [[ //标题栏
+                            {field: 'user_id', title: 'ID', width: 80, sort: true}
+                            ,{field: 'user_name', title: '用户名', width: 120}
+                            ,{field: 'user_account', title: '邮箱', minWidth: 150}
+                            ,{field: 'user_password', title: '签名', minWidth: 160}
+                            ,{field: 'user_phonenum', title: '性别', width: 80}
+                            ,{field: 'vip_id', title: '城市', width: 100}
+                            ,{field: 'user_principal', title: '积分', width: 80, sort: true}
+                            ,{field: 'user_bonus', title: '城市', width: 100}
+                            ,{field: 'user_integral', title: '积分', width: 80, sort: true}
+                        ]]
+                        ,page: true   //开启分页
+                        ,limit:10   //默认十条数据一页
+                        ,limits:[10,20,30,50]  //数据分页条
+                    });
+                }
+            })
+    })
+
+</script>
+</body>
+</html>
