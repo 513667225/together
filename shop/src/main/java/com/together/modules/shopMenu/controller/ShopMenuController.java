@@ -6,7 +6,10 @@ import com.together.modules.shopMenu.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -25,8 +28,17 @@ public class ShopMenuController {
 
     @RequestMapping("/getMenu")
     public R getMenu(){
-        return  null;
+
+        return iShopMenuService.getMenu();
     }
+
+
+    @RequestMapping("/getOrder")
+    public R getOrder(@RequestParam Map<String,Object> map){
+
+        return iShopMenuService.getOrder(map);
+    }
+
 
 
 

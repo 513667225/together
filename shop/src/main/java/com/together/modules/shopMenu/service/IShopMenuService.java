@@ -17,4 +17,8 @@ import java.util.Map;
 public interface IShopMenuService extends IService<ShopMenuEntity> {
 
 
+     R getMenu();
+
+     R getOrder(Map<String,Object> map);
+
 }

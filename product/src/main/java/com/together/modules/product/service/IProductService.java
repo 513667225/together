@@ -1,7 +1,10 @@
 package com.together.modules.product.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.modules.product.entity.ProductEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
