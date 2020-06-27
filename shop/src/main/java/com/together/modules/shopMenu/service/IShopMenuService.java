@@ -1,11 +1,8 @@
 package com.together.modules.shopMenu.service;
 
-import com.together.modules.shopMenu.entity.ShopMenuEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.together.modules.shopMenu.service.impl.ShopMenuServiceImpl;
-import com.together.modules.shopMenu.util.R;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.together.modules.shopMenu.entity.ShopMenuEntity;
+import com.together.util.R;
 
 import java.util.Map;
 

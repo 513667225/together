@@ -2,7 +2,7 @@ package com.together.modules.shop.controller;
 
 
 import com.together.modules.shop.serviceClient.ProductServiceClient;
-import com.together.modules.shopMenu.util.R;
+import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

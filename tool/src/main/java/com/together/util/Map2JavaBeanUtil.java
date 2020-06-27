@@ -1,4 +1,4 @@
-package com.together.modules.util;
+package com.together.util;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;

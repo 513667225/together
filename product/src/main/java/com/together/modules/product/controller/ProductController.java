@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.modules.product.entity.ProductEntity;
 import com.together.modules.product.service.IProductService;
-import com.together.modules.util.Map2JavaBeanUtil;
+import com.together.util.Map2JavaBeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,11 +1,11 @@
 package com.together.modules.shopMenu.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.modules.shopMenu.entity.MenuTree;
 import com.together.modules.shopMenu.entity.ShopMenuEntity;
 import com.together.modules.shopMenu.mapper.ShopMenuMapper;
 import com.together.modules.shopMenu.service.IShopMenuService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.together.modules.shopMenu.util.R;
+import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.together.modules.shopMenu.util;
+package com.together.util;
 
 import java.util.HashMap;
 
