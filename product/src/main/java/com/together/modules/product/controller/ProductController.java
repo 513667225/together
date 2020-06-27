@@ -6,8 +6,11 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.modules.product.entity.ProductEntity;
 import com.together.modules.product.service.IProductService;
+import com.together.modules.util.Map2JavaBeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2020-06-26
  */
 @RestController
-@RequestMapping("/product/product-entity")
+@RequestMapping("/product")
 public class ProductController {
     @Autowired
     private IProductService productService;
@@ -31,6 +34,18 @@ public class ProductController {
      */
     @GetMapping("/getProductPage")
     public R getProductPage(Page page, ProductEntity productEntity){
+//        Page page1 = new Page();
+        return R.ok(productService.page(page, Wrappers.query(productEntity)));
+    }
+
+
+    @RequestMapping("/getProductPage1")
+    public  R getProductPage1(@RequestBody Map<String,Object> map) throws Exception {
+
+        Page page = new Page((int)map.get("page"),(int)map.get("limit"));
+//        Wrappers.
+        ProductEntity productEntity = new ProductEntity();
+        Map2JavaBeanUtil.transMap2Bean(map,productEntity);
         return R.ok(productService.page(page, Wrappers.query(productEntity)));
     }
 

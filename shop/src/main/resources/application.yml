@@ -18,4 +18,4 @@ eureka:
 
 spring:
   application:
-    name: server-shop #此实例注册到eureka服务端的name
+    name: SERVER-SHOP #此实例注册到eureka服务端的name
