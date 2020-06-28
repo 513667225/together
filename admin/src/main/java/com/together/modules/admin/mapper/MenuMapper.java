@@ -1,6 +1,6 @@
-package com.modules.admin.mapper;
+package com.together.modules.admin.mapper;
 
-import com.modules.admin.entity.Menu;
+import com.together.modules.admin.entity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

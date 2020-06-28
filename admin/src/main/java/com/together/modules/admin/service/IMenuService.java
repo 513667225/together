@@ -1,8 +1,8 @@
-package com.modules.admin.service;
+package com.together.modules.admin.service;
 
-import com.modules.admin.entity.Menu;
+import com.together.modules.admin.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.modules.admin.util.R;
+import com.together.modules.admin.util.R;
 
 import java.util.Map;
 

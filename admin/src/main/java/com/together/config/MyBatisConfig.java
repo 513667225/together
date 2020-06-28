@@ -1,4 +1,4 @@
-package com.config;
+package com.together.config;
 
 
 import com.alibaba.druid.pool.DruidDataSource;
@@ -13,7 +13,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import javax.sql.DataSource;
 import java.io.IOException;
 
-@MapperScan("com.*.*.mapper")
+@MapperScan("com.together.*.*.mapper")
 @Configuration
 public class MyBatisConfig {
 

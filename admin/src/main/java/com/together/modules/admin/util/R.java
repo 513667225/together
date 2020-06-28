@@ -1,4 +1,4 @@
-package com.modules.admin.util;
+package com.together.modules.admin.util;
 
 import java.util.HashMap;
 

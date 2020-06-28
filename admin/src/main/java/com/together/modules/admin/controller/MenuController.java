@@ -1,8 +1,8 @@
-package com.modules.admin.controller;
+package com.together.modules.admin.controller;
 
 
-import com.modules.admin.service.IMenuService;
-import com.modules.admin.util.R;
+import com.together.modules.admin.service.IMenuService;
+import com.together.modules.admin.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 

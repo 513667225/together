@@ -1,4 +1,4 @@
-package com.modules.admin.entity;
+package com.together.modules.admin.entity;
 
 import java.util.ArrayList;
 import java.util.List;

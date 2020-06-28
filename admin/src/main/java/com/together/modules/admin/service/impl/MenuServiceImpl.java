@@ -1,12 +1,12 @@
-package com.modules.admin.service.impl;
+package com.together.modules.admin.service.impl;
 
-import com.modules.admin.entity.Menu;
-import com.modules.admin.entity.MenuTree;
-//import com.modules.admin.feginService.OrderServiceClient;
-import com.modules.admin.mapper.MenuMapper;
-import com.modules.admin.service.IMenuService;
+import com.together.modules.admin.entity.Menu;
+import com.together.modules.admin.entity.MenuTree;
+//import com.together.modules.admin.feginService.OrderServiceClient;
+import com.together.modules.admin.mapper.MenuMapper;
+import com.together.modules.admin.service.IMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.modules.admin.util.R;
+import com.together.modules.admin.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
