@@ -37,8 +37,8 @@ public class GoodsController {
         if (map.get("limit")!=null) {
             limit = (int) map.get("limit");
         }
-        if(map.get("product")!=null){
-            goodsEntity = (GoodsEntity) map.get("product");
+        if(map.get("goods")!=null){
+            goodsEntity = (GoodsEntity) map.get("goods");
         }
         Page page = new Page(pageNum,limit);
         Map2JavaBeanUtil.transMap2Bean(map,goodsEntity);
