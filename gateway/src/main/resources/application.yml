@@ -25,7 +25,7 @@ spring:
         - id: user
           uri: lb://SERVER-USER
           predicates:
-            - Path=/user/**
+            - Path=/user/**,/userAddress/**,/userCollect/**,/userComment/**
         - id: admin
           uri: lb://SERVER-ADMIN
           predicates:
@@ -37,7 +37,15 @@ spring:
         - id: shop
           uri: lb://SERVER-SHOP
           predicates:
-            - Path=/shop/**,/shopMenu/**
+            - Path=/shop/**,/shopMenu/**,/shopAptitude/**
+        - id: order
+          uri: lb://SERVER-ORDER
+          predicates:
+            - Path=/order/**,/orderGoods/**
+        - id: order
+          uri: lb://SERVER-GOODS
+          predicates:
+            - Path=/category/**,/goods/**,/goodsAttribute/**,/goodsSpecification/**
 #            - Query=name,1
 #            - Query=age
 #
