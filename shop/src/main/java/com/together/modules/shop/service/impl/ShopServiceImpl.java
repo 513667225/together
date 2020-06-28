@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author 
- * @since 2020-06-26
+ * @since 2020-06-28
  */
 @Service
 public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> implements IShopService {
