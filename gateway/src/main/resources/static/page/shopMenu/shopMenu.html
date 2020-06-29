@@ -34,33 +34,31 @@
         var form = layui.form;
         table.render({
             elem: '#goodsTable'
-            ,url:'/goods/getGoodsPage'
+            ,url:'/shop/getShopPage'
             ,method: 'get'
             ,cellMinWidth: 80
             ,cols: [[
                 {type:'checkbox'}
-                ,{field:'goodsId' , title: 'id', sort: true}
-                ,{field:'goodsSn' , title: '商品名称', }
-                ,{field:'productStock', title: '优惠卷'}
-                ,{field:'shopId', title: '店铺id', sort: true}
-                ,{field:'categoryId' , title: '商品所属类目',}
-                ,{field:'goodsGallery', title: '图片列表'}
-                ,{field:'goodsKeywords', title: '商品关键字'}
-                ,{field:'goodsPrice', title: '商品价格', sort: true}
-                ,{field:'goodsBrief', title: '商品简介'}
-                ,{field:'isOnSale', title: '是否上架'}
-                ,{field:'sortOrder', title: '排序'}
-                ,{field:'picUrl', title: '商品图片'}
-                ,{field:'goodsUnit', title: '商品单位'}
-                ,{field:'goodsDetail', title: '商品详细'}
-                ,{field:'spokesmanId', title: '主播ID'}
-                ,{field:'addTime', title: '创建时间'}
+                ,{field:'shopId' , title: 'id', sort: true}
+                ,{field:'shopName' , title: '商家名称', }
+                ,{field:'shopSlogan', title: '公告语'}
+                ,{field:'shopDetail', title: '详情介绍'}
+                ,{field:'shopIcon' , title: '商家头像',}
+                ,{field:'shopPic', title: '商家店面图片'}
+                ,{field:'shopCategory', title: '商家品类'}
+                ,{field:'shopAddress', title: '商家地址'}
+                ,{field:'shopTel', title: '商家电话'}
+                ,{field:'shopTime', title: '营业时间',sort: true}
+                ,{field:'aptitudeId', title: '商家资质ID'}
+                ,{field:'addTime', title: '创建时间',sort:true}
             ]]
             ,page: true
             ,limits : [5,10]
             ,limit:10
             ,count:1000
-            ,onload:true
+            /*设定初始在第几页*/
+            ,curr: 10
+            ,loading:true
             //将原始数据解析成 table 组件所规定的数据
             ,parseData: function (res) {
                 return {
