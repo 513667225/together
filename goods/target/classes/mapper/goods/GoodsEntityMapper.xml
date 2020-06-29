@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.together.modules.goods.mapper.GoodsMapper">
 
+    <select id="queryGoodsByShopId" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT * FROM goods a left join category b on a.category_id=b.category_id where a.shop_id=#{shopId} limit #{page},#{limit}
+    </select>
+
+    <select id="queryGoodsByShopIdCount" resultType="int" parameterType="java.util.Map">
+        SELECT COUNT(0) FROM goods a left join category b on a.category_id=b.category_id where a.shop_id=#{shopId}
+    </select>
+
 </mapper>

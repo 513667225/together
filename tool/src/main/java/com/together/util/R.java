@@ -3,7 +3,7 @@ package com.together.util;
 import java.util.HashMap;
 
 public class R extends HashMap{
-    public static  String SUCCESS_CODE="200";
+    public static  String SUCCESS_CODE="0";
     public static String ERROR_CODE="500";
     public static String DATA_KEY = "data";
     public static String MSG_KEY = "msg";

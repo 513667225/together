@@ -4,7 +4,12 @@ import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.mapper.GoodsMapper;
 import com.together.modules.goods.service.IGoodsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.together.util.R;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -16,5 +21,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> implements IGoodsService {
+
+    @Autowired
+    GoodsMapper goodsMapper;
+
+    @Override
+    public R queryGoodsByShopId(Map<String, Object> map) {
+        int goodsByShopIdCount = goodsMapper.queryGoodsByShopIdCount(map);
+        return R.success().data(goodsMapper.queryGoodsByShopId(map)).set("total",goodsByShopIdCount);
+    }
+
+
 
 }
