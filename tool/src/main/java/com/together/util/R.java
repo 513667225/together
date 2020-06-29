@@ -17,7 +17,7 @@ public class R extends HashMap{
         return  this;
     }
 
-    private  static R ok(){
+    public   static R ok(){
         return new R();
     }
 
