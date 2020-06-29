@@ -3,6 +3,7 @@ package com.together.modules.shopMenu.controller;
 
 import com.together.modules.shopMenu.service.IShopMenuService;
 import com.together.util.R;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/shopMenu")
+@Log
 public class ShopMenuController {
 
     @Autowired

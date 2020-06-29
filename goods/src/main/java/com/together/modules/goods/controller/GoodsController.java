@@ -27,7 +27,7 @@ public class GoodsController {
     IGoodsService iGoodsService;
 
     @GetMapping("/getGoodsPage")
-    public R getGoodsPage(Map<String,Object> map) throws Exception {
+    public R getGoodsPage(@RequestParam Map<String,Object> map) throws Exception {
         GoodsEntity goodsEntity = new GoodsEntity();
         int pageNum = 1;
         int limit = 10;
