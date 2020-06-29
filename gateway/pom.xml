@@ -13,23 +13,10 @@
 
     <dependencies>
 
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-web</artifactId>-->
-        <!--</dependency>-->
-
-
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>5.2.4.RELEASE</version>
-        </dependency>
-
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -40,21 +27,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot</artifactId>-->
-<!--        </dependency>-->
-
-
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-<!--        <dependency>-->
-<!--        <groupId>javax.servlet</groupId>-->
-<!--        <artifactId>javax.servlet-api</artifactId>-->
-<!--        <version>3.1.0</version>-->
-<!--        <scope>provided</scope>-->
-<!--        </dependency>-->
-
-
     </dependencies>
 
 
