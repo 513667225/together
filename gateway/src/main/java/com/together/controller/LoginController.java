@@ -13,8 +13,6 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @RestController
@@ -37,29 +35,29 @@ public class LoginController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/login")
-    public R login(@Pmap P p) throws Exception{
-        String password  = p.getString("password");
-        p.remove("password");
-        R result = userServiceClient.getUserByName(p);
-        if (result==null){
-            return R.error("用户不存在");
-        }
-        String password1 = String.valueOf(result.get("password"));
-        if (!password.equals(password1)) {
-            return R.error("密码不正确");
-        }
-
-        UserInfo userInfo = Map2JavaBeanUtil.transMap2Bean(result, UserInfo.class);
-
-        R shopPage = shopServiceClient.getShopPage(userInfo.getUserId());
-        userInfo.setShopId(Integer.parseInt(String.valueOf(shopPage.get("shop_id"))));
-        String uuid = UUID.randomUUID().toString();
-        valueOperations.set(uuid,userInfo);
-        HttpServletResponse response = p.getResponse();
-        Cookie cookie = new Cookie(UserInfo.USER_COOKIE_KEY, uuid);
-        response.addCookie(cookie);
-        return R.success();
-    }
+//    @RequestMapping("/login")
+//    public R login(@Pmap P p) throws Exception{
+//        String password  = p.getString("password");
+//        p.remove("password");
+//        R result = userServiceClient.getUserByName(p);
+//        if (result==null){
+//            return R.error("用户不存在");
+//        }
+//        String password1 = String.valueOf(result.get("password"));
+//        if (!password.equals(password1)) {
+//            return R.error("密码不正确");
+//        }
+//
+//        UserInfo userInfo = Map2JavaBeanUtil.transMap2Bean(result, UserInfo.class);
+//
+//        R shopPage = shopServiceClient.getShopPage(userInfo.getUserId());
+//        userInfo.setShopId(Integer.parseInt(String.valueOf(shopPage.get("shop_id"))));
+//        String uuid = UUID.randomUUID().toString();
+//        valueOperations.set(uuid,userInfo);
+//        HttpServletResponse response = p.getResponse();
+//        Cookie cookie = new Cookie(UserInfo.USER_COOKIE_KEY, uuid);
+//        response.addCookie(cookie);
+//        return R.success();
+//    }
 
 }
