@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class P extends HashMap<String,Object> {
 
@@ -31,6 +33,13 @@ public class P extends HashMap<String,Object> {
     public <T> T thisToEntity(Class<T> toClass) throws Exception {
 
        return (T) Map2JavaBeanUtil.transMap2Bean(this,toClass);
+    }
+    public P() {
+
+    }
+
+    public P(Map map) {
+        super(map);
     }
 
     public void thisToEntity(Object toObj) throws Exception {
