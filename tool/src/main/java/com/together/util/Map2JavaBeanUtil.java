@@ -97,7 +97,7 @@ public class Map2JavaBeanUtil {
 	
     // Map --> Bean 1: 利用Introspector,PropertyDescriptor实现 Map --> Bean
     @SuppressWarnings("unchecked")
-	public static void transMap2Bean(Map<String, Object> map, Object obj) throws Exception{
+	public static void transMap2Bean(Map map, Object obj) throws Exception{
         BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
         PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
         for (PropertyDescriptor property : propertyDescriptors) {
@@ -156,7 +156,7 @@ public class Map2JavaBeanUtil {
     }
     
  // Map --> Bean 1: 利用Introspector,PropertyDescriptor实现 Map --> Bean
-    public static <T> T transMap2Bean(Map<String, Object> map, Class<T> obj) throws Exception {
+    public static <T> T transMap2Bean(Map map, Class<T> obj) throws Exception {
     	 T t = obj.newInstance();
     	 transMap2Bean(map, t);
     	return t;
