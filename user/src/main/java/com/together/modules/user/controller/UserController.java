@@ -4,9 +4,11 @@ package com.together.modules.user.controller;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.together.annotation.Pmap;
 import com.together.modules.user.entity.UserEntity;
 import com.together.modules.user.service.IUserService;
 import com.together.util.Map2JavaBeanUtil;
+import com.together.util.P;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,38 +29,28 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @GetMapping("/getGoodsPage")
-    public R getGoodsPage(@RequestParam Map<String,Object> map) throws Exception {
-        UserEntity userEntity = new UserEntity();
-        int pageNum = 1;
-        int limit = 10;
-        if (map.get("page")!=null) {
-            pageNum = (int) map.get("page");
-        }
-        if (map.get("limit")!=null) {
-            limit = (int) map.get("limit");
-        }
-        if(map.get("user")!=null){
-            userEntity = (UserEntity) map.get("user");
-        }
-        Page page = new Page(pageNum,limit);
-        Map2JavaBeanUtil.transMap2Bean(map,userEntity);
-        return R.ok(userService.page(page, Wrappers.query(userEntity)));
+    @GetMapping("/getUserPage")
+    public R getGoodsPage(@Pmap P p) throws Exception {
+        Integer page = p.getInt("page");
+        Integer limit = p.getInt("limit");
+        Page page1  = new Page(page, limit);
+        page1 = userService.page(page1, Wrappers.query(p.thisToEntity(UserEntity.class)));
+        return R.ok(page1);
     }
 
-    @GetMapping("/getGoodsList")
-    public R getGoodsList(){
+    @GetMapping("/getUserList")
+    public R getUserList(){
         return R.ok(userService.list());
     }
 
     /**
-     * 根据商品id查询信息
-     * @param userId
+     * 根据用户账号查询信息
+     * @param p
      * @return
      */
-    @GetMapping("/{userId}")
-    public R getProductId(@PathVariable("userId") String userId){
-        return R.ok(userService.getById(userId));
+    @GetMapping("/getUserByName")
+    public R getUserByName(@Pmap P p){
+        return R.ok(userService.getUserByName(p));
     }
 
     /**
