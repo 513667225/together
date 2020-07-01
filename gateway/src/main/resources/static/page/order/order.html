@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有商品</title>
+</head>
+<link rel="stylesheet" href="/js/layui/css/layui.css">
+<script src="/js/layui/layui.all.js"></script>
+<!--<script src="/js/layer/layer.js"></script>-->
+<script src="/js/tinymce4.7.5/tinymce.min.js"></script>
+
+<body>
+
+<table class="layui-hide" id="orders_table" lay-skin="line" lay-filter="orders_table">
+
+</table>
+
+<script type="text/html" id="goodsBar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="checkGoodsDetail">
+    <a class="layui-btn" lay-event="checkGoodsDetail">查看详情</a>
+</script>
+
+<div>
+
+</div>
+</body>
+<script>
+    layui.use('table', function () {
+        var $ = layui.jquery;
+        var table = layui.table;
+        table.render({
+            elem: '#orders_table',
+            url: '/orders/getOrderPage',
+            method: 'get',
+            cols: [[
+                {type: 'checkbox'},
+                {field: 'orderId', width: 80, title: 'id'},
+                {field: 'userId', width: 80, title: '用户'},
+                {field: 'orderSn', width: 80, title: '订单编号', sort: true},
+                {field: 'orderStatus', width: 80, title: '订单状态', sort: true},
+                {field: 'orderConsignee', width: 80,title: '收货人名字'},
+                {field: 'orderTel', width: 80, title: '手机号码'},
+                {field: 'orderAddress', width: 80, title: '具体地址'},
+                {field: 'orderMessage', width: 80, title: '用户留言'}
+            ]],
+            page: true,
+            limits: [5, 10, 20, 50],
+            limit: 5,
+            loading: true,
+            count: 1000,
+            parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.total, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+            request: {
+                pageName: 'page', // 页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+        });
+
+        //监听行工具事件
+        table.on('tool(orders_table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('确定删除当前商品?', function (index) {
+                    $.ajax({
+                        url: '/goods/delGoods',
+                        type: 'get',
+                        data: {'goods_id': data.goods_id},
+                        success: function (suc) {
+                            if (suc.code == 0) {
+                                obj.del();
+                                layer.close(index);
+                                layer.msg(suc.msg, {icon: 1});
+                            } else {
+                                layer.msg(suc.msg, {icon: 5});
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event === 'edit') {
+
+            } else if (obj.event === 'checkGoodsDetail') {
+                var index = layer.open({
+                    type:1,
+                    title:'查看商品详情',
+                    area:['auto','800px'],
+                    // maxmin: true,
+                    shadeClose:true,
+                    content:obj.data.goods_detail,
+                });
+            }
+        });
+    })
+
+    function showImg(url) {
+        console.log(url);
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: ['auto'],
+            skin: 'layui-layer-nobg',
+            shadeClose: true,
+            content: url
+        });
+    }
+
+
+</script>
+</html>
