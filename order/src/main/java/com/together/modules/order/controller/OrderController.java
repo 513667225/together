@@ -25,10 +25,24 @@ public class OrderController {
     @Autowired
     private IOrderService iOrderService;
 
-    public R getOrderByUserId(@Pmap P p){
+    /**
+     * 根据用户id 查询订单信息
+     */
+
+    public R getOrderPage(@Pmap P p){
         return R.ok(iOrderService.getOrderPage(p));
     }
 
+    /**
+     * 新增
+     */
+    public R insertOrderById(@Pmap P p){
+        return R.ok(iOrderService.insertOrderById(p));
+    }
+
+    /**
+     * 修改
+     */
 
 
 
