@@ -1,11 +1,16 @@
 package com.together.modules.order.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.together.entity.GoodsEntity;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -15,7 +20,7 @@ import java.io.Serializable;
  * @author 
  * @since 2020-06-28
  */
-@TableName("order")
+@TableName("order_bot")
 public class OrderEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -137,6 +142,20 @@ public class OrderEntity implements Serializable {
      * 更新时间
      */
     private Date updateTime;
+
+    //商品列表
+
+    @TableField(exist = false)
+    List<GoodsEntity> listGoods;
+
+
+    public List<GoodsEntity> getListGoods() {
+        return listGoods;
+    }
+
+    public void setListGoods(List<GoodsEntity> listGoods) {
+        this.listGoods = listGoods;
+    }
 
     public Integer getOrderId() {
         return orderId;

@@ -24,7 +24,7 @@
         </div>
     </div>
 </div>
-<table class="layui-table" lay-even="" lay-skin="nob" id="goodsTable"></table>
+<table class="layui-table" lay-even="" lay-skin="nob" id="shopTable"></table>
 <script src="/js/layui/layui.all.js"></script>
 <script src="/js/jquery-1.7.2.min.js"></script>
 <script>
@@ -33,14 +33,17 @@
         var table =  layui.table;
         var form = layui.form;
         table.render({
-            elem: '#goodsTable'
+            elem: '#shopTable'
             ,url:'/shop/getShopPage'
+            ,where:{
+                "userId":1
+            }
             ,method: 'get'
             ,cellMinWidth: 80
             ,cols: [[
                 {type:'checkbox'}
                 ,{field:'shopId' , title: 'id', sort: true}
-                ,{field:'shopName' , title: '商家名称', }
+                ,{field:'shopName' , title: '商家名称'}
                 ,{field:'shopSlogan', title: '公告语'}
                 ,{field:'shopDetail', title: '详情介绍'}
                 ,{field:'shopIcon' , title: '商家头像',}
@@ -78,12 +81,12 @@
                 //每页数据量的参数名，默认：limit
                 , limitName: 'limit'
             },
-            id:'goodsList'
+            id:'shopList'
 
         });
         $('#query_btn').click(function () {
             var inputVal = $('.layui-input').val();
-            table.reload('goodsTable', {
+            table.reload('shopTable', {
                 url:'/goods/getGoodsPage'
                 ,request: {
                     pageName: 'page'
