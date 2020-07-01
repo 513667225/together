@@ -26,6 +26,10 @@ public class PmapResolver extends RequestParamMapMethodArgumentResolver {
         HttpServletRequest nativeRequest = webRequest.getNativeRequest(HttpServletRequest.class);
         p.setRequest(nativeRequest);
         p.setResponse(nativeResponse);
+        Integer limit = p.getInt("limit");
+        Integer page = p.getInt("page");
+        if (limit!=null&&page!=null)
+        p.put("rowIndex",(page-1)*limit);
 //        p.batchToInt("limit","page");
         return p;
     }
