@@ -156,6 +156,7 @@ public class GoodsEntity implements Serializable {
         this.shopId = shopId;
         return this;
     }
+
     public String getGoodsGallery() {
         return goodsGallery;
     }
