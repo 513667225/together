@@ -8,7 +8,10 @@ import com.together.modules.order.mapper.OrderMapper;
 import com.together.modules.order.service.IOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.util.P;
+import com.together.util.R;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -21,14 +24,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> implements IOrderService {
 
+
     @Override
     public IPage getOrderPage(P p) {
         Integer page = p.getInt("page");
         Integer limit = p.getInt("limit");
-        Page page1 = new Page(page,limit);
-        Integer userId = (Integer)p.get("userId");
+        p.initPageArg();
+        Page page1  = new Page(page, limit);
+        Integer userId = p.getInt("userId");
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("userId",userId);
+        queryWrapper.eq("user_id",userId);
         return baseMapper.selectPage(page1,queryWrapper);
+    }
+
+    @Override
+    public int insertOrderById(P p) {
+        OrderEntity orderEntity = (OrderEntity) p.get("order");
+        return baseMapper.insert(orderEntity);
+    }
+
+    @Override
+    public int updById(P p) {
+        OrderEntity orderEntity = (OrderEntity) p.get("order");
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("orderId",orderEntity.getOrderId());
+        return baseMapper.update(orderEntity,queryWrapper);
+    }
+
+    @Override
+    public int delById(P p) {
+        OrderEntity orderEntity = (OrderEntity) p.get("order");
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("orderId",orderEntity.getOrderId());
+        return baseMapper.delete(queryWrapper);
     }
 }
