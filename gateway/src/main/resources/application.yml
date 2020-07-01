@@ -41,7 +41,7 @@ spring:
           uri: lb://SERVER-ORDER
           predicates:
             - Path=/order/**,/orderGoods/**
-        - id: order
+        - id: goods
           uri: lb://SERVER-GOODS
           predicates:
             - Path=/category/**,/goods/**,/goodsAttribute/**,/goodsSpecification/**

@@ -1,10 +1,12 @@
 package com.together.modules.shop.controller;
 
 
-import com.baomidou.mybatisplus.extension.api.R;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.together.annotation.Pmap;
 import com.together.modules.shop.service.IShopService;
 import com.together.util.P;
+import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +32,8 @@ public class ShopController {
      */
     @GetMapping("/getShopPage")
     public R getShopPage(@Pmap P p) throws Exception{
-        System.out.println(p);
-        return R.ok(shopService.getShopPage(p));
+        IPage shopPage = shopService.getShopPage(p);
+        return R.success("xxx",shopPage.getRecords()).set("count",shopPage.getTotal());
     }
 
 
@@ -41,20 +43,20 @@ public class ShopController {
      * @param p
      * @return
      */
-    @PostMapping
+    /*@PostMapping
     public R saveShopById(@Pmap P p){
         return R.ok(shopService.saveShopById(p));
-    }
+    }*/
 
     /**
      * 修改
      * @param p
      * @return
      */
-    @PutMapping
+    /*@PutMapping
     public R updShopById(@Pmap P p){
         return R.ok(shopService.updShopById(p));
-    }
+    }*/
 
 
 }

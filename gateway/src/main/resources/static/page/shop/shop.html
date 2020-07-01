@@ -9,26 +9,33 @@
 <body>
 <br>
 
-<div class="layui-form" action="">
+<form class="layui-form" action="">
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">店铺名称：</label>
             <div class="layui-input-inline">
-                <input type="text" name="productName"  required  lay-verify="required" placeholder="请输入店铺" autocomplete="off" class="layui-input">
+                <input type="text" name="productName" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
+            </div>
+
+            <label class="layui-form-label">商品品类：</label>
+            <div class="layui-input-inline">
+                <select name="shopCategory" id="shopCategory">
+                    <option value="">请选择</option>
+                </select>
             </div>
         </div>
         <div class="layui-inline">
             <div class="layui-input-inline">
-                <button id="query_btn" class="layui-btn layui-btn-warm" data-type="reload">搜索</button>
+                <button id="query_btn" class="layui-btn layui-btn-warm">搜索</button>
             </div>
         </div>
     </div>
-</div>
+</form>
 <table class="layui-table" lay-even="" lay-skin="nob" id="shopTable"></table>
 <script src="/js/layui/layui.all.js"></script>
 <script src="/js/jquery-1.7.2.min.js"></script>
 <script>
-    layui.use('table',function () {
+    layui.use(['table','form'],function () {
         var $ = layui.jquery;
         var table =  layui.table;
         var form = layui.form;
@@ -70,9 +77,9 @@
                     //解析提示文本
                     "msg": res.msg,
                     //解析数据长度
-                    "count": res.data.total,
+                    "count": res.count,
                     //解析数据列表
-                    "data": res.data.records
+                    "data": res.data
                 };
             },
             request: {
@@ -84,25 +91,33 @@
             id:'shopList'
 
         });
-        $('#query_btn').click(function () {
-            var inputVal = $('.layui-input').val();
-            table.reload('shopTable', {
-                url:'/goods/getGoodsPage'
-                ,request: {
-                    pageName: 'page'
-                    ,limitName: 'limit'
-                }
-                ,where: {
-                    goods:{
-                        goodsName : inputVal
-                    }
-                }
-                ,page: {
-                    curr: 1
-                }
-            });
+        form.on("button(query_btn)", function(data){
+            console.log(data);
         });
+        //获取商品类别
+        getShopCategory();
     })
+
+    /**
+     * 获取商品类别
+     */
+    function getShopCategory(){
+        $.ajax({
+            url:"/category/getCategoryList"
+            ,method: 'get'
+            ,success:function(res){
+                if(res.msg){
+                    for(var i =0;i<res.data.length;i++){
+                        $("#shopCategory").append("<option value=\""+res.data[i].categoryId+"\">"+res.data[i].categoryName+"</option>");
+                    }
+                    //重新渲染
+                    layui.form.render("select");
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+        });
+    }
 
 </script>
 </body>
