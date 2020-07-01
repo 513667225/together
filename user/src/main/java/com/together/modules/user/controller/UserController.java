@@ -9,6 +9,7 @@ import com.together.modules.user.entity.UserEntity;
 import com.together.modules.user.service.IUserService;
 import com.together.util.Map2JavaBeanUtil;
 import com.together.util.P;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,11 @@ public class UserController {
     @GetMapping("/getUserList")
     public R getUserList(){
         return R.ok(userService.list());
+    }
+
+    @GetMapping("/getUserById")
+    public R getUserById(Integer userId){
+        return R.ok(userService.getById(userId));
     }
 
     /**
