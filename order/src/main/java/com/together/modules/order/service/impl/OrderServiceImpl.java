@@ -11,6 +11,7 @@ import com.together.util.P;
 import com.together.util.R;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,16 +26,21 @@ import java.util.Map;
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> implements IOrderService {
 
 
+//    @Override
+//    public IPage getOrderPage(P p) {
+
+//    }
+
     @Override
-    public IPage getOrderPage(P p) {
-        Integer page = p.getInt("page");
+    public List<OrderEntity> getOrderPage(P p) {
+                Integer page = p.getInt("page");
         Integer limit = p.getInt("limit");
         p.initPageArg();
-        Page page1  = new Page(page, limit);
+        Page<OrderEntity> page1  = new Page(page, limit);
         Integer userId = p.getInt("userId");
-        QueryWrapper queryWrapper = new QueryWrapper();
+        QueryWrapper<OrderEntity> queryWrapper = new QueryWrapper<OrderEntity>();
         queryWrapper.eq("user_id",userId);
-        return baseMapper.selectPage(page1,queryWrapper);
+        return  baseMapper.selectPage(page1,queryWrapper).getRecords();
     }
 
     @Override
