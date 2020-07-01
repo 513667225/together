@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有商品</title>
+</head>
+<link rel="stylesheet" href="/js/layui/css/layui.css">
+<script src="/js/layui/layui.all.js"></script>
+<!--<script src="/js/layer/layer.js"></script>-->
+<script src="/js/tinymce4.7.5/tinymce.min.js"></script>
+
+<body>
+
+<table class="layui-hide" id="goods_table" lay-skin="line" lay-filter="goods_table">
+
+</table>
+
+<script type="text/html" id="goodsBar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="checkGoodsDetail">
+    <a class="layui-btn" lay-event="checkGoodsDetail">查看详情</a>
+</script>
+
+<div>
+
+</div>
+</body>
+<script>
+    layui.use('table', function () {
+        var $ = layui.jquery;
+        var table = layui.table;
+        table.render({
+            elem: '#goods_table',
+            url: '/goods/getGoodsPage',
+            method: 'get',
+            cols: [[
+                {type: 'checkbox'},
+                {field: 'goods_id', width: 80, title: 'id'},
+                {field: 'goods_sn', width: 80, title: '商品编号'},
+                {field: 'goods_name', width: 80, title: '商品名称', sort: true},
+                {field: 'category_name', width: 80, title: '商品分类', sort: true},
+                {field: 'goods_gallery', width: 80,title: '商品宣传图片列表'},
+                {field: 'goods_price', width: 80, title: '商品关键字'},
+                {field: 'goods_brief', width: 80, title: '商品简介'},
+                {field: 'is_on_sale', width: 80, title: '是否上架'},
+                {
+                    field:'pic_url',
+                    width: 80,
+                    title:'商品页面商品图片',
+                    templet: function(data) {
+                        var url = data.pic_url;
+                        return "<div onclick='showImg(\"" + url + "\")'><img src='"+url+"' style='height:35px;width=35px'></div>";
+                    }
+                },
+                {field: 'goods_unit', width: 135, title: '商品单位'},
+                // {field: 'goods_detail', width: 135, title: '商品详情页', sort: true},
+                {field: 'goods_detail', width: 135, title: '商品详情页', toolbar: '#checkGoodsDetail', align: 'center'},
+                {field: 'spokesman_id', width: 135, title: '代言人ID'},
+                {field: 'add_time', width: 135, title: '创建时间'},
+                {field: 'update_time', width: 135, title: '更新时间'},
+                {fixed: 'right', title: '操作', toolbar: '#goodsBar', width: 150}
+            ]],
+            page: true,
+            limits: [5, 10, 20, 50],
+            limit: 5,
+            loading: true,
+            count: 1000,
+            parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.total, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+            request: {
+                pageName: 'page', // 页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+        });
+
+        //监听行工具事件
+        table.on('tool(goods_table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('确定删除当前商品?', function (index) {
+                    $.ajax({
+                        url: '/goods/delGoods',
+                        type: 'get',
+                        data: {'goods_id': data.goods_id},
+                        success: function (suc) {
+                            if (suc.code == 0) {
+                                obj.del();
+                                layer.close(index);
+                                layer.msg(suc.msg, {icon: 1});
+                            } else {
+                                layer.msg(suc.msg, {icon: 5});
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event === 'edit') {
+
+            } else if (obj.event === 'checkGoodsDetail') {
+                var index = layer.open({
+                    type:1,
+                    title:'查看商品详情',
+                    area:['auto','800px'],
+                    // maxmin: true,
+                    shadeClose:true,
+                    content:obj.data.goods_detail,
+                });
+            }
+        });
+    })
+
+    function showImg(url) {
+        console.log(url);
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: ['auto'],
+            skin: 'layui-layer-nobg',
+            shadeClose: true,
+            content: url
+        });
+    }
+
+
+</script>
+</html>

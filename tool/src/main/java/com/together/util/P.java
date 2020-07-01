@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class P extends HashMap<String,Object> {
@@ -48,6 +47,9 @@ public class P extends HashMap<String,Object> {
     }
 
 
+
+
+
     public void batchToInt(String... names){
         for (String name : names) {
             String s = (String) this.get(name);
@@ -57,6 +59,14 @@ public class P extends HashMap<String,Object> {
         }
     }
 
+
+    public String getString(String key) {
+        Object value =   this.get(key);
+        if (value == null) {
+            return null;
+        }
+        return String.valueOf(value);
+    }
 
     public Integer getInt(String key) {
         String value =  (String) this.get(key);

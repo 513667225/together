@@ -34,17 +34,23 @@
         var form = layui.form;
         table.render({
             elem: '#goodsTable'
-            ,url:'/shopMenu/getMenu'
+            ,url:'/shop/getShopPage'
             ,method: 'get'
             ,cellMinWidth: 80
             ,cols: [[
                 {type:'checkbox'}
-                ,{field:'id' , title: 'id', sort: true}
-                ,{field:'pid' , title: '父id', sort: true}
-                ,{field:'url', title: '资源'}
-                ,{field:'name', title: '资源名称'}
-                ,{field:'orderNum' , title: '序号', sort: true}
-                ,{field:'type', title: '功能类型'}
+                ,{field:'shopId' , title: 'id', sort: true}
+                ,{field:'shopName' , title: '商家名称', }
+                ,{field:'shopSlogan', title: '公告语'}
+                ,{field:'shopDetail', title: '详情介绍'}
+                ,{field:'shopIcon' , title: '商家头像',}
+                ,{field:'shopPic', title: '商家店面图片'}
+                ,{field:'shopCategory', title: '商家品类'}
+                ,{field:'shopAddress', title: '商家地址'}
+                ,{field:'shopTel', title: '商家电话'}
+                ,{field:'shopTime', title: '营业时间',sort: true}
+                ,{field:'aptitudeId', title: '商家资质ID'}
+                ,{field:'addTime', title: '创建时间',sort:true}
             ]]
             ,page: true
             ,limits : [5,10]
@@ -74,6 +80,24 @@
             },
             id:'goodsList'
 
+        });
+        $('#query_btn').click(function () {
+            var inputVal = $('.layui-input').val();
+            table.reload('goodsTable', {
+                url:'/goods/getGoodsPage'
+                ,request: {
+                    pageName: 'page'
+                    ,limitName: 'limit'
+                }
+                ,where: {
+                    goods:{
+                        goodsName : inputVal
+                    }
+                }
+                ,page: {
+                    curr: 1
+                }
+            });
         });
     })
 
