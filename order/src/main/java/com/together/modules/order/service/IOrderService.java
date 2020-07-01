@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.together.modules.order.entity.OrderEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.together.util.P;
+import com.together.util.R;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -17,11 +20,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface IOrderService extends IService<OrderEntity> {
 
     /**
-     * 根据用户id查询订单信息+分页
+     * 根据用户ID查询订单信息
      */
-    IPage getOrderPage(@RequestParam("p")P p);
+
+    IPage getOrderPage(P p);
 
     /**
-     * 增加订单方法
+     * 增加用户ID订单
      */
+    int insertOrderById(P p);
+
+    /**
+     * 根据用户ID修改订单信息
+     */
+
+    int updById(P p);
+
+    /**
+     * 根据订单ID删除订单
+     */
+
+    int delById(P p);
 }
