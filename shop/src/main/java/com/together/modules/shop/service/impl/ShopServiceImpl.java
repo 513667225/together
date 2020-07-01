@@ -30,8 +30,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
     public IPage getShopPage(P p) {
         Integer page = p.getInt("page");
         Integer limit = p.getInt("limit");
+        p.initPageArg();
         Page page1  = new Page(page, limit);
-        Integer userId = (Integer) p.get("userId");
+        Integer userId = p.getInt("userId");
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("user_id",userId);
         return baseMapper.selectPage(page1,queryWrapper);

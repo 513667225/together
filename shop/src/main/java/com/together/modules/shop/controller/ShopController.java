@@ -29,7 +29,8 @@ public class ShopController {
      * @return
      */
     @GetMapping("/getShopPage")
-    public R getUserByUserId(@Pmap P p){
+    public R getShopPage(@Pmap P p) throws Exception{
+        System.out.println(p);
         return R.ok(shopService.getShopPage(p));
     }
 

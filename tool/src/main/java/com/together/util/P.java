@@ -47,6 +47,14 @@ public class P extends HashMap<String,Object> {
     }
 
 
+    public void initPageArg(){
+        if (this.get("page") == null) {
+            this.put("page",0);
+        }
+        if (this.get("limit") == null) {
+            this.put("limit",10);
+        }
+    }
 
 
 

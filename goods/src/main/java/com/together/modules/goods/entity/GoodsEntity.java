@@ -93,6 +93,19 @@ public class GoodsEntity implements Serializable {
      */
     private Integer spokesmanId;
 
+    public Integer getGoodsLevel() {
+        return goodsLevel;
+    }
+
+    public void setGoodsLevel(Integer goodsLevel) {
+        this.goodsLevel = goodsLevel;
+    }
+
+    /**
+     * 档次
+     */
+    private Integer goodsLevel;
+
     /**
      * 创建时间
      */
@@ -243,23 +256,24 @@ public class GoodsEntity implements Serializable {
     @Override
     public String toString() {
         return "GoodsEntity{" +
-            "goodsId=" + goodsId +
-            ", goodsSn=" + goodsSn +
-            ", goodsName=" + goodsName +
-            ", categoryId=" + categoryId +
-            ", shopId=" + shopId +
-            ", goodsGallery=" + goodsGallery +
-            ", goodsKeywords=" + goodsKeywords +
-            ", goodsPrice=" + goodsPrice +
-            ", goodsBrief=" + goodsBrief +
-            ", isOnSale=" + isOnSale +
-            ", sortOrder=" + sortOrder +
-            ", picUrl=" + picUrl +
-            ", goodsUnit=" + goodsUnit +
-            ", goodsDetail=" + goodsDetail +
-            ", spokesmanId=" + spokesmanId +
-            ", addTime=" + addTime +
-            ", updateTime=" + updateTime +
-        "}";
+                "goodsId=" + goodsId +
+                ", goodsSn='" + goodsSn + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", categoryId=" + categoryId +
+                ", shopId=" + shopId +
+                ", goodsGallery='" + goodsGallery + '\'' +
+                ", goodsKeywords='" + goodsKeywords + '\'' +
+                ", goodsPrice=" + goodsPrice +
+                ", goodsBrief='" + goodsBrief + '\'' +
+                ", isOnSale=" + isOnSale +
+                ", sortOrder=" + sortOrder +
+                ", picUrl='" + picUrl + '\'' +
+                ", goodsUnit='" + goodsUnit + '\'' +
+                ", goodsDetail='" + goodsDetail + '\'' +
+                ", spokesmanId=" + spokesmanId +
+                ", goodsLevel=" + goodsLevel +
+                ", addTime=" + addTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

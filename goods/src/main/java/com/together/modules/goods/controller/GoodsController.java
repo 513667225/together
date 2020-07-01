@@ -1,20 +1,14 @@
 package com.together.modules.goods.controller;
 
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
-import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.service.IGoodsService;
-import com.together.util.Map2JavaBeanUtil;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -29,12 +23,28 @@ import java.util.Map;
 public class GoodsController {
     @Autowired
     IGoodsService iGoodsService;
+
     @GetMapping("/getGoodsPage")
     public R getGoodsPage(@Pmap P p) throws Exception {
         System.out.println(p);
         p.put("shopId",1);
+        p.batchToInt("page","limit");
         return iGoodsService.queryGoodsByShopId(p);
     }
 
+    @RequestMapping("/delGoods")
+    public R delGoods(@Pmap P p){
+        if (iGoodsService.removeById(p.getInt("goods_id"))) {
+            return R.success("删除成功");
+        }
+        else{
+            return R.error("删除失败");
+        }
+    }
+
+    @RequestMapping("/queryGoodsById")
+    public R queryGoodsById(@Pmap P p){
+        return R.success("操作成功",iGoodsService.getById(p.getInt("goodsId")));
+    }
 
 }
