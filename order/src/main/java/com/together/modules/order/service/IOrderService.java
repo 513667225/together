@@ -7,6 +7,7 @@ import com.together.util.P;
 import com.together.util.R;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,11 +20,9 @@ import java.util.Map;
  */
 public interface IOrderService extends IService<OrderEntity> {
 
-    /**
-     * 根据用户ID查询订单信息
-     */
 
-    IPage getOrderPage(P p);
+
+    List<OrderEntity> getOrderPage(P p);
 
     /**
      * 增加用户ID订单
@@ -41,4 +40,7 @@ public interface IOrderService extends IService<OrderEntity> {
      */
 
     int delById(P p);
+
+
+
 }

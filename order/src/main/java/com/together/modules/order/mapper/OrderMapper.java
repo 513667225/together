@@ -2,6 +2,9 @@ package com.together.modules.order.mapper;
 
 import com.together.modules.order.entity.OrderEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.together.util.R;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -12,5 +15,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-06-28
  */
 public interface OrderMapper extends BaseMapper<OrderEntity> {
+
+
 
 }

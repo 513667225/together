@@ -51,8 +51,6 @@ public class OrderController {
         p.remove("rowIndex");
         Page<OrderEntity> objectPage = new Page<>(1, 10);
         Page<OrderEntity> pageObject=orderMapper.selectPage(objectPage,new QueryWrapper<OrderEntity>().allEq(p));
-
-
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
 

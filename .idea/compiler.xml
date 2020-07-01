@@ -9,8 +9,12 @@
         <module name="user" />
         <module name="gateway" />
         <module name="product" />
+        <module name="order" />
         <module name="eureka" />
         <module name="shop" />
+        <module name="goods" />
+        <module name="tool" />
+        <module name="nacos" />
         <module name="admin" />
       </profile>
     </annotationProcessing>
@@ -25,10 +29,14 @@
       <module name="eureka" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="getaway" options="-parameters" />
+      <module name="goods" options="-parameters" />
+      <module name="nacos" options="-parameters" />
+      <module name="order" options="-parameters" />
       <module name="product" options="-parameters" />
       <module name="relation" options="-parameters" />
       <module name="shop" options="-parameters" />
       <module name="together" options="-parameters" />
+      <module name="tool" options="-parameters" />
       <module name="user" options="-parameters" />
     </option>
   </component>
