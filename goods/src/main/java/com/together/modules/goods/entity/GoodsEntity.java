@@ -189,11 +189,11 @@ public class GoodsEntity implements Serializable {
         this.goodsBrief = goodsBrief;
         return this;
     }
-    public Boolean getOnSale() {
+    public Boolean getIsOnSale() {
         return isOnSale;
     }
 
-    public GoodsEntity setOnSale(Boolean isOnSale) {
+    public GoodsEntity setIsOnSale(Boolean isOnSale) {
         this.isOnSale = isOnSale;
         return this;
     }
