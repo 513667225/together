@@ -29,22 +29,52 @@ public class P extends HashMap<String,Object> {
     private HttpServletResponse response;
 
 
-    public <T> T thisToEntity(Class<T> toClass) throws Exception {
 
-       return (T) Map2JavaBeanUtil.transMap2Bean(this,toClass);
-    }
+
+
+
     public P() {
 
     }
 
-    public P(Map map) {
-        super(map);
+    public void thisToEntityUpper2Line(Object obj) throws Exception {
+        MapUtil.mapKeySetUpper2Line(this);
+         thisToEntity(obj);
     }
+
+    public void  thisToEntityLine2Upper(Object obj) throws Exception {
+        MapUtil.mapKeySetLine2Upper( this);
+         thisToEntity(obj);
+    }
+
+
 
     public void thisToEntity(Object toObj) throws Exception {
 
         Map2JavaBeanUtil.transMap2Bean(this,toObj);
     }
+
+    public <T> T thisToEntity(Class<T> toClass) throws Exception {
+
+        return (T) Map2JavaBeanUtil.transMap2Bean(this,toClass);
+    }
+
+    public <T> T thisToEntityUpper2Line(Class<T> toClass) throws Exception {
+//        this.keySet()
+        MapUtil.mapKeySetUpper2Line(this);
+        return thisToEntity(toClass);
+    }
+
+    public <T> T thisToEntityLine2Upper(Class<T> toClass) throws Exception {
+        MapUtil.mapKeySetLine2Upper( this);
+        return thisToEntity(toClass);
+    }
+
+
+    public P(Map map) {
+        super(map);
+    }
+
 
 
     public void initPageArg(){

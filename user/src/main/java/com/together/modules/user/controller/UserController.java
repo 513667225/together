@@ -37,6 +37,14 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+
+
+    @RequestMapping(value = "/getUserById",method = RequestMethod.GET)
+    R getUserById(@RequestParam("userId") int userId){
+        UserEntity userEntity = userService.getById(userId);
+        return R.success().data(userEntity);
+    }
+
     @GetMapping("/getUserPage")
     public R getGoodsPage(@Pmap P p) throws Exception {
         Integer page = p.getInt("page");

@@ -58,7 +58,7 @@ public class Map2JavaBeanUtil {
 	
 	/**
 	 * @Description: 将obj强转为指定类型
-	 * @param obj
+	 * @param
 	 * @param c
 	 * @return Object
 	 * @throws
@@ -94,21 +94,38 @@ public class Map2JavaBeanUtil {
 		}
 		return cell;
 	}
-	
+
+	public static void transMap2Bean(Map map, Object obj) throws Exception{
+		transMap2Bean(map,obj,false);
+	}
+
+	public static Method getWriteMethod(Class clazz,String name) throws Exception{
+		String fast = name.substring(0, 1);
+		String end =  name.substring(1);
+
+		Method method = clazz.getDeclaredMethod("set" + fast.toUpperCase()+end, clazz.getDeclaredField(name).getType());
+		method.setAccessible(true);
+		return method;
+	}
+
     // Map --> Bean 1: 利用Introspector,PropertyDescriptor实现 Map --> Bean
     @SuppressWarnings("unchecked")
-	public static void transMap2Bean(Map map, Object obj) throws Exception{
+	public static void transMap2Bean(Map map, Object obj,boolean isUpper2Line) throws Exception{
         BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
         PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
         for (PropertyDescriptor property : propertyDescriptors) {
-            String key = transUpper2UnderLine(property.getName());
+			String key= property.getName();
+			if (isUpper2Line){
+				key = transUpper2UnderLine(property.getName());
+			}
             if (map.containsKey(key)) {
                 Object value = map.get(key);
                 if(value == null || "".equals(String.valueOf(value))) {
                 	continue;
                 }
                 // 得到property对应的setter方法
-                Method setter = property.getWriteMethod();
+
+                Method setter = getWriteMethod(obj.getClass(),property.getName());
 				if(value.getClass().getName().indexOf("List") > 0) {
 					Class<?> beanClass = getActualType(obj, property.getName(), 0);
 					if(beanClass == null) {

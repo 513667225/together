@@ -2,6 +2,7 @@ package com.together.modules.goods.controller;
 
 
 import com.together.annotation.Pmap;
+import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.service.IGoodsService;
 import com.together.util.P;
 import com.together.util.R;
@@ -44,7 +45,8 @@ public class GoodsController {
 
     @RequestMapping("/queryGoodsById")
     public R queryGoodsById(@Pmap P p){
-        return R.success("操作成功",iGoodsService.getById(p.getInt("goodsId")));
+        GoodsEntity goodsId = iGoodsService.getById(p.getInt("goodsId"));
+        return R.success("操作成功",goodsId);
     }
 
 }

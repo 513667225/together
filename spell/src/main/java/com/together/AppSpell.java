@@ -3,16 +3,14 @@ package com.together;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.HashMap;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-//@EnableDiscoveryClient
-public class AppUser {
+@EnableFeignClients
+public class AppSpell {
 
     public static void main(String[] args) {
-        SpringApplication.run(AppUser.class);
+        SpringApplication.run(AppSpell.class);
     }
-
 
 }

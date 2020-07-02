@@ -15,6 +15,7 @@
         <module>admin</module>
         <module>goods</module>
         <module>order</module>
+        <module>spell</module>
     </modules>
 
     <parent>
