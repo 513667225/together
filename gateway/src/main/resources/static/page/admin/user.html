@@ -41,26 +41,24 @@
         var form = layui.form;
         table.render({
             elem: '#userTable'
-            ,url:'/shop/getShopPage'
+            ,url:'/user/getUserPage'
             ,where:{
-                "userId":1
+
             }
             ,method: 'get'
             ,cellMinWidth: 80
             ,cols: [[
                 {type:'checkbox'}
-                ,{field:'shopId' , title: 'id', sort: true}
-                ,{field:'shopName' , title: '商家名称'}
-                ,{field:'shopSlogan', title: '公告语'}
-                ,{field:'shopDetail', title: '详情介绍'}
-                ,{field:'shopIcon' , title: '商家头像',}
-                ,{field:'shopPic', title: '商家店面图片'}
-                ,{field:'shopCategory', title: '商家品类'}
-                ,{field:'shopAddress', title: '商家地址'}
-                ,{field:'shopTel', title: '商家电话'}
-                ,{field:'shopTime', title: '营业时间',sort: true}
-                ,{field:'aptitudeId', title: '商家资质ID'}
-                ,{field:'addTime', title: '创建时间',sort:true}
+                ,{field:'userId' , title: 'id', sort: true}
+                ,{field:'userName' , title: '用户名称'}
+                ,{field:'userGender', title: '性别'}
+                ,{field:'userBirthday' , title: '生日',}
+                ,{field:'userLastLoginTime', title: '最近一次登录时间'}
+                ,{field:'userLastLoginIp', title: '最近一次登录IP地址'}
+                ,{field:'userLevel', title: '用户类别'}
+                ,{field:'userNickname', title: '用户昵称'}
+                ,{field:'userMobile', title: '用户手机号码',sort: true}
+                ,{field:'userAvatar', title: '用户头像图片'}
             ]]
             ,page: true
             ,limits : [5,10]

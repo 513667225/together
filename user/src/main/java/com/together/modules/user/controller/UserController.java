@@ -2,8 +2,8 @@ package com.together.modules.user.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
 import com.together.modules.user.entity.UserEntity;
@@ -12,6 +12,7 @@ import com.together.modules.user.utli.ResponseUtli;
 import com.together.modules.user.utli.ValidateUtli;
 import com.together.util.Map2JavaBeanUtil;
 import com.together.util.P;
+import com.together.util.R;
 import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -40,14 +41,18 @@ public class UserController {
     public R getGoodsPage(@Pmap P p) throws Exception {
         Integer page = p.getInt("page");
         Integer limit = p.getInt("limit");
-        Page page1  = new Page(page, limit);
-        page1 = userService.page(page1, Wrappers.query(p.thisToEntity(UserEntity.class)));
-        return R.ok(page1);
+        p.initPageArg();
+        p.remove("page");
+        p.remove("limit");
+        p.remove("rowIndex");
+        Page<UserEntity> objectPage = new Page<>(1, 10);
+        Page<UserEntity> pageObject=userService.page(objectPage,new QueryWrapper<UserEntity>().allEq(p));
+        return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
 
     @GetMapping("/getUserList")
     public R getUserList(){
-        return R.ok(userService.list());
+        return R.success("success",userService.list());
     }
 
     /**
@@ -57,7 +62,7 @@ public class UserController {
      */
     @GetMapping("/getUserByName")
     public R getUserByName(@Pmap P p){
-        return R.ok(userService.getUserByName(p));
+        return R.success("success",userService.getUserByName(p));
     }
 
     /**
@@ -70,11 +75,13 @@ public class UserController {
         try {
             ValidateUtli.validateParams(p,"code","userName","avatarUrl");
             UserEntity userEntity = userService.getUserLogin(p);
-            return R.ok(ResponseUtli.StringToMap("userId",userEntity.getUserId())).setCode(200);
+            R r=R.success("success",ResponseUtli.StringToMap("userId",userEntity.getUserId()));
+            r.put("code",200);
+            return r;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return R.failed("登录失败").setCode(500).setData(ResponseUtli.NullToMap());
+        return R.error("登录失败").data(ResponseUtli.NullToMap());
     }
 
 
@@ -88,7 +95,9 @@ public class UserController {
     @PostMapping("/zhifu")
     public R zhifu(@Pmap P p){
         JSONObject jsonObject = userService.payGroupOrder(p);
-        return R.ok(jsonObject).setCode(200);
+        R r=R.success("success",jsonObject);
+        r.put("code",200);
+        return r;
     }
 
     /**
@@ -102,7 +111,9 @@ public class UserController {
     public R getGroupUserState(@Pmap P p) throws Exception {
         ValidateUtli.validateParams(p,"id");
         Map<String, Object> groupUserState = userService.getGroupUserState(p);
-        return R.ok(groupUserState).setCode(200);
+        R r=R.success("success",groupUserState);
+        r.put("code",200);
+        return r;
     }
 
 
@@ -115,7 +126,7 @@ public class UserController {
      */
     @PutMapping
     public R updateById(@RequestBody UserEntity userEntity){
-        return R.ok(userService.updateById(userEntity));
+        return R.success("success",userService.updateById(userEntity));
     }
 
 }
