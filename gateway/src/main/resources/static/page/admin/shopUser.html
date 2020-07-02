@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>管理员用户</title>
+    <title>普通用户</title>
     <link rel="stylesheet" href="/js/layui/css/layui.css">
 
 </head>
@@ -14,14 +14,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">用户名：</label>
             <div class="layui-input-inline">
-                <input type="text" name="adminName" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
-            </div>
-
-            <label class="layui-form-label">用户：</label>
-            <div class="layui-input-inline">
-                <select name="shopCategory" id="shopCategory">
-                    <option value="">请选择</option>
-                </select>
+                <input type="text" name="shopuserName" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
@@ -31,7 +24,7 @@
         </div>
     </div>
 </form>
-<table class="layui-table" lay-even="" lay-skin="nob" id="adminTable"></table>
+<table class="layui-table" lay-even="" lay-skin="nob" id="shopUserTable"></table>
 <script src="/js/layui/layui.all.js"></script>
 <script src="/js/jquery-1.7.2.min.js"></script>
 <script>
@@ -40,8 +33,8 @@
         var table =  layui.table;
         var form = layui.form;
         table.render({
-            elem: '#adminTable'
-            ,url:'/admin/getAdminPage'
+            elem: '#shopUserTable'
+            ,url:'/shopUser/getShopUserPage'
             ,where:{
 
             }
@@ -49,11 +42,9 @@
             ,cellMinWidth: 80
             ,cols: [[
                 {type:'checkbox'}
-                ,{field:'adminId' , title: 'id', sort: true}
-                ,{field:'adminNikename' , title: '管理员名称'}
-                ,{field:'adminName', title: '管理员登录账号'}
-                ,{field:'adminLevel' , title: '管理员级别',}
-                ,{field:'addTime', title: '创建时间'
+                ,{field:'shopuserId' , title: 'id', sort: true}
+                ,{field:'shopuserName', title: '账号'}
+                ,{field:'addTime' , title: '创建时间'
                     ,templet: function (d) {
                         return createTime(d.addTime);
                     }
@@ -85,31 +76,10 @@
                 //每页数据量的参数名，默认：limit
                 , limitName: 'limit'
             },
-            id:'adminList'
+            id:'shopUserList'
 
         });
     })
-
-    /**
-     * 获取商品类别
-     */
-    function getShopCategory(){
-        $.ajax({
-            url:"/category/getCategoryList"
-            ,method: 'get'
-            ,success:function(res){
-                if(res.msg){
-                    for(var i =0;i<res.data.length;i++){
-                        $("#shopCategory").append("<option value=\""+res.data[i].categoryId+"\">"+res.data[i].categoryName+"</option>");
-                    }
-                    //重新渲染
-                    layui.form.render("select");
-                }else{
-                    layer.msg(res.message);
-                }
-            }
-        });
-    }
 
     function createTime(v) {
         var date = new Date(v);
@@ -125,6 +95,7 @@
         var str = y + "-" + m + "-" + d + " " + h + ":" + M;
         return str;
     }
+
 
 </script>
 </body>

@@ -51,8 +51,16 @@
                 {type:'checkbox'}
                 ,{field:'userId' , title: 'id', sort: true}
                 ,{field:'userGender', title: '性别'}
-                ,{field:'userBirthday' , title: '生日',type:""}
-                ,{field:'userLastLoginTime', title: '最近一次登录时间'}
+                ,{field:'userBirthday' , title: '生日'
+                    ,templet: function (d) {
+                        return createTime(d.userBirthday);
+                    }
+                }
+                ,{field:'userLastLoginTime', title: '最近一次登录时间'
+                    ,templet: function (d) {
+                        return createTime(d.userLastLoginTime);
+                    }
+                }
                 ,{field:'userLastLoginIp', title: '最近一次登录IP地址'}
                 ,{field:'userLevel', title: '用户类别'}
                 ,{field:'userNickname', title: '用户昵称'}
@@ -88,33 +96,23 @@
             id:'shopList'
 
         });
-        form.on("button(query_btn)", function(data){
-            console.log(data);
-        });
-        //获取商品类别
-        getShopCategory();
     })
 
-    /**
-     * 获取商品类别
-     */
-    function getShopCategory(){
-        $.ajax({
-            url:"/category/getCategoryList"
-            ,method: 'get'
-            ,success:function(res){
-                if(res.msg){
-                    for(var i =0;i<res.data.length;i++){
-                        $("#shopCategory").append("<option value=\""+res.data[i].categoryId+"\">"+res.data[i].categoryName+"</option>");
-                    }
-                    //重新渲染
-                    layui.form.render("select");
-                }else{
-                    layer.msg(res.message);
-                }
-            }
-        });
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+        return str;
     }
+
 
 </script>
 </body>
