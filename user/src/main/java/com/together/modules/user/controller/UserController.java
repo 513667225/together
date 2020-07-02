@@ -31,7 +31,7 @@ public class UserController {
     private IUserService userService;
 
     @GetMapping("/getUserPage")
-    public R getGoodsPage(@Pmap P p) throws Exception {
+    public R getUserPage(@Pmap P p) throws Exception {
         Integer page = p.getInt("page");
         Integer limit = p.getInt("limit");
         Page page1  = new Page(page, limit);
