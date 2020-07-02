@@ -89,6 +89,16 @@ public class UserEntity implements Serializable {
      */
     private Date addTime;
 
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     /**
      * 更新时间
      */
@@ -233,6 +243,8 @@ public class UserEntity implements Serializable {
             ", userReferrer=" + userReferrer +
             ", addTime=" + addTime +
             ", updateTime=" + updateTime +
+                ", userName=" + userName +
+
         "}";
     }
 }
