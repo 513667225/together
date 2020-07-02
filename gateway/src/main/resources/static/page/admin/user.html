@@ -51,9 +51,7 @@
                 {type:'checkbox'}
                 ,{field:'userId' , title: 'id', sort: true}
                 ,{field:'userGender', title: '性别'}
-                ,{field:'userBirthday' , title: '生日',templet: function (d) {
-                        return createTime(d.add_time);
-                    }}
+                ,{field:'userBirthday' , title: '生日',type:""}
                 ,{field:'userLastLoginTime', title: '最近一次登录时间'}
                 ,{field:'userLastLoginIp', title: '最近一次登录IP地址'}
                 ,{field:'userLevel', title: '用户类别'}
@@ -116,22 +114,6 @@
                 }
             }
         });
-    }
-
-    /*时间方法*/
-    function createTime(v) {
-        var date = new Date(v);
-        var y = date.getFullYear();
-        var m = date.getMonth() + 1;
-        m = m < 10 ? '0' + m : m;
-        var d = date.getDate();
-        d = d < 10 ? ("0" + d) : d;
-        var h = date.getHours();
-        h = h < 10 ? ("0" + h) : h;
-        var M = date.getMinutes();
-        M = M < 10 ? ("0" + M) : M;
-        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
-        return str;
     }
 
 </script>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<blockquote class="layui-elem-quote layui-text">
+    这是订单的查看页面，目前来讲不提供修改，后面可以根据需求来确定是否开发修改
+</blockquote>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>订单基本信息展示</legend>
+</fieldset>
+
+<form class="layui-form" action="" lay-filter="order">
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单编号</label>
+        <div class="layui-input-block">
+            <input type="text" readonly="readonly" id="shop_id" name="shop_id" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单状态</label>
+        <div class="layui-input-block">
+            <input type="text" name="order_status" id="order_status" readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">售后状态</label>
+        <div class="layui-input-block">
+            <input type="text" readonly="readonly" id="aftersale_status" name="aftersale_status" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">收货人名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="order_consignee"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">收货人手机号</label>
+        <div class="layui-input-block">
+            <input type="text" readonly="readonly" id="order_tel" name="order_tel" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">收货具体地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="order_address"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单留言</label>
+        <div class="layui-input-block">
+            <input type="text" readonly="readonly" id="order_message" name="order_message" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品总费用</label>
+        <div class="layui-input-block">
+            <input type="text" name="goods_price"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">配送费用</label>
+        <div class="layui-input-block">
+            <input type="text" name="freight_price"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">拼豆减免费用</label>
+        <div class="layui-input-block">
+            <input type="text" name="pindou_price"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">实付费用</label>
+        <div class="layui-input-block">
+            <input type="text" name="actual_price"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信付款编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="pay_id"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信付款时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="pay_time"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">发货编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="ship_sn"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">发货开始时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="ship_time"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户确认收货时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="confirm_time"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单关闭时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="end_time"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">创建时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="add_time"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+</form>
+
+<script src="/js/layui/layui.all.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+
+    var orderBasicData=parent.window.data;
+
+    layui.use('table', function () {
+        var $ = layui.jquery;
+        var table = layui.table;
+        table.render({
+            elem: '#details_table',
+            url: '/orders/getOrderGoods?order_id='+orderBasicData.order_id,
+            method: 'get',
+            cols: [[
+                {type: 'checkbox'},
+                {field: 'goods_name', title: '商品名字'},
+                {field: 'goods_price', title: '商品单价'},
+                {field: 'order_sn', title: '订单编号'},
+                {field: 'shop_name', title: '店铺名字'},
+                {field: 'shop_address', title: '店铺地址'}
+            ]],
+        });
+    });
+
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+
+        //表单赋值
+        function init(){
+
+            form.val('order', {
+                "order_address": orderBasicData.order_address // "name": "value"
+                ,"order_message": orderBasicData.order_message
+                ,"order_sn": orderBasicData.order_sn
+                ,"order_status": orderBasicData.order_status //复选框选中状态
+                ,"goods_price": orderBasicData.goods_price //开关状态
+                ,"freight_price": orderBasicData.freight_price
+                ,"pindou_price": orderBasicData.pindou_price
+                ,"order_price":orderBasicData.order_price
+                ,"actual_price":orderBasicData.actual_price
+                ,"user_mobile":orderBasicData.user_mobile
+                ,"order_consignee":orderBasicData.order_consignee
+            });
+        }
+
+        init();
+
+
+        //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function(){
+            var data = form.val('example');
+            alert(JSON.stringify(data));
+        });
+
+    });
+</script>
+
+</body>
+</html>
