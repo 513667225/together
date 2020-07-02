@@ -44,37 +44,37 @@
             method: 'get',
             cols: [[
                 {type: 'checkbox'},
-                {field: 'goods_id', width: 100, title: 'ID'},
-                {field: 'goods_sn', width: 100, title: '商品编号'},
-                {field: 'goods_name', title: '商品名称', sort: true},
-                {field: 'category_name', width: 110, title: '商品分类', sort: true, align: 'center'},
-                {field: 'goods_gallery', title: '商品宣传图片列表', width: 150, toolbar: '#checkGoodsPicDetail', align: 'center'},
-                {field: 'goods_price', width: 110, title: '商品价格(元)', align: 'center'},
-                {field: 'goods_brief', title: '商品简介'},
-                {field: 'is_on_sale', width: 100, title: '是否上架', align: 'center'},
+                {field: 'goodsId', width: 100, title: 'ID'},
+                {field: 'goodsSn', width: 100, title: '商品编号'},
+                {field: 'goodsName', title: '商品名称', sort: true},
+                {field: 'categoryName', width: 110, title: '商品分类', sort: true, align: 'center'},
+                {field: 'goodsGallery', title: '商品宣传图片列表', width: 150, toolbar: '#checkGoodsPicDetail', align: 'center'},
+                {field: 'goodsPrice', width: 110, title: '商品价格(元)', align: 'center'},
+                {field: 'goodsBrief', title: '商品简介'},
+                {field: 'isOnSale', width: 100, title: '是否上架', align: 'center'},
                 {
-                    field: 'pic_url',
+                    field: 'picUrl',
                     width: 165,
                     title: '商品页面商品图片',
                     align: 'center',
                     templet: function (data) {
-                        var url = data.pic_url;
+                        var url = data.picUrl;
                         return "<div onclick='showImg(\"" + url + "\")'><img src='" + url + "' style='height:35px;width=35px'></div>";
                     }
                 },
-                {field: 'goods_unit', width: 100, title: '商品单位', align: 'center'},
-                {field: 'goods_detail', title: '商品详情页', width: 100, toolbar: '#checkGoodsDetail', align: 'center'},
+                {field: 'goodsUnit', width: 100, title: '商品单位', align: 'center'},
+                {field: 'goodsDetail', title: '商品详情页', width: 100, toolbar: '#checkGoodsDetail', align: 'center'},
                 // {field: 'spokesman_id', width: 135, title: '代言人ID'},预留字段---主播
                 {
-                    field: 'add_time', width: 150, title: '创建时间',
+                    field: 'addTime', width: 150, title: '创建时间',
                     templet: function (d) {
-                        return createTime(d.add_time);
+                        return createTime(d.addTime);
                     }
                 },
                 {
-                    field: 'update_time', width: 150, title: '更新时间',
+                    field: 'updateTime', width: 150, title: '更新时间',
                     templet: function (d) {
-                        return createTime(d.update_time);
+                        return createTime(d.updateTime);
                     }
                 },
                 {fixed: 'right', title: '操作', toolbar: '#goodsBar', align: 'center'}
@@ -106,7 +106,7 @@
                         url: '/goods/delGoods',
                         type: 'get',
                         dataType: 'json',
-                        data: {'goods_id': data.goods_id},
+                        data: {'goods_id': data.goodsId},
                         success: function (suc) {
                             if (suc.code == 0) {
                                 obj.del();
@@ -127,11 +127,11 @@
                     area: ['auto', '800px'],
                     // maxmin: true,
                     shadeClose: true,
-                    content: obj.data.goods_detail,
+                    content: obj.data.goodsDetail,
                 });
             } else if (obj.event === 'checkGoodsPicDetail') {
-                console.log(data.goods_gallery);
-                var jsonResult  = $.parseJSON(data.goods_gallery);
+                console.log(data.goodsGallery);
+                var jsonResult  = $.parseJSON(data.goodsGallery);
                 console.log(jsonResult);
                 layer.photos({
                     photos: jsonResult,

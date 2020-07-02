@@ -3,7 +3,6 @@
 <mapper namespace="com.together.modules.goods.mapper.GoodsMapper">
 
     <select id="queryGoodsByShopId" resultType="java.util.Map" parameterType="java.util.Map">
-        SELECT * FROM goods a left join category b on a.category_id=b.category_id where a.shop_id=#{shopId} limit #{rowIndex},#{limit}
         SELECT a.goods_id goodsId, a.goods_sn goodsSn,a.goods_name goodsName,b.category_id categoryId,
         a.shop_id shopId,a.goods_gallery goodsGallery,a.goods_price goodsPrice,a.goods_brief goodsBrief,a.is_on_sale isOnSale,
         a.sort_order sortOrder,a.pic_url picUrl,a.goods_unit goodsUnit,a.goods_detail goodsDetail,a.goods_level goodsLevel,
