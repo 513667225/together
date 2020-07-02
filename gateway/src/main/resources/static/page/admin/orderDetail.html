@@ -145,24 +145,6 @@
 
     var orderBasicData=parent.window.data;
 
-    layui.use('table', function () {
-        var $ = layui.jquery;
-        var table = layui.table;
-        table.render({
-            elem: '#details_table',
-            url: '/orders/getOrderGoods?order_id='+orderBasicData.order_id,
-            method: 'get',
-            cols: [[
-                {type: 'checkbox'},
-                {field: 'goods_name', title: '商品名字'},
-                {field: 'goods_price', title: '商品单价'},
-                {field: 'order_sn', title: '订单编号'},
-                {field: 'shop_name', title: '店铺名字'},
-                {field: 'shop_address', title: '店铺地址'}
-            ]],
-        });
-    });
-
     layui.use(['form', 'layedit', 'laydate'], function(){
         var form = layui.form
             ,layer = layui.layer

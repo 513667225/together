@@ -26,7 +26,7 @@
         </div>
         <div class="layui-inline">
             <div class="layui-input-inline">
-                <button id="query_btn" data-type="reload" class="layui-btn layui-btn-warm">搜索</button>
+                <button id="query_btn" class="layui-btn layui-btn-warm">搜索</button>
             </div>
         </div>
     </div>
@@ -140,27 +140,20 @@
         });
         //获取商品类别
         //getShopCategory();
-        var $ = layui.$, active = {
-            reload: function(){
-                var shopName = $('#shopName');
-                var shopCategory = $('shopCategory');
-                debugger;
-                //执行重载
-                table.reload('shopList', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        shopName: shopName.val(),
-                        shopCategory:shopCategory.val()
-                    }
-                }, 'data');
-            }
-        };
-
-        $('.div_table .layui-btn').on('click', function(){
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
+        // 执行搜索，表格重载
+        $('#query_btn').on('click', function () {
+            // 搜索条件
+            var shopName = $('#shopName').val();
+            /*var send_data = $('#send_data').val();*/
+            table.reload('admin_shopTable', {
+                method: 'get'
+                , where: {
+                    shopName: shopName,
+                }
+                , page: {
+                    curr: 1
+                }
+            });
         });
     })
 
