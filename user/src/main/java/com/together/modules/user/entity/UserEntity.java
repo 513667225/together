@@ -1,7 +1,7 @@
 package com.together.modules.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -19,13 +19,9 @@ public class UserEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "user_id", type = IdType.AUTO)
+    @TableId(value = "user_id")
     private Integer userId;
 
-    /**
-     * 用户名称
-     */
-    private String userName;
 
     /**
      * 用户密码
@@ -77,10 +73,6 @@ public class UserEntity implements Serializable {
      */
     private String weixinOpenid;
 
-    /**
-     * 微信登录会话KEY
-     */
-    private String sessionKey;
 
     /**
      * 0 可用;1 禁用;2 注销
@@ -108,14 +100,6 @@ public class UserEntity implements Serializable {
 
     public UserEntity setUserId(Integer userId) {
         this.userId = userId;
-        return this;
-    }
-    public String getUserName() {
-        return userName;
-    }
-
-    public UserEntity setUserName(String userName) {
-        this.userName = userName;
         return this;
     }
     public String getUserPassword() {
@@ -198,14 +182,6 @@ public class UserEntity implements Serializable {
         this.weixinOpenid = weixinOpenid;
         return this;
     }
-    public String getSessionKey() {
-        return sessionKey;
-    }
-
-    public UserEntity setSessionKey(String sessionKey) {
-        this.sessionKey = sessionKey;
-        return this;
-    }
     public Integer getUserStatus() {
         return userStatus;
     }
@@ -243,7 +219,6 @@ public class UserEntity implements Serializable {
     public String toString() {
         return "UserEntity{" +
             "userId=" + userId +
-            ", userName=" + userName +
             ", userPassword=" + userPassword +
             ", userGender=" + userGender +
             ", userBirthday=" + userBirthday +
@@ -254,7 +229,6 @@ public class UserEntity implements Serializable {
             ", userMobile=" + userMobile +
             ", userAvatar=" + userAvatar +
             ", weixinOpenid=" + weixinOpenid +
-            ", sessionKey=" + sessionKey +
             ", userStatus=" + userStatus +
             ", userReferrer=" + userReferrer +
             ", addTime=" + addTime +

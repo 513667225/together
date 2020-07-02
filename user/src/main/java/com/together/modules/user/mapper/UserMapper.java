@@ -1,5 +1,6 @@
 package com.together.modules.user.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.together.modules.user.entity.UserEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface UserMapper extends BaseMapper<UserEntity> {
 
+    UserEntity selectOne(QueryWrapper<Object> eq);
 }

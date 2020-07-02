@@ -1,8 +1,11 @@
 package com.together.modules.user.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.together.modules.user.entity.UserEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.together.util.P;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -21,6 +24,7 @@ public interface IUserService extends IService<UserEntity> {
      * @return
      */
     UserEntity getUserByName(P p);
-
-
+    UserEntity getUserLogin(Map<String,Object> param);
+    JSONObject payGroupOrder(Map<String,Object> param);
+    Map<String, Object> getGroupUserState(P p);
 }
