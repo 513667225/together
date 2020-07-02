@@ -7,7 +7,7 @@
         a.shop_id shopId,a.goods_gallery goodsGallery,a.goods_price goodsPrice,a.goods_brief goodsBrief,a.is_on_sale isOnSale,
         a.sort_order sortOrder,a.pic_url picUrl,a.goods_unit goodsUnit,a.goods_detail goodsDetail,a.goods_level goodsLevel,
         a.spokesman_id spokesmanId,a.add_time addTime,a.update_time updateTime,b.category_name categoryName,b.category_slogan categorySlogan
-        FROM goods a left join category b on a.category_id=b.category_id where a.shop_id=1 limit 0,1
+        FROM goods a left join category b on a.category_id=b.category_id where a.shop_id=#{shopId} limit #{rowIndex},#{limit}
     </select>
 
     <select id="queryGoodsByShopIdCount" resultType="int" parameterType="java.util.Map">
