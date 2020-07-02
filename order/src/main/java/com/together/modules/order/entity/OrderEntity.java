@@ -29,9 +29,9 @@ public class OrderEntity implements Serializable {
     private Integer orderId;
 
     /**
-     * 用户表的用户ID
+     * 店铺表的店铺ID
      */
-    private Integer userId;
+    private Integer shopId;
 
     /**
      * 订单编号
@@ -148,6 +148,13 @@ public class OrderEntity implements Serializable {
     @TableField(exist = false)
     List<GoodsEntity> listGoods;
 
+    public Integer getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Integer shopId) {
+        this.shopId = shopId;
+    }
 
     public List<GoodsEntity> getListGoods() {
         return listGoods;
@@ -165,14 +172,7 @@ public class OrderEntity implements Serializable {
         this.orderId = orderId;
         return this;
     }
-    public Integer getUserId() {
-        return userId;
-    }
 
-    public OrderEntity setUserId(Integer userId) {
-        this.userId = userId;
-        return this;
-    }
     public String getOrderSn() {
         return orderSn;
     }
@@ -354,7 +354,7 @@ public class OrderEntity implements Serializable {
     public String toString() {
         return "OrderEntity{" +
             "orderId=" + orderId +
-            ", userId=" + userId +
+            ", shopId=" + shopId +
             ", orderSn=" + orderSn +
             ", orderStatus=" + orderStatus +
             ", aftersaleStatus=" + aftersaleStatus +
