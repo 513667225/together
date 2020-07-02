@@ -36,6 +36,11 @@ public class ShopController {
         return R.success("xxx",shopPage.getRecords()).set("count",shopPage.getTotal());
     }
 
+    @GetMapping("/getAllShop")
+    public R getAllShop(@Pmap P p){
+        p.batchToInt("page","limit");
+        return shopService.queryAllShop(p);
+    }
 
 
     /**

@@ -10,10 +10,13 @@ import com.together.modules.shop.mapper.ShopMapper;
 import com.together.modules.shop.service.IShopService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.util.P;
+import com.together.util.R;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,6 +28,20 @@ import java.util.List;
  */
 @Service
 public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> implements IShopService {
+
+    @Autowired
+    ShopMapper shopMapper;
+
+    /**
+     * 查询所有店铺信息
+     * @param map
+     * @return
+     */
+    @Override
+    public R queryAllShop(Map<String, Object> map) {
+        int shopCount = shopMapper.queryAllShopCount(map);
+        return R.success().data(shopMapper.queryAllShop(map)).set("total",shopCount);
+    }
 
     @Override
     public IPage getShopPage(P p) {

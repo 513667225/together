@@ -3,27 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>layout 后台大布局 - Layui</title>
+    <title>爱尚拼商家后台管理系统</title>
     <link rel="stylesheet" href="/js/layui/css/layui.css">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">爱尚拼的商家后台管理系统</div>
-        <!-- 头部区域（可配合layui已有的水平导航） -->
-        <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
-                </dl>
-            </li>
-        </ul>
+        <div class="layui-logo">爱尚拼商家后台管理系统</div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
@@ -53,10 +39,9 @@
             <ul class="layui-tab-title"></ul>
             <div class="layui-tab-content"></div>
         </div>
-    </div>
+    </div>ss
 
     <div class="layui-footer">
-        <!-- 底部固定区域 -->
         © layui.com - 底部固定区域
     </div>
 </div>
@@ -92,6 +77,17 @@
                 element.render("nav");
             }
         });
+
+        //首页选项卡
+        var tabheight = layui.jquery(window).height() - 95;
+        contentTxt = '<iframe src="/page/shop/index.html" scrolling="no" width="100%" height="' + (tabheight) + 'PX"></iframe>';
+        layui.element.tabAdd('tabDemo', {
+            title: '首页',
+            content: contentTxt,
+            id: '首页',
+        });
+
+        layui.element.tabChange('tabDemo', '首页');
     });
 
     /*触发动态选项卡事件*/
@@ -112,7 +108,6 @@
             })
             //切换刷新
             layui.element.tabChange('tabDemo', name)
-            /*layer.msg('新增-' + name)*/
         }
     }
 
