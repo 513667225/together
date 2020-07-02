@@ -55,6 +55,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("orderId",orderEntity.getOrderId());
         return baseMapper.update(orderEntity,queryWrapper);
+
     }
 
     @Override
