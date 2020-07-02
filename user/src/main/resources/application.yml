@@ -9,6 +9,6 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.0.109:8848
+        server-addr: 192.168.0.111:8848
   application:
     name: SERVER-USER #此实例注册到eureka服务端的name
