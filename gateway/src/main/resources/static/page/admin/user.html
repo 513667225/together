@@ -2,92 +2,122 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>所有用户</title>
+    <title>普通用户</title>
     <link rel="stylesheet" href="/js/layui/css/layui.css">
 
 </head>
 <body>
 <br>
 
-<!--<div class="layui-layout layui-layout-admin">-->
-<!--    <div class="layui-header" style="background-color: white;line-height: 6">-->
-<!--        &nbsp;<input type="text" placeholder="请输入查询的内容" style="height: 25px;width: 230px;">-->
-<!--        <button class="layui-btn layui-btn-sm layui-btn-warm"style="border-radius: 20px" onclick="">查询</button>-->
-<!--        <button class="layui-btn layui-btn-sm layui-btn-warm"style="border-radius: 20px" onclick="">增加</button><br>-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <table class="layui-table" lay-filter="table" id="usertable" style="text-align: center;width: 100%">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th>id</th>-->
-<!--                <th>名称</th>-->
-<!--                <th>账号</th>-->
-<!--                <th>密码</th>-->
-<!--                <th>电话</th>-->
-<!--                <th>vip编号</th>-->
-<!--                <th>佣金</th>-->
-<!--                <th>奖金</th>-->
-<!--                <th>积分</th>-->
-<!--                <th>操作</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr>-->
-<!--                <td style="width: 8%">贤心</td>-->
-<!--                <td style="width: 10%">贤心</td>-->
-<!--                <td style="width: 10%">贤心</td>-->
-<!--                <td style="width: 10%">贤心</td>-->
-<!--                <td style="width: 10%">贤心</td>-->
-<!--                <td style="width: 10%">贤心</td>-->
-<!--                <td style="width: 10%">贤心</td>-->
-<!--                <td style="width: 10%">贤心</td>-->
-<!--                <td style="width: 10%">贤心</td>-->
-<!--                <td style="width: 12%">-->
-<!--                    <button class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" style="border-radius: 8px">删除</button>-->
-<!--                    <button class="layui-btn layui-btn-xs" lay-event="edit" style="border-radius: 8px">编辑</i></button>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--    </div>-->
-<!--    <table class="layui-hide" id="usertable"></table>-->
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">用户名：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="productName" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
+            </div>
 
-<!--</div>-->
-
-<table class="layui-hide" id="demo"></table>
+            <label class="layui-form-label">用户：</label>
+            <div class="layui-input-inline">
+                <select name="shopCategory" id="shopCategory">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <button id="query_btn" class="layui-btn layui-btn-warm">搜索</button>
+            </div>
+        </div>
+    </div>
+</form>
+<table class="layui-table" lay-even="" lay-skin="nob" id="userTable"></table>
 <script src="/js/layui/layui.all.js"></script>
+<script src="/js/jquery-1.7.2.min.js"></script>
 <script>
-    layui.use('table',function () {
+    layui.use(['table','form'],function () {
         var $ = layui.jquery;
-       var table =  layui.table;
+        var table =  layui.table;
+        var form = layui.form;
+        table.render({
+            elem: '#userTable'
+            ,url:'/shop/getShopPage'
+            ,where:{
+                "userId":1
+            }
+            ,method: 'get'
+            ,cellMinWidth: 80
+            ,cols: [[
+                {type:'checkbox'}
+                ,{field:'shopId' , title: 'id', sort: true}
+                ,{field:'shopName' , title: '商家名称'}
+                ,{field:'shopSlogan', title: '公告语'}
+                ,{field:'shopDetail', title: '详情介绍'}
+                ,{field:'shopIcon' , title: '商家头像',}
+                ,{field:'shopPic', title: '商家店面图片'}
+                ,{field:'shopCategory', title: '商家品类'}
+                ,{field:'shopAddress', title: '商家地址'}
+                ,{field:'shopTel', title: '商家电话'}
+                ,{field:'shopTime', title: '营业时间',sort: true}
+                ,{field:'aptitudeId', title: '商家资质ID'}
+                ,{field:'addTime', title: '创建时间',sort:true}
+            ]]
+            ,page: true
+            ,limits : [5,10]
+            ,limit:10
+            ,count:1000
+            /*设定初始在第几页*/
+            ,curr: 10
+            ,loading:true
+            //将原始数据解析成 table 组件所规定的数据
+            ,parseData: function (res) {
+                return {
+                    //解析接口状态
+                    "code": res.code,
+                    //解析提示文本
+                    "msg": res.msg,
+                    //解析数据长度
+                    "count": res.count,
+                    //解析数据列表
+                    "data": res.data
+                };
+            },
+            request: {
+                // 页码的参数名称，默认：page
+                pageName: 'page'
+                //每页数据量的参数名，默认：limit
+                , limitName: 'limit'
+            },
+            id:'shopList'
 
-            $.ajax({
-                url:'/user/user-entity/getUserPage',
-                type:'get',
-                dataType:'json',
-                success:function (data) {
-                    debugger;
-                    console.log(data);
-                    table.render({
-                        elem:'#demo',
-                        cols: [[ //标题栏
-                            {field: 'user_id', title: 'ID', width: 80, sort: true}
-                            ,{field: 'user_name', title: '用户名', width: 120}
-                            ,{field: 'user_account', title: '邮箱', minWidth: 150}
-                            ,{field: 'user_password', title: '签名', minWidth: 160}
-                            ,{field: 'user_phonenum', title: '性别', width: 80}
-                            ,{field: 'vip_id', title: '城市', width: 100}
-                            ,{field: 'user_principal', title: '积分', width: 80, sort: true}
-                            ,{field: 'user_bonus', title: '城市', width: 100}
-                            ,{field: 'user_integral', title: '积分', width: 80, sort: true}
-                        ]]
-                        ,page: true   //开启分页
-                        ,limit:10   //默认十条数据一页
-                        ,limits:[10,20,30,50]  //数据分页条
-                    });
-                }
-            })
+        });
+        form.on("button(query_btn)", function(data){
+            console.log(data);
+        });
+        //获取商品类别
+        getShopCategory();
     })
+
+    /**
+     * 获取商品类别
+     */
+    function getShopCategory(){
+        $.ajax({
+            url:"/category/getCategoryList"
+            ,method: 'get'
+            ,success:function(res){
+                if(res.msg){
+                    for(var i =0;i<res.data.length;i++){
+                        $("#shopCategory").append("<option value=\""+res.data[i].categoryId+"\">"+res.data[i].categoryName+"</option>");
+                    }
+                    //重新渲染
+                    layui.form.render("select");
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+        });
+    }
 
 </script>
 </body>

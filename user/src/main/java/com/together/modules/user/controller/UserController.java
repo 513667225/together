@@ -1,14 +1,15 @@
 package com.together.modules.user.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
 import com.together.modules.user.entity.UserEntity;
 import com.together.modules.user.service.IUserService;
 import com.together.util.Map2JavaBeanUtil;
 import com.together.util.P;
+import com.together.util.R;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,19 +35,23 @@ public class UserController {
     public R getUserPage(@Pmap P p) throws Exception {
         Integer page = p.getInt("page");
         Integer limit = p.getInt("limit");
-        Page page1  = new Page(page, limit);
-        page1 = userService.page(page1, Wrappers.query(p.thisToEntity(UserEntity.class)));
-        return R.ok(page1);
+        p.initPageArg();
+        p.remove("page");
+        p.remove("limit");
+        p.remove("rowIndex");
+        Page<UserEntity> objectPage = new Page<>(1, 10);
+        Page<UserEntity> pageObject = userService.page(objectPage,new QueryWrapper<UserEntity>().allEq(p));
+        return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
 
     @GetMapping("/getUserList")
     public R getUserList(){
-        return R.ok(userService.list());
+        return R.success("success",userService.list());
     }
 
     @GetMapping("/getUserById")
     public R getUserById(Integer userId){
-        return R.ok(userService.getById(userId));
+        return R.success("success",userService.getById(userId));
     }
 
     /**
@@ -56,7 +61,7 @@ public class UserController {
      */
     @GetMapping("/getUserByName")
     public R getUserByName(@Pmap P p){
-        return R.ok(userService.getUserByName(p));
+        return R.success("success",userService.getUserByName(p));
     }
 
     /**
@@ -66,7 +71,7 @@ public class UserController {
      */
     @PostMapping
     public R save(@RequestBody UserEntity userEntity){
-        return R.ok(userService.save(userEntity));
+        return R.success("success",userService.save(userEntity));
     }
 
     /**
@@ -76,7 +81,7 @@ public class UserController {
      */
     @PutMapping
     public R updateById(@RequestBody UserEntity userEntity){
-        return R.ok(userService.updateById(userEntity));
+        return R.success("success",userService.updateById(userEntity));
     }
 
 }
