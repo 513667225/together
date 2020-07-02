@@ -22,24 +22,13 @@ public interface IOrderService extends IService<OrderEntity> {
 
 
 
-    List<OrderEntity> getOrderPage(P p);
+    R getOrderPage(P p);
 
-    /**
-     * 增加用户ID订单
-     */
-    int insertOrderById(P p);
+    int getOrderPageConut(P p);
 
-    /**
-     * 根据用户ID修改订单信息
-     */
+    R queryOrderGoods(P p);
 
-    int updById(P p);
 
-    /**
-     * 根据订单ID删除订单
-     */
-
-    int delById(P p);
 
 
 

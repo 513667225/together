@@ -33,39 +33,24 @@ public class OrderController {
 
     @Autowired
     private GoodsServiceClient goodsServiceClient;
-    /**
-     * 查询订单信息
-     */
 
-    @Autowired
-    OrderMapper orderMapper;
-
+    //分页查询
     @RequestMapping("getOrderPage")
     public R getOrderPage(@Pmap P p){
+        p.batchToInt("page","limit");
+        return iOrderService.getOrderPage(p);
+    }
 
-        Integer page = p.getInt("page");
-        Integer limit = p.getInt("limit");
-        p.initPageArg();
-        p.remove("page");
-        p.remove("limit");
-        p.remove("rowIndex");
-        Page<OrderEntity> objectPage = new Page<>(1, 10);
-        Page<OrderEntity> pageObject=orderMapper.selectPage(objectPage,new QueryWrapper<OrderEntity>().allEq(p));
-        return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
+
+    @RequestMapping("getOrderGoods")
+    public R getOrderGoods(@Pmap P p){
+        p.batchToInt("order_id");
+        return iOrderService.queryOrderGoods(p);
     }
 
 
 
-    /**
-     * 新增
-     */
-    public R insertOrderById(@Pmap P p){
-        return R.success("success",iOrderService.insertOrderById(p));
-    }
 
-    /**
-     * 修改
-     */
 
 
 
