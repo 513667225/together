@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有商品</title>
+</head>
+<link rel="stylesheet" href="/js/layui/css/layui.css">
+<script src="/js/layui/layui.all.js"></script>
+<!--<script src="/js/layer/layer.js"></script>-->
+<script src="/js/tinymce4.7.5/tinymce.min.js"></script>
+
+<body>
+
+<table class="layui-hide" id="orders_table" lay-skin="line" lay-filter="orders_table">
+
+</table>
+
+<script type="text/html" id="shipBar">
+    <a class="layui-btn layui-btn-xs" lay-event="editShip">上传物流信息</a>
+</script>
+
+<script type="text/html" id="orderDetail">
+    <a class="layui-btn layui-btn-xs" lay-event="orderDetail">查看详情</a>
+</script>
+
+<div>
+
+</div>
+</body>
+<script>
+    var data
+    layui.use('table', function () {
+        var $ = layui.jquery;
+        var table = layui.table;
+        table.render({
+            elem: '#orders_table',
+            url: '/orders/getShopOrders',
+            method: 'get',
+            where:{
+                shop_id:'1',
+            },
+            cols: [[
+                {type: 'checkbox'},
+                {field: 'order_id', width: 80, title: 'id'},
+                {field: 'order_tel', width: 150, title: '会员号码'},
+                {field: 'order_sn', width: 120, title: '订单编号', sort: true},
+                {field: 'order_status', width: 80, title: '状态', sort: true},
+                {field: 'order_consignee', width: 100,title: '收货人'},
+                {field: 'order_address', width: 180, title: '具体地址'},
+                {field: 'order_message', width: 180, title: '用户留言'},
+                {field: 'order_detail', title: '订单详情', width: 120, toolbar: '#orderDetail', align: 'center'},
+                {fixed: 'right', title: '操作', toolbar: '#shipBar', align: 'center'}
+            ]],
+            page: true,
+            limits: [5, 10, 20, 50],
+            limit: 5,
+            loading: true,
+            count: 1000,
+            request: {
+                pageName: 'page', // 页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+        });
+
+        //监听行工具事件
+
+        table.on('tool(orders_table)', function (obj) {
+            data = obj.data;
+            if (obj.event === 'orderDetail') {
+                var orderId =data.order_id;
+                var index = layer.open({
+                    type:2,
+                    title:'查看订单详情',
+                    area : ['1000px' , '560px'],
+                    shadeClose:true,
+                    content: "orderDetail.html?orderId="+orderId
+                });
+            }else if(obj.event === 'editShip'){
+
+            }
+        });
+    })
+
+</script>
+</html>
