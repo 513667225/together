@@ -7,7 +7,6 @@ public class Spell {
 
     private  int userId;
 
-
     private  int goodsId;
 
     private String group;

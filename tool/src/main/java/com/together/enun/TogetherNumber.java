@@ -1,5 +1,10 @@
 package com.together.enun;
 
+
+/**
+ * 拼团次数枚举
+ * @author  Agu
+ */
 public enum TogetherNumber {
 
     ONCE(1), FIVE(5), TEN(10), INFINITI(-1);

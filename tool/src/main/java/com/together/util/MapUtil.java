@@ -2,17 +2,38 @@ package com.together.util;
 
 import java.util.*;
 
+/**
+ * map操作帮助类
+ * @author  Agu
+ */
 public class MapUtil {
 
-
+    /**
+     * 将map里面所有key 生成为sql语句 同时驼峰转下划线
+     * @param map
+     * @return
+     * @throws Exception
+     */
     public  static String mapToSqlUpper2Line(Map map)throws Exception{
         return mapToSql(mapKeySetUpper2Line(map));
     }
 
+    /**
+     * 将map里面所有key 生成为sql语句 同时下划线转驼峰
+     * @param map
+     * @return
+     * @throws Exception
+     */
     public  static String mapToSqlLine2Upper(Map map) throws Exception{
         return mapToSql(mapKeySetLine2Upper(map));
     }
 
+
+    /**
+     * map转化为sql 格式:key=#{key}
+     * @param map
+     * @return
+     */
     public  static String mapToSql(Map map){
         Set<Map.Entry> set = map.entrySet();
         String sql = "";
@@ -25,17 +46,13 @@ public class MapUtil {
         return sql;
     }
 
-    public static void main(String[] args) throws Exception {
-        HashMap<String, String> objectObjectHashMap = new HashMap<>();
-        objectObjectHashMap.put("xx_x","123");
-        objectObjectHashMap.put("xx1","123");
-        objectObjectHashMap.put("xx2","123");
-        System.out.println(mapToSqlLine2Upper(objectObjectHashMap));
-    }
 
-
-
-
+    /**
+     * map里面所有key 驼峰转下划线
+     * @param map
+     * @return
+     * @throws Exception
+     */
     public static Map mapKeySetUpper2Line(Map map) throws Exception {
         Set<Map.Entry> set = map.entrySet();
         Map map1 = new HashMap();
@@ -46,6 +63,12 @@ public class MapUtil {
         return map1;
     }
 
+    /**
+     * map里面所有key 下划线转驼峰
+     * @param map
+     * @return
+     * @throws Exception
+     */
     public static Map mapKeySetLine2Upper(Map map) throws Exception {
         Set<Map.Entry> set = map.entrySet();
         Map map1 = new HashMap();

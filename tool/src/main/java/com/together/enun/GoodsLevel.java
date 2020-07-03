@@ -1,5 +1,9 @@
 package com.together.enun;
 
+/**
+ * 拼团返现档次对应的钱
+ *@author  Agu
+ */
 public enum GoodsLevel {
 
     ONE(1),TOW(2),THREE(3),FOUR(4);

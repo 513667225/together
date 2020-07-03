@@ -1,5 +1,9 @@
 package com.together.parameter;
 
+/**
+ * Mq配置相关参数
+ * @author  Agu
+ */
 public class MqParameter {
 
     public static final String SPELL_QUEUE_NAME = "spellQueue";
