@@ -1,6 +1,8 @@
 package com.together.modules.shopUser.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
 import com.together.modules.shop.service.impl.ShopServiceImpl;
 import com.together.modules.shopUser.entity.ShopUserEntity;
@@ -8,6 +10,7 @@ import com.together.modules.shopUser.service.IShopUserService;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -25,22 +28,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShopUserController {
 
     @Autowired
-    IShopUserService iShopUserService;
+    IShopUserService shopUserService;
 
-    @RequestMapping("/shopUserLogin")
-    public R shopUserLogin(@Pmap P p) throws Exception {
-        ShopUserEntity shopUserEntity = iShopUserService.shopUserLogin(p);
-        if (shopUserEntity!=null){
-            return R.success().data(shopUserEntity);
-        }else{
-            return R.error();
-        }
-    }
-
-    @RequestMapping("/shopUserregister")
-    public R shopUserReRister(@Pmap P p) throws Exception {
-        ShopUserEntity shopUserEntity = iShopUserService.shopUserRegister(p);
-        return R.success().data(shopUserEntity);
+    @GetMapping("/getShopUserPage")
+    public R getShopUserPage(@Pmap P p) throws Exception {
+        Integer page = p.getInt("page");
+        Integer limit = p.getInt("limit");
+        p.initPageArg();
+        Page<ShopUserEntity> objectPage = new Page<>(page,limit);
+        p.remove("page");
+        p.remove("limit");
+        p.remove("rowIndex");
+        Page<ShopUserEntity> pageObject = shopUserService.page(objectPage,new QueryWrapper<ShopUserEntity>().allEq(p));
+        return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
 }
 

@@ -33,7 +33,6 @@
 </form>
 <table class="layui-table" lay-even="" lay-skin="nob" id="adminTable"></table>
 <script src="/js/layui/layui.all.js"></script>
-<script src="/js/jquery-1.7.2.min.js"></script>
 <script>
     layui.use(['table','form'],function () {
         var $ = layui.jquery;
@@ -62,9 +61,6 @@
             ,page: true
             ,limits : [5,10]
             ,limit:10
-            ,count:1000
-            /*设定初始在第几页*/
-            ,curr: 10
             ,loading:true
             //将原始数据解析成 table 组件所规定的数据
             ,parseData: function (res) {
@@ -89,27 +85,6 @@
 
         });
     })
-
-    /**
-     * 获取商品类别
-     */
-    function getShopCategory(){
-        $.ajax({
-            url:"/category/getCategoryList"
-            ,method: 'get'
-            ,success:function(res){
-                if(res.msg){
-                    for(var i =0;i<res.data.length;i++){
-                        $("#shopCategory").append("<option value=\""+res.data[i].categoryId+"\">"+res.data[i].categoryName+"</option>");
-                    }
-                    //重新渲染
-                    layui.form.render("select");
-                }else{
-                    layer.msg(res.message);
-                }
-            }
-        });
-    }
 
     function createTime(v) {
         var date = new Date(v);
