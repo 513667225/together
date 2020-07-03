@@ -39,7 +39,6 @@
 </script>
 
 <script src="/js/layui/layui.all.js"></script>
-<script src="/js/jquery-1.7.2.min.js"></script>
 <script>
     var data
     layui.use(['table','form'],function () {
@@ -115,7 +114,8 @@
                 var shopId = data.shopId;
                 var index = layer.open({
                     type:2,
-                    title:'商品',
+                    title:'店铺' +
+                        '详情',
                     area : ['1000px' , '560px'],
                     shadeClose:true,
                     content: "shopDetail.html?shopId="+shopId

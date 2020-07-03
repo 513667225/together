@@ -11,13 +11,13 @@
 <body>
 <div class="div_table">
     <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">收货人手机号：</label>
+        <div class="layui-inline" style="margin-top: 20px">
+            <label class="layui-form-label" style="width: 150px">收货人手机号：</label>
             <div class="layui-input-inline">
-                <input type="text" name="order_tel" id="order_tel" placeholder="请输入收货人手机号" autocomplete="off" class="layui-input">
+                <input type="text" name="order_tel" style="width: 250px" id="order_tel" placeholder="请输入收货人手机号" autocomplete="off" class="layui-input">
             </div>
         </div>
-        <div class="layui-inline">
+        <div class="layui-inline" style="margin-top: 20px">
             <div class="layui-input-inline">
                 <button id="query_btn" data-type="reload" class="layui-btn layui-btn-warm">搜索</button>
             </div>
@@ -54,20 +54,38 @@
                 {field: 'order_consignee', title: '收货人名称'},
                 {field: 'order_tel', title: '收货人手机号'},
                 {field: 'order_address', title: '收货具体地址'},
-
                 {field: 'order_message', title: '订单留言', sort: true},
                 {field: 'goods_price', title: '商品总费用', sort: true},
                 {field: 'freight_price',title: '配送费用'},
                 {field: 'pindou_price', title: '拼豆减免费用', sort: true},
                 {field: 'actual_price', title: '实付费用', sort: true},
                 {field: 'pay_id',title: '微信付款编号'},
-                {field: 'pay_time', title: '微信付款时间'},
-
+                {field: 'pay_time', title: '微信付款时间'
+                    ,templet: function (d) {
+                        return createTime(d.pay_time);
+                    }
+                },
                 {field: 'ship_sn', title: '发货编号', sort: true},
-                {field: 'ship_time', title: '发货开始时间', sort: true},
-                {field: 'confirm_time',title: '用户确认收货时间'},
-                {field: 'end_time', title: '订单关闭时间'},
-                {field: 'add_time', title: '创建时间'},
+                {field: 'ship_time', title: '发货开始时间', sort: true
+                    ,templet: function (d) {
+                        return createTime(d.ship_time);
+                    }
+                },
+                {field: 'confirm_time',title: '用户确认收货时间'
+                    ,templet: function (d) {
+                        return createTime(d.confirm_time);
+                    }
+                },
+                {field: 'end_time', title: '订单关闭时间'
+                    ,templet: function (d) {
+                        return createTime(d.end_time);
+                    }
+                },
+                {field: 'add_time', title: '创建时间'
+                    ,templet: function (d) {
+                        return createTime(d.add_time);
+                    }
+                },
                 {field: 'order_detail', title: '订单详情', toolbar: '#orderDetail', align: 'center'},
             ]],
             page: true,
@@ -109,6 +127,21 @@
             shadeClose: true,
             content: url
         });
+    }
+
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+        return str;
     }
 
 

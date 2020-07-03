@@ -46,7 +46,7 @@ public class UserController {
         p.remove("page");
         p.remove("limit");
         p.remove("rowIndex");
-        Page<UserEntity> objectPage = new Page<>(1, 10);
+        Page<UserEntity> objectPage = new Page<>(page, limit);
         Page<UserEntity> pageObject=userService.page(objectPage,new QueryWrapper<UserEntity>().allEq(p));
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
@@ -87,6 +87,13 @@ public class UserController {
         }
         return R.error("登录失败").data(ResponseUtli.NullToMap());
     }
+
+
+    @RequestMapping("")
+    public R updateUserPhone(){
+        return R.error("登录失败").data(ResponseUtli.NullToMap());
+    }
+
 
 
     /**
