@@ -7,6 +7,7 @@ import com.together.modules.order.entity.OrderEntity;
 import com.together.modules.order.mapper.OrderMapper;
 import com.together.modules.order.service.IOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.together.util.MapUtil;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     }
 
     @Override
-    public R queryOrderByShopId(P p) {
+    public R queryOrderByShopId(P p) throws Exception {
         List<Map<String, Object>> maps = orderMapper.queryOrderByShopId(p);
+        for (Map<String, Object> map : maps) {
+            MapUtil.mapKeySetLine2Upper(map);
+        }
         return R.success().data(maps);
     }
 }
