@@ -25,6 +25,5 @@ public interface IUserService extends IService<UserEntity> {
      */
     UserEntity getUserByName(P p);
     UserEntity getUserLogin(Map<String,Object> param);
-    JSONObject payGroupOrder(Map<String,Object> param);
     Map<String, Object> getGroupUserState(P p);
 }

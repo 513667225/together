@@ -3,23 +3,17 @@ package com.together.modules.user.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
 import com.together.modules.user.entity.UserEntity;
 import com.together.modules.user.service.IUserService;
-import com.together.modules.user.utli.ResponseUtli;
-import com.together.modules.user.utli.ValidateUtli;
-import com.together.util.Map2JavaBeanUtil;
 import com.together.util.P;
 import com.together.util.R;
-import org.apache.catalina.connector.Request;
+import com.together.util.utli.ResponseUtli;
+import com.together.util.utli.ValidateUtli;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 import java.util.Map;
 
 /**
@@ -86,7 +80,7 @@ public class UserController {
         try {
             ValidateUtli.validateParams(p,"code","userName","avatarUrl");
             UserEntity userEntity = userService.getUserLogin(p);
-            R r=R.success("success",ResponseUtli.StringToMap("userId",userEntity.getUserId()));
+            R r=R.success("success", ResponseUtli.StringToMap("userId",userEntity.getUserId()));
             r.put("code",200);
             return r;
         } catch (Exception e) {
@@ -95,21 +89,6 @@ public class UserController {
         return R.error("登录失败").data(ResponseUtli.NullToMap());
     }
 
-
-
-
-    /**
-     * 支付
-     * @param p
-     * @return
-     */
-    @PostMapping("/zhifu")
-    public R zhifu(@Pmap P p){
-        JSONObject jsonObject = userService.payGroupOrder(p);
-        R r=R.success("success",jsonObject);
-        r.put("code",200);
-        return r;
-    }
 
     /**
      * 单个查询订单状态
