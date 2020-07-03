@@ -1,21 +1,18 @@
 package com.together.modules.order.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
 import com.together.modules.order.entity.OrderEntity;
-import com.together.modules.order.mapper.OrderMapper;
 import com.together.modules.order.service.IOrderService;
 import com.together.modules.order.serviceClient.GoodsServiceClient;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -62,11 +59,12 @@ public class OrderController {
      * @param orderEntity
      * @return
      */
-    @ResponseBody
-    @PutMapping
+
+    @RequestMapping("updateOrders")
     public R updateOrders(OrderEntity orderEntity){
+        Date date = new Date();
+        orderEntity.setShipTime(date);
+        System.out.println(date);
         return R.success("success",iOrderService.updateById(orderEntity));
-
-
     }
 }
