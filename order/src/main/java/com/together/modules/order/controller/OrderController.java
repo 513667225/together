@@ -35,7 +35,7 @@ public class OrderController {
 
     //分页查询
     @RequestMapping("getOrderPage")
-    public R getOrderPage(@Pmap P p){
+    public R getOrderPage(@Pmap P p)throws Exception{
         p.batchToInt("page","limit");
         return iOrderService.getOrderPage(p);
     }
