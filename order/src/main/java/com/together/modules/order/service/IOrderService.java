@@ -22,7 +22,7 @@ public interface IOrderService extends IService<OrderEntity> {
 
 
 
-    R getOrderPage(P p);
+    R getOrderPage(P p) throws Exception;
 
     int getOrderPageConut(P p);
 
