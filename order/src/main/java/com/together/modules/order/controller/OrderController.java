@@ -11,8 +11,10 @@ import com.together.modules.order.serviceClient.GoodsServiceClient;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -53,7 +55,17 @@ public class OrderController {
         p.batchToInt("shop_id");
         p.batchToInt("page","limit");
         return iOrderService.queryOrderByShopId(p);
+    }
 
+    /**
+     * 修改
+     * @param orderEntity
+     * @return
+     */
+    @ResponseBody
+    @PutMapping
+    public R updateOrders(OrderEntity orderEntity){
+        return R.success("success",iOrderService.updateById(orderEntity));
 
     }
 }
