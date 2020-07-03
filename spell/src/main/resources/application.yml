@@ -1,0 +1,9 @@
+server:
+  port: 2001
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.0.111:8848
+  application:
+    name: SERVER-SPELL

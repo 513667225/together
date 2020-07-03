@@ -143,10 +143,24 @@ public class OrderEntity implements Serializable {
      */
     private Date updateTime;
 
-    //商品列表
+    /**
+     * 会员id
+     */
+    private Integer userId;
 
+    //商品列表
+    /**
+     * 属于冗余字段
+     */
     @TableField(exist = false)
     List<GoodsEntity> listGoods;
+
+    //冗余字段
+    @TableField(exist = false)
+    private String userMobile;
+    //冗余字段
+    @TableField(exist = false)
+    private String shopName;
 
     public Integer getShopId() {
         return shopId;

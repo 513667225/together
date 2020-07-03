@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有商品</title>
+
+</head>
+<link rel="stylesheet" href="/js/layui/css/layui.css">
+<script src="/js/jquery-1.7.2.min.js"></script>
+<script src="/js/layui/layui.all.js"></script>
+<script src="/js/layer/layer.js"></script>
+<script src="/js/tinymce4.7.5/tinymce.min.js"></script>
+<body>
+
+<table class="layui-hide" id="goods_table" lay-skin="line" lay-filter="goods_table">
+
+</table>
+
+</body>
+<script>
+    var goodsBasicData=parent.window.data;
+
+    layui.use('table', function () {
+        var $ = layui.jquery;
+        var table = layui.table;
+        table.render({
+            elem: '#goods_table',
+            url: '/goods/getGoodsPage',
+            method: 'get'
+            ,where:{
+                shopId:goodsBasicData.shopId
+            }
+            ,cols: [[
+                {type: 'checkbox'},
+                {field: 'goodsId', width: 100, title: 'ID'},
+                {field: 'goodsSn', width: 100, title: '商品编号'},
+                {field: 'goodsName', title: '商品名称', sort: true},
+                {field: 'categoryName', width: 110, title: '商品分类', sort: true, align: 'center'},
+                {field: 'goodsGallery', title: '商品宣传图片列表', width: 150, toolbar: '#checkGoodsPicDetail', align: 'center'},
+                {field: 'goodsPrice', width: 110, title: '商品价格(元)', align: 'center'},
+                {field: 'goodsBrief', title: '商品简介'},
+                {field: 'isOnSale', width: 100, title: '是否上架', align: 'center'},
+                {
+                    field: 'picUrl',
+                    width: 165,
+                    title: '商品页面商品图片',
+                    align: 'center',
+                    templet: function (data) {
+                        var url = data.picUrl;
+                        return "<div onclick='showImg(\"" + url + "\")'><img src='" + url + "' style='height:35px;width=35px'></div>";
+                    }
+                },
+                {field: 'goodsUnit', width: 100, title: '商品单位', align: 'center'},
+                {field: 'goodsDetail', title: '商品详情页', width: 100, toolbar: '#checkGoodsDetail', align: 'center'},
+                {
+                    field: 'addTime', width: 150, title: '创建时间',
+                    templet: function (d) {
+                        return createTime(d.addTime);
+                    }
+                },
+                {
+                    field: 'updateTime', width: 150, title: '更新时间',
+                    templet: function (d) {
+                        return createTime(d.updateTime);
+                    }
+                },
+            ]],
+            page: true,
+            limits: [5, 10, 20, 50],
+            limit: 5,
+            loading: true,
+            count: 1000,
+            parseData: function (res) {
+                return {
+                    "code": res.code,
+                    "msg": res.msg,
+                    "count": res.total,
+                    "data": res.data
+                };
+            },
+            request: {
+                pageName: 'page',
+                limitName: 'limit'
+            },
+        });
+
+    })
+
+    function showImg(url) {
+        console.log(url);
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: ['auto'],
+            skin: 'layui-layer-nobg',
+            shadeClose: true,
+            content: "<img src='" + url + "'>"
+        });
+    }
+
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+        return str;
+    }
+
+</script>
+</html>

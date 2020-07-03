@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @GetMapping("/getUserPage")
-    public R getGoodsPage(@Pmap P p) throws Exception {
+    public R getUserPage(@Pmap P p) throws Exception {
         Integer page = p.getInt("page");
         Integer limit = p.getInt("limit");
         p.initPageArg();
@@ -57,6 +57,9 @@ public class UserController {
         Page<UserEntity> pageObject=userService.page(objectPage,new QueryWrapper<UserEntity>().allEq(p));
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
+
+
+
 
     @GetMapping("/getUserList")
     public R getUserList(){

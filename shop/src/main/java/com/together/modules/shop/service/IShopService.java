@@ -1,13 +1,12 @@
 package com.together.modules.shop.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.together.modules.shop.entity.ShopEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.together.modules.shop.entity.ShopEntity;
 import com.together.util.P;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.together.util.R;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -18,6 +17,11 @@ import java.util.List;
  * @since 2020-06-28
  */
 public interface IShopService extends IService<ShopEntity> {
+
+    /**
+     * 管理员接口,查询所有店铺信息
+     */
+    R queryAllShop(Map<String, Object> map);
 
     /**
      * 根据用户id查询店铺集合 分页

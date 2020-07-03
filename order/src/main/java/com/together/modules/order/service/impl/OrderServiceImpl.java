@@ -9,6 +9,7 @@ import com.together.modules.order.service.IOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.util.P;
 import com.together.util.R;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,44 +26,29 @@ import java.util.Map;
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> implements IOrderService {
 
-
-//    @Override
-//    public IPage getOrderPage(P p) {
-
-//    }
+    @Autowired
+    OrderMapper orderMapper;
 
     @Override
-    public List<OrderEntity> getOrderPage(P p) {
-                Integer page = p.getInt("page");
-        Integer limit = p.getInt("limit");
-        p.initPageArg();
-        Page<OrderEntity> page1  = new Page(page, limit);
-        Integer userId = p.getInt("userId");
-        QueryWrapper<OrderEntity> queryWrapper = new QueryWrapper<OrderEntity>();
-        queryWrapper.eq("user_id",userId);
-        return  baseMapper.selectPage(page1,queryWrapper).getRecords();
+    public R getOrderPage(P p) {
+        List<Map<String, Object>> maps = orderMapper.queryOrderPage(p);
+        return R.success().data(maps).set("count",getOrderPageConut(p));
     }
 
     @Override
-    public int insertOrderById(P p) {
-        OrderEntity orderEntity = (OrderEntity) p.get("order");
-        return baseMapper.insert(orderEntity);
+    public int getOrderPageConut(P p) {
+        return orderMapper.queryOrderPageCount(p);
     }
 
     @Override
-    public int updById(P p) {
-        OrderEntity orderEntity = (OrderEntity) p.get("order");
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("orderId",orderEntity.getOrderId());
-        return baseMapper.update(orderEntity,queryWrapper);
-
+    public R queryOrderGoods(P p) {
+        List<Map<String, Object>> maps = orderMapper.queryOrderGoods(p);
+        return R.success().data(maps);
     }
 
     @Override
-    public int delById(P p) {
-        OrderEntity orderEntity = (OrderEntity) p.get("order");
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("orderId",orderEntity.getOrderId());
-        return baseMapper.delete(queryWrapper);
+    public R queryOrderByShopId(P p) {
+        List<Map<String, Object>> maps = orderMapper.queryOrderByShopId(p);
+        return R.success().data(maps);
     }
 }

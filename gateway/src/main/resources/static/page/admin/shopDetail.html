@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<blockquote class="layui-elem-quote layui-text">
+    这是订单的查看页面，目前来讲不提供修改，后面可以根据需求来确定是否开发修改
+</blockquote>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>订单基本信息展示</legend>
+</fieldset>
+
+<form class="layui-form" action="" lay-filter="shop">
+    <div class="layui-form-item">
+        <label class="layui-form-label">店铺名称</label>
+        <div class="layui-input-block">
+            <input type="text" readonly="readonly" id="shopName" name="shopName" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">公告语</label>
+        <div class="layui-input-block">
+            <input type="text" name="shopSlogan" id="shopSlogan" readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">详情介绍</label>
+        <div class="layui-input-block">
+            <input type="text" readonly="readonly" id="shopDetail" name="shopDetail" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商家头像</label>
+        <div class="layui-input-block">
+            <input type="text" name="shopIcon"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">商家店面图片</label>
+        <div class="layui-input-block">
+            <input type="text" readonly="readonly" id="shopPic" name="shopPic" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商家品类</label>
+        <div class="layui-input-block">
+            <input type="text" name="shopCategory"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">商家地址</label>
+        <div class="layui-input-block">
+            <input type="text" readonly="readonly" id="shopAddress" name="shopAddress" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商家电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="shopTel"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">营业时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="shopTime"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商家资质ID</label>
+        <div class="layui-input-block">
+            <input type="text" name="aptitudeId"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">创建时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="addTime"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商铺用户ID</label>
+        <div class="layui-input-block">
+            <input type="text" name="shopuserId"  readonly  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+</form>
+
+<script src="/js/layui/layui.all.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+
+    var shopBasicData=parent.window.data;
+
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+
+        //表单赋值
+        function init(){
+            form.val('shop', {
+                "shopId": shopBasicData.shopId // "name": "value"
+                ,"shopName": shopBasicData.shopName
+                ,"shopSlogan": shopBasicData.shopSlogan
+                ,"shopDetail": shopBasicData.shopDetail //复选框选中状态
+                ,"shopIcon": shopBasicData.shopIcon //开关状态
+                ,"shopPic": shopBasicData.shopPic
+                ,"shopCategory": shopBasicData.shopCategory
+                ,"shopAddress":shopBasicData.shopAddress
+                ,"shopTel":shopBasicData.shopTel
+                ,"shopTime":shopBasicData.shopTime
+                ,"aptitudeId":shopBasicData.aptitudeId
+                ,"addTime":shopBasicData.addTime
+                ,"shopuserId":shopBasicData.shopuserId
+            });
+        }
+        init();
+        //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function(){
+            var data = form.val('example');
+            alert(JSON.stringify(data));
+        });
+
+    });
+</script>
+
+</body>
+</html>

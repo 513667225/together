@@ -2,4 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.together.modules.shop.mapper.ShopMapper">
 
+    <select id="queryAllShop" resultType="java.util.Map" parameterType="java.util.Map">
+        select a.shop_id shopId,a.shop_name shopName,a.shop_slogan shopSlogan,a.shop_detail shopDetail,a.shop_icon shopIcon,
+        a.shop_pic shopPic,a.shop_category shopCategory,a.shop_address shopAddress,a.shop_tel shopTel,a.shop_time shopTime,
+        b.aptitude_id aptitudeId,a.shopuser_id shopuserId,a.add_time addTime,a.update_time updateTime,b.aptitude_company aptitudeCompany,
+        b.aptitude_address aptitudeAddress,b.aptitude_legal_person aptitudeLegalPerson,b.aptitude_key aptudeKey,b.aptitude_pic aptitudePic
+        from shop a left join shop_aptitude b on a.shop_id=b.shop_id limit #{rowIndex},#{limit}
+    </select>
+
+    <select id="queryAllShopCount" resultType="int" parameterType="java.util.Map">
+        select COUNT(0) from shop a left join shop_aptitude b on a.shop_id=b.shop_id
+    </select>
+
 </mapper>

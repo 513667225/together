@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有用户</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+
+</head>
+<body>
+<br>
+
+<div class="div_table">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">店铺名称：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="shopName" id="shopName" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
+            </div>
+
+            <!--<label class="layui-form-label">商品品类：</label>
+            <div class="layui-input-inline">
+                <select name="shopCategory" id="shopCategory">
+                    <option value="">请选择</option>
+                </select>
+            </div>-->
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <button id="query_btn" class="layui-btn layui-btn-warm">搜索</button>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="layui-table" lay-skin="nob" id="admin_shopTable" lay-filter="admin_shopTable"></table>
+
+<script type="text/html" id="shopBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="shopView">店铺详情</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="goodsView">商品列表</a>
+</script>
+
+<script src="/js/layui/layui.all.js"></script>
+<script src="/js/jquery-1.7.2.min.js"></script>
+<script>
+    var data
+    layui.use(['table','form'],function () {
+        var $ = layui.jquery;
+        var table =  layui.table;
+        var form = layui.form;
+        table.render({
+            elem: '#admin_shopTable'
+            ,url:'/shop/getAllShop'
+            ,where:{
+
+            }
+            ,method: 'get'
+            ,cellMinWidth: 80
+            ,height: 300
+            ,cols: [[
+                {type:'checkbox'}
+                ,{field:'shopId' , title: 'id', sort: true}
+                ,{field:'shopName' , title: '店铺名称'}
+                ,{field:'shopSlogan', title: '公告语'}
+                ,{field:'shopDetail', title: '详情介绍'}
+                ,{field:'shopIcon' , title: '商家头像',}
+                ,{field:'shopPic', title: '商家店面图片'}
+                ,{field:'shopCategory', title: '商家品类'}
+                ,{field:'shopAddress', title: '商家地址'}
+                ,{field:'shopTel', title: '商家电话'}
+                ,{field:'shopTime', title: '营业时间',sort: true
+                    ,templet: function (d) {
+                        return createTime(d.shopTime);
+                    }}
+                ,{field:'aptitudeId', title: '商家资质ID'}
+                ,{field:'addTime', title: '创建时间',sort:true
+                    ,templet: function (d) {
+                        return createTime(d.addTime);
+                    }
+                }
+                ,{field:'shopuserId', title: '商铺用户ID',sort:true}
+                ,{fixed: 'right', title: '操作', toolbar: '#shopBar', align: 'center',width: 200, }
+            ]]
+            ,page: true
+            ,limits : [5,10]
+            ,limit:10
+            ,count:1000
+            /*设定初始在第几页*/
+            ,curr: 10
+            ,loading:true
+            //将原始数据解析成 table 组件所规定的数据
+            ,parseData: function (res) {
+                return {
+                    //解析接口状态
+                    "code": res.code,
+                    //解析提示文本
+                    "msg": res.msg,
+                    //解析数据长度
+                    "count": res.count,
+                    //解析数据列表
+                    "data": res.data
+                };
+            },
+            request: {
+                // 页码的参数名称，默认：page
+                pageName: 'page'
+                //每页数据量的参数名，默认：limit
+                , limitName: 'limit'
+            },
+            id:'shopList'
+
+        });
+        //监听工具条
+        table.on('tool(admin_shopTable)', function(obj) {
+            data = obj.data;
+            if (obj.event === 'shopView') {
+                var shopId = data.shopId;
+                var index = layer.open({
+                    type:2,
+                    title:'商品',
+                    area : ['1000px' , '560px'],
+                    shadeClose:true,
+                    content: "shopDetail.html?shopId="+shopId
+                });
+            }else if(obj.event === 'goodsView'){
+                var shopId = data.shopId;
+                var index = layer.open({
+                    type:2,
+                    title:'商品',
+                    area : ['1000px' , '560px'],
+                    shadeClose:true,
+                    content: "allGoods.html?shopId="+shopId
+                });
+            }else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+            }
+        });
+        //获取商品类别
+        //getShopCategory();
+        // 执行搜索，表格重载
+        $('#query_btn').on('click', function () {
+            // 搜索条件
+            var shopName = $('#shopName').val();
+            /*var send_data = $('#send_data').val();*/
+            table.reload('admin_shopTable', {
+                method: 'get'
+                , where: {
+                    shopName: shopName,
+                }
+                , page: {
+                    curr: 1
+                }
+            });
+        });
+    })
+
+    /**
+     * 获取商品类别
+     */
+    function getShopCategory(){
+        $.ajax({
+            url:"/category/getCategoryList"
+            ,method: 'get'
+            ,success:function(res){
+                if(res.msg){
+                    for(var i =0;i<res.data.length;i++){
+                        $("#shopCategory").append("<option value=\""+res.data[i].categoryId+"\">"+res.data[i].categoryName+"</option>");
+                    }
+                    //重新渲染
+                    layui.form.render("select");
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+        });
+    }
+
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+        return str;
+    }
+
+</script>
+</body>
+</html>
