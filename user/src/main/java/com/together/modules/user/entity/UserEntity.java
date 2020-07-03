@@ -89,20 +89,90 @@ public class UserEntity implements Serializable {
      */
     private Date addTime;
 
-    private String userName;
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     /**
      * 更新时间
      */
     private Date updateTime;
+
+
+    /**
+     * 
+     */
+    private int goupSize;
+
+    /**
+     * 直邀人数
+     */
+    private int underlingSize;
+
+    public int getGoupSize() {
+        return goupSize;
+    }
+
+    public void setGoupSize(int goupSize) {
+        this.goupSize = goupSize;
+    }
+
+    /**
+     * 下辖会员人数
+     */
+    private int memberSize;
+
+    /**
+     * 下辖服务经理人数
+     */
+    private int managerSize;
+
+    /**
+     * 下辖总监人数
+     */
+    private int majordomoSize;
+
+    /**
+     * 团队服务经理人数
+     */
+    private int teammanagerSize;
+
+
+    public int getUnderlingSize() {
+        return underlingSize;
+    }
+
+    public void setUnderlingSize(int underlingSize) {
+        this.underlingSize = underlingSize;
+    }
+
+    public int getMemberSize() {
+        return memberSize;
+    }
+
+    public void setMemberSize(int memberSize) {
+        this.memberSize = memberSize;
+    }
+
+    public int getManagerSize() {
+        return managerSize;
+    }
+
+    public void setManagerSize(int managerSize) {
+        this.managerSize = managerSize;
+    }
+
+    public int getMajordomoSize() {
+        return majordomoSize;
+    }
+
+    public void setMajordomoSize(int majordomoSize) {
+        this.majordomoSize = majordomoSize;
+    }
+
+    public int getTeammanagerSize() {
+        return teammanagerSize;
+    }
+
+    public void setTeammanagerSize(int teammanagerSize) {
+        this.teammanagerSize = teammanagerSize;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -243,8 +313,6 @@ public class UserEntity implements Serializable {
             ", userReferrer=" + userReferrer +
             ", addTime=" + addTime +
             ", updateTime=" + updateTime +
-                ", userName=" + userName +
-
         "}";
     }
 }

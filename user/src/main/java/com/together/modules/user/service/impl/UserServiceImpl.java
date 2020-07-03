@@ -2,6 +2,7 @@ package com.together.modules.user.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.together.modules.user.entity.UserEntity;
 import com.together.modules.user.mapper.UserMapper;
 import com.together.modules.user.service.IUserService;
@@ -111,7 +112,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                     userEntity.setUserReferrer(userReferrer);//  推荐人id
                 }
                 baseMapper.insert(userEntity);
-                return userEntity;
+                //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
+                if(userReferrer!=null){
+                    UserEntity userEntity1 = baseMapper.selectById(userReferrer);  //推荐人
+                    userEntity1.setUnderlingSize(userEntity1.getUnderlingSize()+1);
+                    userEntity1.setGoupSize(userEntity1.getGoupSize()+1);
+                    //修改推荐人邀请人数及团队邀请人数
+                    baseMapper.updateById(userEntity1);
+                    Integer userReferrer1 = userEntity1.getUserReferrer();
+                    //修改推荐人上级团队邀请人数
+                    isUpdateGoup(userReferrer1);  //修改团队人数
+                    isUpdateMember(userEntity1);  //改变用户级别
+                }
             }
            //TODO: 如果登录进来的 头像/名称 与数据库保存的不同,则进行修改
             if(!userEntity.getUserAvatar().equals(avatarUrl) || !userEntity.getUserNickname().equals(userName)){
@@ -129,6 +141,75 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         }
         return null;
     }
+
+
+    //判断用户级别是否要修改为会员用户
+    public UserEntity isUpdateMember(UserEntity userEntity){
+        if(userEntity.getUnderlingSize()>=10
+                &&userEntity.getGoupSize()>=20
+                &&userEntity.getUserLevel()==0){
+            //满足会员条件  修改用户推荐人等级
+            userEntity.setUserLevel(1);
+            return userEntity;
+        }
+        return userEntity;
+    }
+
+    //判断用户级别是否要修改为服务经理
+    public UserEntity isUpdateManager(UserEntity userEntity){
+        if(userEntity.getMemberSize()>=10
+                &&userEntity.getGoupSize()>=30
+                &&userEntity.getUserLevel()==1){
+            //满足会员条件  修改用户推荐人等级
+            userEntity.setUserLevel(2);
+            baseMapper.updateById(userEntity);
+            Integer userReferrer = userEntity.getUserReferrer();
+            UserEntity userEntity1 = baseMapper.selectById(userReferrer);
+            UserEntity updateTeammanager = isUpdateTeammanager(userEntity1);
+            isUpdateMajordomo(updateTeammanager);
+
+        }
+        return userEntity;
+    }
+
+    //判断用户级别是否要修改为服务总监
+    public void isUpdateMajordomo(UserEntity userEntity){
+        if(userEntity.getMajordomoSize()>=15
+                &&userEntity.getTeammanagerSize()>=30
+                &&userEntity.getUserLevel()==2){
+            //满足会员条件  修改用户推荐人等级
+            userEntity.setUserLevel(3);
+            baseMapper.updateById(userEntity);
+        }
+    }
+
+    //修改团队服务经理人数
+    public UserEntity isUpdateTeammanager(UserEntity userEntity){
+        userEntity.setTeammanagerSize(userEntity.getTeammanagerSize()+1);
+        baseMapper.updateById(userEntity);
+        return userEntity;
+    }
+
+    //递归修改团队人数
+    public void isUpdateGoup(UserEntity userEntity){
+        userEntity.setGoupSize(userEntity.getGoupSize()+1);
+        baseMapper.updateById(userEntity);
+        UserEntity userEntity1 = baseMapper.selectById(userEntity.getUserReferrer());
+        if(userEntity1.getUserReferrer()!=null){
+            isUpdateGoup(userEntity1);
+        }
+        return;
+    }
+
+    //修改团队人数
+    public void isUpdateGoup(Integer userReferrerId){
+        if(userReferrerId!=null){
+            UserEntity userEntity1 = baseMapper.selectById(userReferrerId);
+            isUpdateGoup(userEntity1);
+        }
+        return;
+    }
+
 
     @Override
     public Map<String, Object> getGroupUserState(P p) {

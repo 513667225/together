@@ -14,13 +14,27 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.time.Duration;
+import java.util.Arrays;
 
 @Configuration
 public class RedisConfig{
+
+//    public static void main(String[] args) {
+//        Jedis jedis=new Jedis("203.195.134.30");
+//        jedis.flushAll();
+//        jedis.eval("if redis.call(\"sadd\",KEYS[1],ARGV[1])==1 then\n" +
+//                "    return redis.call(\"scard\",KEYS[1])\n" +
+//                "else \n" +
+//                "   return 0\n" +
+//                "end   ", Arrays.asList("taibai"), Arrays.asList("aewfawe"));
+//        System.out.println(jedis.scard("taibai"));
+//    }
+
     @Bean
     public JedisPoolConfig jedisPoolConfig(){
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
@@ -34,6 +48,7 @@ public class RedisConfig{
         jedisPoolConfig.setTimeBetweenEvictionRunsMillis(300000); //-1不检测   单位为毫秒  空闲资源监测周期
         jedisPoolConfig.setMinEvictableIdleTimeMillis(30*60*1000);//资源池中资源最小空闲时间 单位为毫秒  达到此值后空闲资源将被移除
         jedisPoolConfig.setNumTestsPerEvictionRun(300); //做空闲监测时，每次采集的样本数  -1代表对所有连接做监测
+//        jedisPoolConfig.setEvictorShutdownTimeoutMillis();
         return jedisPoolConfig;
     }
 
