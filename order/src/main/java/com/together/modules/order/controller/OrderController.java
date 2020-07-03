@@ -48,10 +48,11 @@ public class OrderController {
         return iOrderService.queryOrderGoods(p);
     }
 
+    @RequestMapping("getShopOrders")
+    public R getShopOrders(@Pmap P p){
+        p.batchToInt("shop_id");
+        p.batchToInt("page","limit");
+        return iOrderService.queryOrderByShopId(p);
 
-
-
-
-
-
+    }
 }
