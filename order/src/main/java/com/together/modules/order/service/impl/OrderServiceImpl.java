@@ -45,4 +45,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         List<Map<String, Object>> maps = orderMapper.queryOrderGoods(p);
         return R.success().data(maps);
     }
+
+    @Override
+    public R queryOrderByShopId(P p) {
+        List<Map<String, Object>> maps = orderMapper.queryOrderByShopId(p);
+        return R.success().data(maps);
+    }
 }
