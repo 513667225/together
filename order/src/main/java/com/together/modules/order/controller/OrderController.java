@@ -49,10 +49,11 @@ public class OrderController {
     }
 
     @RequestMapping("getShopOrders")
-    public R getShopOrders(@Pmap P p){
+    public R getShopOrders(@Pmap P p) throws Exception {
         p.batchToInt("shop_id");
         p.batchToInt("page","limit");
         return iOrderService.queryOrderByShopId(p);
+
 
     }
 }
