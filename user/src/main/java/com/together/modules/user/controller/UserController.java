@@ -89,6 +89,12 @@ public class UserController {
     }
 
 
+
+    @RequestMapping("/test")
+    public R test(@Pmap P p){
+        userService.test(p);
+        return R.success();
+    }
     @RequestMapping("")
     public R updateUserPhone(){
         return R.error("登录失败").data(ResponseUtli.NullToMap());

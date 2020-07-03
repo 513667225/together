@@ -114,15 +114,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 baseMapper.insert(userEntity);
                 //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
                 if(userReferrer!=null){
-                    UserEntity userEntity1 = baseMapper.selectById(userReferrer);  //推荐人
-                    userEntity1.setUnderlingSize(userEntity1.getUnderlingSize()+1);
-                    userEntity1.setGoupSize(userEntity1.getGoupSize()+1);
-                    //修改推荐人邀请人数及团队邀请人数
-                    baseMapper.updateById(userEntity1);
-                    Integer userReferrer1 = userEntity1.getUserReferrer();
-                    //修改推荐人上级团队邀请人数
-                    isUpdateGoup(userReferrer1);  //修改团队人数
-                    isUpdateMember(userEntity1);  //改变用户级别
+                    //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
+                    isUpdateMessage(userReferrer,true);
                 }
             }
            //TODO: 如果登录进来的 头像/名称 与数据库保存的不同,则进行修改
@@ -142,61 +135,103 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         return null;
     }
 
+    //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
+    private void isUpdateMessage(Integer userReferrer,boolean isUnderling) {
+        UserEntity userEntity1 = baseMapper.selectById(userReferrer);
+        if(isUnderling){
+            //修改直邀人数+1
+            userEntity1.setUnderlingSize(userEntity1.getUnderlingSize()+1);
+        }
+        //修改团队人数+1
+        userEntity1.setGoupSize(userEntity1.getGoupSize()+1);
+        //判断是否需要更新用户上级等级
+        isUpdateUserLevel(userEntity1);
+        baseMapper.updateById(userEntity1);
+        if(userEntity1.getUserReferrer()!=null) {
+            //递归修改上级团队人数
+            isUpdateMessage(userEntity1.getUserReferrer(),false);
+        }
+        return;
+    }
 
-    //判断用户级别是否要修改为会员用户
-    public UserEntity isUpdateMember(UserEntity userEntity){
+
+    //判断用户级别需要要修改
+    public Integer isUpdateUserLevel(UserEntity userEntity){
+        int identification=-1;
         if(userEntity.getUnderlingSize()>=10
                 &&userEntity.getGoupSize()>=20
                 &&userEntity.getUserLevel()==0){
             //满足会员条件  修改用户推荐人等级
             userEntity.setUserLevel(1);
-            return userEntity;
+            identification=1;
         }
-        return userEntity;
-    }
-
-    //判断用户级别是否要修改为服务经理
-    public UserEntity isUpdateManager(UserEntity userEntity){
         if(userEntity.getMemberSize()>=10
                 &&userEntity.getGoupSize()>=30
                 &&userEntity.getUserLevel()==1){
             //满足会员条件  修改用户推荐人等级
             userEntity.setUserLevel(2);
-            baseMapper.updateById(userEntity);
-            Integer userReferrer = userEntity.getUserReferrer();
-            UserEntity userEntity1 = baseMapper.selectById(userReferrer);
-            UserEntity updateTeammanager = isUpdateTeammanager(userEntity1);
-            isUpdateMajordomo(updateTeammanager);
-
+            identification=2;
         }
-        return userEntity;
-    }
-
-    //判断用户级别是否要修改为服务总监
-    public void isUpdateMajordomo(UserEntity userEntity){
         if(userEntity.getMajordomoSize()>=15
                 &&userEntity.getTeammanagerSize()>=30
                 &&userEntity.getUserLevel()==2){
             //满足会员条件  修改用户推荐人等级
             userEntity.setUserLevel(3);
-            baseMapper.updateById(userEntity);
+            identification=3;
         }
+        baseMapper.updateById(userEntity);
+        return identification;
     }
 
-    //修改团队服务经理人数
-    public UserEntity isUpdateTeammanager(UserEntity userEntity){
-        userEntity.setTeammanagerSize(userEntity.getTeammanagerSize()+1);
-        baseMapper.updateById(userEntity);
-        return userEntity;
-    }
+    //判断用户级别是否要修改为服务经理
+//    public UserEntity isUpdateManager(UserEntity userEntity){
+//        if(userEntity.getMemberSize()>=10
+//                &&userEntity.getGoupSize()>=30
+//                &&userEntity.getUserLevel()==1){
+//            //满足会员条件  修改用户推荐人等级
+//            userEntity.setUserLevel(2);
+//            baseMapper.updateById(userEntity);
+//            Integer userReferrer = userEntity.getUserReferrer();
+//            UserEntity userEntity1 = baseMapper.selectById(userReferrer);
+//            UserEntity updateTeammanager = isUpdateTeammanager(userEntity1);
+//            isUpdateMajordomo(updateTeammanager);
+//
+//        }
+//        return userEntity;
+//    }
+//
+//    //判断用户级别是否要修改为服务总监
+//    public void isUpdateMajordomo(UserEntity userEntity){
+//        if(userEntity.getMajordomoSize()>=15
+//                &&userEntity.getTeammanagerSize()>=30
+//                &&userEntity.getUserLevel()==2){
+//            //满足会员条件  修改用户推荐人等级
+//            userEntity.setUserLevel(3);
+//            baseMapper.updateById(userEntity);
+//        }
+//    }
+//
+//    //修改团队服务经理人数
+//    public UserEntity isUpdateTeammanager(UserEntity userEntity){
+//        userEntity.setTeammanagerSize(userEntity.getTeammanagerSize()+1);
+//        baseMapper.updateById(userEntity);
+//        return userEntity;
+//    }
+
+    //递归修改用户等级
+
 
     //递归修改团队人数
     public void isUpdateGoup(UserEntity userEntity){
         userEntity.setGoupSize(userEntity.getGoupSize()+1);
-        baseMapper.updateById(userEntity);
+        //修改团队人数+1  判断团队人数+1后  能否升级
+        Integer updateUserLevel = isUpdateUserLevel(userEntity);
         UserEntity userEntity1 = baseMapper.selectById(userEntity.getUserReferrer());
         if(userEntity1.getUserReferrer()!=null){
             isUpdateGoup(userEntity1);
+        }
+        if(updateUserLevel!=-1){
+            isUpdateUserLevel(userEntity1);
         }
         return;
     }
@@ -215,6 +250,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public Map<String, Object> getGroupUserState(P p) {
         System.out.println(p);
         return ResponseUtli.NullToMap();
+    }
+
+    @Override
+    public void test(P p) {
+        UserEntity userEntity = baseMapper.selectById(10002);
+        for (int i = 1; i <= p.getInt("size"); i++) {
+            userEntity.setUserId(i);
+            userEntity.setUserReferrer(p.getInt("referrer_id"));
+            baseMapper.insert(userEntity);
+            //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
+            if(userEntity.getUserReferrer()!=null){
+                //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
+                isUpdateMessage(userEntity.getUserReferrer(),true);
+            }
+        }
     }
 
 
