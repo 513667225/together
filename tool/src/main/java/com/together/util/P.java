@@ -3,6 +3,7 @@ package com.together.util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,6 +138,9 @@ public class P extends HashMap<String,Object> {
     }
 
 
+    public Date getDate(String key){
+        return new Date(getLong(key));
+    }
 
 
     public String getString(String key) {
