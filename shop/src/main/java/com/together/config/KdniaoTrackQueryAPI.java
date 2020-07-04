@@ -16,6 +16,7 @@ import java.util.Map;
 
 
 public class KdniaoTrackQueryAPI {
+
 	//电商ID
 	private String EBusinessID="1654342";
 	//电商加密私钥，快递鸟提供，注意保管，不要泄漏

@@ -35,6 +35,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
         }
         return R.success().data(maps).set("total",goodsByShopIdCount);
     }
+    
 
 
 

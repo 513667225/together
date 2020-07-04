@@ -48,4 +48,6 @@ public class GoodsController {
         return R.success("操作成功",goodsId);
     }
 
+
+
 }
