@@ -299,7 +299,7 @@ public class OrderEntity implements Serializable {
         this.payTime = payTime;
         return this;
     }
-    public String getShipSn() {
+    public String getShipSn(String ship_sn) {
         return shipSn;
     }
 
@@ -307,7 +307,7 @@ public class OrderEntity implements Serializable {
         this.shipSn = shipSn;
         return this;
     }
-    public String getShipChannel() {
+    public String getShipChannel(String ship_channel) {
         return shipChannel;
     }
 
