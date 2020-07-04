@@ -23,15 +23,63 @@
     <a class="layui-btn layui-btn-xs" lay-event="orderDetail">查看详情</a>
 </script>
 
-<div>
+<div class="layui-row" id="upShipMessage" style="display:none;">
+    <div class="layui-col-md10">
+        <form class="layui-form layui-from-pane" action="" style="margin-top:20px" >
 
+            <div class="layui-form-item">
+                <label class="layui-form-label">快递公司</label>
+                <div class="layui-input-block">
+                    <select name="shipChannel" lay-filter="shipChannel">
+                        <option value="YTO"  selected="">圆通速递</option>
+                        <option value="SF">顺丰快递</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">物流编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="shipSn"  required  lay-verify="required" autocomplete="off" placeholder="请输入物流编号" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="margin-top:40px">
+                <div class="layui-input-block">
+                    <button class="layui-btn  layui-btn-submit " lay-submit="" lay-filter="shipSubmit">确认修改</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+
 </body>
 <script>
-    var data
-    layui.use('table', function () {
+    var data;
+    layui.use(['table','form'], function () {
         var $ = layui.jquery;
         var table = layui.table;
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+        var order_id;
+
+        form.render();
+
+        form.on('submit(shipSubmit)', function(data) {
+            $.ajax({
+                url: '/orders/updateOrders',
+                type: 'get',
+                dataType: 'json',
+                data: {'order_id':order_id,'ship_sn': data.field.shipSn,'ship_channel':data.field.shipChannel},
+                success: function (suc) {
+                    console.log("------"+suc);
+                }
+            })
+        })
+
         table.render({
             elem: '#orders_table',
             url: '/orders/getShopOrders',
@@ -41,14 +89,14 @@
             },
             cols: [[
                 {type: 'checkbox'},
-                {field: 'order_id', width: 80, title: 'id'},
-                {field: 'order_tel', width: 150, title: '会员号码'},
-                {field: 'order_sn', width: 120, title: '订单编号', sort: true},
-                {field: 'order_status', width: 80, title: '状态', sort: true},
-                {field: 'order_consignee', width: 100,title: '收货人'},
-                {field: 'order_address', width: 180, title: '具体地址'},
-                {field: 'order_message', width: 180, title: '用户留言'},
-                {field: 'order_detail', title: '订单详情', width: 120, toolbar: '#orderDetail', align: 'center'},
+                {field: 'orderId', width: 80, title: 'id'},
+                {field: 'orderTel', width: 150, title: '会员号码'},
+                {field: 'orderSn', width: 120, title: '订单编号', sort: true},
+                {field: 'orderStatus', width: 80, title: '状态', sort: true},
+                {field: 'orderConsignee', width: 100,title: '收货人'},
+                {field: 'orderAddress', title: '具体地址'},
+                {field: 'orderMessage', title: '用户留言'},
+                {field: 'orderDetail', title: '订单详情', width: 120, toolbar: '#orderDetail', align: 'center'},
                 {fixed: 'right', title: '操作', toolbar: '#shipBar', align: 'center'}
             ]],
             page: true,
@@ -57,29 +105,38 @@
             loading: true,
             count: 1000,
             request: {
-                pageName: 'page', // 页码的参数名称，默认：page
-                limitName: 'limit' //每页数据量的参数名，默认：limit
+                pageName: 'page',
+                limitName: 'limit'
             },
         });
-
-        //监听行工具事件
 
         table.on('tool(orders_table)', function (obj) {
             data = obj.data;
             if (obj.event === 'orderDetail') {
-                var orderId =data.order_id;
+                var orderId =data.orderId;
                 var index = layer.open({
                     type:2,
                     title:'查看订单详情',
-                    area : ['1000px' , '560px'],
+                    area : ['1000px' , '800px'],
                     shadeClose:true,
                     content: "orderDetail.html?orderId="+orderId
                 });
             }else if(obj.event === 'editShip'){
-
+                order_id = data.orderId;
+                layer.open({
+                    type:1,
+                    title:'上传物流信息',
+                    area : ['420px', '250px'],
+                    shadeClose:true,
+                    content: $("#upShipMessage")
+                });
             }
         });
+
+
     })
+
+
 
 </script>
 </html>

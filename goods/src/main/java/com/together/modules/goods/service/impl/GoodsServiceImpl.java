@@ -4,6 +4,7 @@ import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.mapper.GoodsMapper;
 import com.together.modules.goods.service.IGoodsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.together.util.MapUtil;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,13 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
     GoodsMapper goodsMapper;
 
     @Override
-    public R queryGoodsByShopId(Map<String, Object> map) {
+    public R queryGoodsByShopId(Map<String, Object> map) throws Exception {
         int goodsByShopIdCount = goodsMapper.queryGoodsByShopIdCount(map);
-        return R.success().data(goodsMapper.queryGoodsByShopId(map)).set("total",goodsByShopIdCount);
+        List<Map<String, Object>> maps = goodsMapper.queryGoodsByShopId(map);
+        for (Map<String, Object> stringObjectMap : maps) {
+            MapUtil.mapKeySetLine2Upper(stringObjectMap);
+        }
+        return R.success().data(maps).set("total",goodsByShopIdCount);
     }
 
 
