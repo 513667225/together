@@ -115,7 +115,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
                 if(userReferrer!=null){
                     //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
-                    isUpdateMessage(userReferrer,true);
+                    isUpdateMessage(userReferrer,true,-1,false);
                 }
             }
            //TODO: 如果登录进来的 头像/名称 与数据库保存的不同,则进行修改
@@ -136,7 +136,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
-    private void isUpdateMessage(Integer userReferrer,boolean isUnderling) {
+    private void isUpdateMessage(Integer userReferrer,boolean isUnderling,Integer isUpdateDirectly,Boolean updateDirectly) {
         UserEntity userEntity1 = baseMapper.selectById(userReferrer);
         if(isUnderling){
             //修改直邀人数+1
@@ -144,16 +144,46 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         }
         //修改团队人数+1
         userEntity1.setGoupSize(userEntity1.getGoupSize()+1);
-        //判断是否需要更新用户上级等级
-        isUpdateUserLevel(userEntity1);
+        //判断是否需要更新用户等级
+        Integer updateUserLevel = isUpdateUserLevel(userEntity1);
+        boolean isupdateDirectly=false;
+        //更新直推会员，服务经理，服务总监人数
+        if(isUpdateDirectly!=-1){
+            //返回是否要修改团队服务经理人数
+            isupdateDirectly = isUpdateDirectly(userEntity1, isUpdateDirectly);
+        }
+        //修改团队服务经理人数
+        if(updateDirectly){
+            userEntity1.setTeammanagerSize(userEntity1.getTeammanagerSize()+1);
+            isupdateDirectly=true;
+        }
         baseMapper.updateById(userEntity1);
         if(userEntity1.getUserReferrer()!=null) {
             //递归修改上级团队人数
-            isUpdateMessage(userEntity1.getUserReferrer(),false);
+            isUpdateMessage(userEntity1.getUserReferrer(),false,updateUserLevel,isupdateDirectly);
         }
         return;
     }
 
+    //修改直推会员，服务经理，服务总监
+    public boolean isUpdateDirectly(UserEntity userEntity,Integer isUpdateDirectly){
+        boolean ManagerSize=false;
+       switch (isUpdateDirectly){
+           case -1:
+               break;
+           case 1:
+               userEntity.setMemberSize(userEntity.getMemberSize()+1);
+               break;
+           case 2:
+               userEntity.setManagerSize(userEntity.getManagerSize()+1);
+               ManagerSize=true;
+               break;
+           case 3:
+               userEntity.setMajordomoSize(userEntity.getMajordomoSize()+1);
+               break;
+       }
+        return ManagerSize;
+    }
 
     //判断用户级别需要要修改
     public Integer isUpdateUserLevel(UserEntity userEntity){
@@ -255,14 +285,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public void test(P p) {
         UserEntity userEntity = baseMapper.selectById(10002);
-        for (int i = 1; i <= p.getInt("size"); i++) {
+        for (int i = p.getInt("start"); i <= (p.getInt("size")+p.getInt("start")); i++) {
             userEntity.setUserId(i);
+            userEntity.setMajordomoSize(0);
+            userEntity.setManagerSize(0);
+            userEntity.setMemberSize(0);
+            userEntity.setTeammanagerSize(0);
+            userEntity.setGoupSize(0);
+            userEntity.setUnderlingSize(0);
             userEntity.setUserReferrer(p.getInt("referrer_id"));
+            userEntity.setUserLevel(0);
             baseMapper.insert(userEntity);
             //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
             if(userEntity.getUserReferrer()!=null){
                 //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
-                isUpdateMessage(userEntity.getUserReferrer(),true);
+                isUpdateMessage(userEntity.getUserReferrer(),true,-1,false);
             }
         }
     }

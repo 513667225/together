@@ -70,7 +70,7 @@ public class RedisConfig{
 
     @Bean
     public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig){
-        JedisClientConfiguration jedisClientConfiguration = JedisClientConfiguration.builder().usePooling().poolConfig(jedisPoolConfig).and().readTimeout(Duration.ofMillis(2000)).build();
+        JedisClientConfiguration jedisClientConfiguration = JedisClientConfiguration.builder().usePooling().poolConfig(jedisPoolConfig).and().readTimeout(Duration.ofMillis(20000)).build();
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setDatabase(0);
         redisStandaloneConfiguration.setPort(6379);
