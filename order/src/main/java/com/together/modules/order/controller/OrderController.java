@@ -55,6 +55,18 @@ public class OrderController {
         return iOrderService.queryOrderByShopId(p);
     }
 
+
+    /**
+     * 根据订单ID查询订单
+     * @param p
+     * @return
+     */
+    @RequestMapping("/queryOrdersById")
+    public R queryOrdersById(@Pmap P p){
+        OrderEntity orderId = iOrderService.getById(p.getInt("orderId"));
+        return R.success("操作成功",orderId);
+    }
+
     /**
      * 修改
      * @param p
@@ -73,6 +85,16 @@ public class OrderController {
         orderEntity.setUpdateTime(date);
 //        p.thisToEntityLine2Upper(orderEntity);
         return R.success("success",iOrderService.updateById(orderEntity));
+    }
+
+    @RequestMapping("/delOrders")
+    public R delOrders(@Pmap P p){
+        if (iOrderService.removeById(p.getInt("order_id"))) {
+            return R.success("删除成功");
+        }
+        else{
+            return R.error("删除失败");
+        }
     }
 
     /**
