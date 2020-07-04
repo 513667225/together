@@ -10,6 +10,7 @@ import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -60,11 +61,14 @@ public class OrderController {
      * @return
      */
 
+    @ResponseBody
     @RequestMapping("updateOrders")
     public R updateOrders(OrderEntity orderEntity){
         Date date = new Date();
         orderEntity.setShipTime(date);
         System.out.println(date);
+        orderEntity.getShipSn("ship_sn");
+        orderEntity.getShipChannel("ship_channel");
         return R.success("success",iOrderService.updateById(orderEntity));
     }
 
@@ -73,8 +77,8 @@ public class OrderController {
      * @param p
      * @return
      */
-    public R insertOrders(@Pmap P p){
+    public R insertOrders(@Pmap P p,OrderEntity orderEntity){
 
-        return R.success("success",iOrderService);
+        return R.success("success",iOrderService.save(orderEntity));
     }
 }
