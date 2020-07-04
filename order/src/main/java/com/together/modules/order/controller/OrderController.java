@@ -63,12 +63,13 @@ public class OrderController {
 
     @ResponseBody
     @RequestMapping("updateOrders")
-    public R updateOrders(OrderEntity orderEntity){
+    public R updateOrders(@Pmap P p) throws Exception {
         Date date = new Date();
-        orderEntity.setShipTime(date);
-        System.out.println(date);
-        orderEntity.getShipSn("ship_sn");
-        orderEntity.getShipChannel("ship_channel");
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setShipSn(p.getString("ship_sn"));
+        orderEntity.setOrderId(p.getInt("order_id"));
+        orderEntity.setShipChannel(p.getString("ship_channel"));
+//        p.thisToEntityLine2Upper(orderEntity);
         return R.success("success",iOrderService.updateById(orderEntity));
     }
 
