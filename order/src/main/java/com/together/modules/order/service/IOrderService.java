@@ -26,7 +26,7 @@ public interface IOrderService extends IService<OrderEntity> {
 
     int getOrderPageConut(P p);
 
-    R queryOrderGoods(P p);
+    R queryOrderGoods(P p) throws Exception;
 
     R queryOrderByShopId(P p) throws Exception;
 

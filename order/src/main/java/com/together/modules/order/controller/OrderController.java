@@ -67,4 +67,14 @@ public class OrderController {
         System.out.println(date);
         return R.success("success",iOrderService.updateById(orderEntity));
     }
+
+    /**
+     * 增加
+     * @param p
+     * @return
+     */
+    public R insertOrders(@Pmap P p){
+
+        return R.success("success",iOrderService);
+    }
 }
