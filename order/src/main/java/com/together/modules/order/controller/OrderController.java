@@ -70,6 +70,7 @@ public class OrderController {
         orderEntity.setOrderId(p.getInt("order_id"));
         orderEntity.setShipChannel(p.getString("ship_channel"));
         orderEntity.setShipTime(date);
+        orderEntity.setUpdateTime(date);
 //        p.thisToEntityLine2Upper(orderEntity);
         return R.success("success",iOrderService.updateById(orderEntity));
     }
