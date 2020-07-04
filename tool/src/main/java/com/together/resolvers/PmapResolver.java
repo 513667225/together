@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
+/**
+ * Spring MVC参数注入时拦截@{@link Pmap} 注解
+ * @author  Agu
+ */
 public class PmapResolver extends RequestParamMapMethodArgumentResolver {
 
     @Override

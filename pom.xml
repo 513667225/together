@@ -16,6 +16,7 @@
         <module>goods</module>
         <module>order</module>
         <module>spell</module>
+        <module>ReMoney</module>
     </modules>
 
     <parent>

@@ -39,7 +39,6 @@
 </script>
 
 <script src="/js/layui/layui.all.js"></script>
-<script src="/js/jquery-1.7.2.min.js"></script>
 <script>
     var data
     layui.use(['table','form'],function () {
@@ -82,9 +81,6 @@
             ,page: true
             ,limits : [5,10]
             ,limit:10
-            ,count:1000
-            /*设定初始在第几页*/
-            ,curr: 10
             ,loading:true
             //将原始数据解析成 table 组件所规定的数据
             ,parseData: function (res) {
@@ -115,7 +111,8 @@
                 var shopId = data.shopId;
                 var index = layer.open({
                     type:2,
-                    title:'商品',
+                    title:'店铺' +
+                        '详情',
                     area : ['1000px' , '560px'],
                     shadeClose:true,
                     content: "shopDetail.html?shopId="+shopId

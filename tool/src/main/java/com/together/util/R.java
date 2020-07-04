@@ -3,6 +3,12 @@ package com.together.util;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * 返回值统一类:R
+ *
+ *  @author  Agu
+ */
 public class R extends HashMap {
     public static String SUCCESS_CODE = "0";
     public static String ERROR_CODE = "500";
@@ -20,35 +26,70 @@ public class R extends HashMap {
 
 //    transUnderLine2Upper
 
-
+    /**
+     * 将当前R里面 key为data的Map转化为Entity 并且在此之前将里面的所有驼峰key转化为下划线key   如: userName-->user_name
+     * @param obj 转化的目标entity对象
+     * @throws Exception
+     */
     public void thisToEntityUpper2Line(Object obj) throws Exception {
-        MapUtil.mapKeySetUpper2Line(this);
+        MapUtil.mapKeySetUpper2Line((Map) this.get("data"));
         thisToEntity(obj);
     }
 
+    /**
+     * 将当前R key为data的Map转化为Entity 并且在此之前将里面的所有下划线key转化为驼峰key   如: user_name-->userName
+     * @param obj 转化的目标entity对象
+     * @throws Exception
+     */
     public void  thisToEntityLine2Upper(Object obj) throws Exception {
-        MapUtil.mapKeySetLine2Upper( this);
+        MapUtil.mapKeySetLine2Upper( (Map) this.get("data"));
         thisToEntity(obj);
     }
 
-
+    /**
+     *  将当前R里面 key为data的Map转化并构建一个Entity 并且在此之前将里面的所有驼峰key转化为下划线key   如: userName-->user_name
+     * @param toClass 需要转化的目标entity的class对象
+     * @param <T> 目标entity类型泛型
+     * @return 构建出来的entity
+     * @throws Exception
+     */
     public <T> T thisToEntityUpper2Line(Class<T> toClass) throws Exception {
 //        this.keySet()
         MapUtil.mapKeySetUpper2Line((Map) this.get("data"));
         return thisToEntity(toClass);
     }
 
+
+    /**
+     * 将当前R key为data的Map转化并构建一个Entity 并且在此之前将里面的所有下划线key转化为驼峰key   如: user_name-->userName
+     * @param toClass 需要转化的目标entity的class对象
+     * @param <T> 目标entity类型泛型
+     * @return 构建出来的entity
+     * @throws Exception
+     */
     public <T> T thisToEntityLine2Upper(Class<T> toClass) throws Exception {
         MapUtil.mapKeySetLine2Upper((Map) this.get("data"));
         return thisToEntity(toClass);
     }
 
+
+    /**
+     * 将当前R key为data的Map转化并构建一个Entity
+     * @param toClass 需要转化的目标entity的class对象
+     * @param <T> 目标entity类型泛型
+     * @return 构建出来的entity
+     * @throws Exception
+     */
     public <T> T thisToEntity(Class<T> toClass) throws Exception {
 
         return (T) Map2JavaBeanUtil.transMap2Bean((Map) this.get("data"), toClass);
     }
 
-
+    /**
+     * 将当前R key为data的Map转化为Entity
+     * @param toObj 转化的目标entity对象
+     * @throws Exception
+     */
     public void thisToEntity(Object toObj) throws Exception {
 
         Map2JavaBeanUtil.transMap2Bean((Map) this.get("data"), toObj);

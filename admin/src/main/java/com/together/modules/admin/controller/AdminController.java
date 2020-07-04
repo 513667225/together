@@ -34,10 +34,10 @@ public class AdminController {
         Integer page = p.getInt("page");
         Integer limit = p.getInt("limit");
         p.initPageArg();
+        Page<AdminEntity> objectPage = new Page<>(page,limit);
         p.remove("page");
         p.remove("limit");
         p.remove("rowIndex");
-        Page<AdminEntity> objectPage = new Page<>(1, 10);
         Page<AdminEntity> pageObject = adminService.page(objectPage,new QueryWrapper<AdminEntity>().allEq(p));
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }

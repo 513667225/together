@@ -36,7 +36,7 @@ spring:
         - id: shop
           uri: lb://SERVER-SHOP
           predicates:
-            - Path=/shop/**,/shopMenu/**,/shopAptitude/**
+            - Path=/shop/**,/shopMenu/**,/shopAptitude/**,/shopUser/**
         - id: order
           uri: lb://SERVER-ORDER
           predicates:

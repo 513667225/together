@@ -42,7 +42,7 @@ public class OrderController {
 
 
     @RequestMapping("getOrderGoods")
-    public R getOrderGoods(@Pmap P p){
+    public R getOrderGoods(@Pmap P p) throws Exception {
         p.batchToInt("order_id");
         return iOrderService.queryOrderGoods(p);
     }
@@ -66,5 +66,15 @@ public class OrderController {
         orderEntity.setShipTime(date);
         System.out.println(date);
         return R.success("success",iOrderService.updateById(orderEntity));
+    }
+
+    /**
+     * 增加
+     * @param p
+     * @return
+     */
+    public R insertOrders(@Pmap P p){
+
+        return R.success("success",iOrderService);
     }
 }

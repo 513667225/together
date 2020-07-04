@@ -16,20 +16,82 @@
 </blockquote>
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>订单基本信息展示</legend>
+    <legend>商铺基本信息展示</legend>
 </fieldset>
 
 <form class="layui-form" action="" lay-filter="shop">
     <div class="layui-form-item">
-        <label class="layui-form-label">店铺名称</label>
-        <div class="layui-input-block">
-            <input type="text" readonly="readonly" id="shopName" name="shopName" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        <div class="layui-inline">
+            <label class="layui-form-label">店铺名称</label>
+            <div class="layui-input-block">
+                <input type="text" readonly="readonly" id="shopName" name="shopName" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">公告语</label>
+            <div class="layui-input-block">
+                <input type="text" name="shopSlogan" id="shopSlogan" readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">商家头像</label>
+            <div class="layui-input-block">
+                <input type="text" name="shopIcon"  readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">公告语</label>
-        <div class="layui-input-block">
-            <input type="text" name="shopSlogan" id="shopSlogan" readonly  autocomplete="off" class="layui-input">
+        <div class="layui-inline">
+            <label class="layui-form-label">商家店面图片</label>
+            <div class="layui-input-block">
+                <input type="text" readonly="readonly" id="shopPic" name="shopPic" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">商家品类</label>
+            <div class="layui-input-block">
+                <input type="text" name="shopCategory"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">商家地址</label>
+            <div class="layui-input-block">
+                <input type="text" readonly="readonly" id="shopAddress" name="shopAddress" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">商家电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="shopTel"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">营业时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="shopTime"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">商家资质ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="aptitudeId"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="addTime"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">商铺用户ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="shopuserId"  readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
     <div class="layui-form-item">
@@ -38,65 +100,13 @@
             <input type="text" readonly="readonly" id="shopDetail" name="shopDetail" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">商家头像</label>
-        <div class="layui-input-block">
-            <input type="text" name="shopIcon"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">商家店面图片</label>
-        <div class="layui-input-block">
-            <input type="text" readonly="readonly" id="shopPic" name="shopPic" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">商家品类</label>
-        <div class="layui-input-block">
-            <input type="text" name="shopCategory"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">商家地址</label>
-        <div class="layui-input-block">
-            <input type="text" readonly="readonly" id="shopAddress" name="shopAddress" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">商家电话</label>
-        <div class="layui-input-block">
-            <input type="text" name="shopTel"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">营业时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="shopTime"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">商家资质ID</label>
-        <div class="layui-input-block">
-            <input type="text" name="aptitudeId"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">创建时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="addTime"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">商铺用户ID</label>
-        <div class="layui-input-block">
-            <input type="text" name="shopuserId"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
 </form>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>店铺所有订单</legend>
+</fieldset>
+<table class="layui-hide" id="order_table" lay-skin="line" lay-filter="order_table">
+</table>
 
 <script src="/js/layui/layui.all.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
@@ -104,12 +114,64 @@
 
     var shopBasicData=parent.window.data;
 
+    layui.use('table', function () {
+        var $ = layui.jquery;
+        var table = layui.table;
+        table.render({
+            elem: '#order_table',
+            url: '/orders/getShopOrders?shop_id=' + shopBasicData.shopId,
+            method: 'get',
+            cols: [[
+                {type: 'checkbox'},
+                {field: 'shopId', width: 180, title: 'id'},
+                {field: 'orderSn', width: 100, title: '订单编号'},
+                {field: 'orderStatus', width: 150, title: '订单状态'},
+                {field: 'aftersaleStatus', width: 150, title: '售后状态'},
+                {field: 'orderConsignee', width: 200, title: '收货人名称'},
+                {field: 'orderTel', width: 180, title: '收货人手机号'},
+                {field: 'orderAddress', width: 100, title: '收货地址'},
+                {field: 'orderMessage', width: 150, title: '订单留言'},
+                {field: 'goodsPrice', width: 150, title: '总费用'},
+                {field: 'pindouPrice', width: 200, title: '拼豆减免费用'},
+                {field: 'orderPrice', width: 150, title: '订单费用'},
+                {field: 'actualPrice', width: 150, title: '实付费用'},
+                {field: 'payId', width: 200, title: '微信付款编号'},
+                {
+                    field: 'payTime', width: 180, title: '微信付款时间'
+                    , templet: function (d) {
+                        return createTime(d.payTime);
+                    }
+                },
+                {field: 'shipSn', width: 100, title: '发货编号'},
+                {
+                    field: 'shipTime', width: 150, title: '发货开始时间'
+                    , templet: function (d) {
+                        return createTime(d.shipTime);
+                    }
+                },
+                {
+                    field: 'confirmTime', width: 150, title: '收货时间'
+                    , templet: function (d) {
+                        return createTime(d.confirmTime);
+                    }
+                },
+                {field: 'comments', width: 200, title: '待评价订单商品数量'},
+                {
+                    field: 'endTime', width: 150, title: '订单关闭时间'
+                    , templet: function (d) {
+                        return createTime(d.endTime);
+                    }
+                },
+            ]],
+        });
+    })
+
+
     layui.use(['form', 'layedit', 'laydate'], function(){
         var form = layui.form
             ,layer = layui.layer
             ,layedit = layui.layedit
             ,laydate = layui.laydate;
-
 
         //表单赋值
         function init(){
@@ -137,6 +199,21 @@
         });
 
     });
+
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+        return str;
+    }
 </script>
 
 </body>

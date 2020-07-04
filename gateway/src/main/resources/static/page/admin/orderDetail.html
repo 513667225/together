@@ -140,6 +140,7 @@
 </form>
 
 <script src="/js/layui/layui.all.js"></script>
+<script src="/js/util/date.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
 
@@ -156,17 +157,27 @@
         function init(){
 
             form.val('order', {
-                "order_address": orderBasicData.order_address // "name": "value"
-                ,"order_message": orderBasicData.order_message
+                "shop_id": orderBasicData.shop_id
                 ,"order_sn": orderBasicData.order_sn
-                ,"order_status": orderBasicData.order_status //复选框选中状态
-                ,"goods_price": orderBasicData.goods_price //开关状态
+                ,"order_status": orderBasicData.order_status
+                ,"aftersale_status": orderBasicData.aftersale_status // "name": "value"
+                ,"order_consignee": orderBasicData.order_consignee
+                ,"order_tel": orderBasicData.order_tel
+                ,"order_address": orderBasicData.order_address //复选框选中状态
+                ,"order_message": orderBasicData.order_message //开关状态
+                ,"goods_price": orderBasicData.goods_price
                 ,"freight_price": orderBasicData.freight_price
-                ,"pindou_price": orderBasicData.pindou_price
+                ,"pindou_price":orderBasicData.pindou_price
                 ,"order_price":orderBasicData.order_price
                 ,"actual_price":orderBasicData.actual_price
-                ,"user_mobile":orderBasicData.user_mobile
-                ,"order_consignee":orderBasicData.order_consignee
+                ,"pay_id":orderBasicData.pay_id
+                ,"pay_time": orderBasicData.pay_time
+                ,"ship_sn": orderBasicData.ship_sn
+                ,"ship_channel": orderBasicData.ship_channel
+                ,"ship_time":orderBasicData.ship_time
+                ,"confirm_time":orderBasicData.confirm_time
+                ,"comments":orderBasicData.comments
+                ,"end_time":orderBasicData.end_time
             });
         }
 
@@ -180,6 +191,21 @@
         });
 
     });
+
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+        return str;
+    }
 </script>
 
 </body>

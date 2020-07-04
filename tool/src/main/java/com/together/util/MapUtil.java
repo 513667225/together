@@ -2,17 +2,40 @@ package com.together.util;
 
 import java.util.*;
 
+/**
+ * map操作帮助类
+ * @author  Agu
+ */
 public class MapUtil {
 
-
+    /**
+     * 将map里面所有key 生成为sql语句 同时驼峰转下划线
+     * @param map
+     * @return
+     * @throws Exception
+     */
     public  static String mapToSqlUpper2Line(Map map)throws Exception{
-        return mapToSql(mapKeySetUpper2Line(map));
+        mapKeySetUpper2Line(map);
+        return mapToSql(map);
     }
 
+    /**
+     * 将map里面所有key 生成为sql语句 同时下划线转驼峰
+     * @param map
+     * @return
+     * @throws Exception
+     */
     public  static String mapToSqlLine2Upper(Map map) throws Exception{
-        return mapToSql(mapKeySetLine2Upper(map));
+        mapKeySetLine2Upper(map);
+        return mapToSql(map);
     }
 
+
+    /**
+     * map转化为sql 格式:key=#{key}
+     * @param map
+     * @return
+     */
     public  static String mapToSql(Map map){
         Set<Map.Entry> set = map.entrySet();
         String sql = "";
@@ -25,38 +48,45 @@ public class MapUtil {
         return sql;
     }
 
-    public static void main(String[] args) throws Exception {
-        HashMap<String, String> objectObjectHashMap = new HashMap<>();
-        objectObjectHashMap.put("xx_x","123");
-        objectObjectHashMap.put("xx1","123");
-        objectObjectHashMap.put("xx2","123");
-        System.out.println(mapToSqlLine2Upper(objectObjectHashMap));
-    }
 
-
-
-
-    public static Map mapKeySetUpper2Line(Map map) throws Exception {
+    /**
+     * map里面所有key 驼峰转下划线
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    public static void mapKeySetUpper2Line(Map map) throws Exception {
         Set<Map.Entry> set = map.entrySet();
+        Set removeSet = new HashSet();
         Map map1 = new HashMap();
         for (Map.Entry entry : set) {
             String s = Map2JavaBeanUtil.transUpper2UnderLine(entry.getKey().toString());
             map1.put(s,entry.getValue());
+            removeSet.add(entry.getKey());
         }
-        return map1;
+        map.putAll(map1);
+        map.keySet().removeAll(removeSet);
     }
 
-    public static Map mapKeySetLine2Upper(Map map) throws Exception {
+    /**
+     * map里面所有key 下划线转驼峰
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    public static void mapKeySetLine2Upper(Map map) throws Exception {
         Set<Map.Entry> set = map.entrySet();
+        Set removeSet = new HashSet();
         Map map1 = new HashMap();
         for (Map.Entry entry : set) {
             String s = Map2JavaBeanUtil.transUnderLine2Upper(entry.getKey().toString());
             map1.put(s,entry.getValue());
-//            removeSet.add(entry.getKey());
+            removeSet.add(entry.getKey());
         }
-        return map1;
-//        map.keySet().remove(removeSet);
+        map.putAll(map1);
+        map.keySet().removeAll(removeSet);
     }
+
 
 
 }
