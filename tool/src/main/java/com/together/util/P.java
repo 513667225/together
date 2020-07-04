@@ -48,8 +48,7 @@ public class P extends HashMap<String,Object> {
      * @throws Exception
      */
     public void thisToEntityUpper2Line(Object obj) throws Exception {
-        MapUtil.mapKeySetUpper2Line(this);
-        thisToEntity(obj);
+        thisToEntity(obj,true);
     }
 
     /**
@@ -70,9 +69,9 @@ public class P extends HashMap<String,Object> {
      * @throws Exception
      */
     public <T> T thisToEntityUpper2Line(Class<T> toClass) throws Exception {
-//        this.keySet()
-        MapUtil.mapKeySetUpper2Line(this);
-        return thisToEntity(toClass);
+        T t = toClass.newInstance();
+        thisToEntity(t,true);
+        return t;
     }
 
     /**
@@ -98,6 +97,11 @@ public class P extends HashMap<String,Object> {
         Map2JavaBeanUtil.transMap2Bean(this,toObj);
     }
 
+    public void thisToEntity(Object toObj,boolean b) throws Exception {
+
+        Map2JavaBeanUtil.transMap2Bean(this,toObj,b);
+    }
+
     /**
      *  参考 @see R  里面的同方法
      *  区别： 此方法是将自己本身转化
@@ -108,6 +112,7 @@ public class P extends HashMap<String,Object> {
 
         return (T) Map2JavaBeanUtil.transMap2Bean(this,toClass);
     }
+
 
 
     /**

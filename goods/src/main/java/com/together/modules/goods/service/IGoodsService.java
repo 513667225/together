@@ -19,6 +19,6 @@ import java.util.Map;
  */
 public interface IGoodsService extends IService<GoodsEntity> {
 
-    R queryGoodsByShopId(Map<String, Object> map);
+    R queryGoodsByShopId(Map<String, Object> map) throws Exception;
 
 }

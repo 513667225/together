@@ -28,21 +28,65 @@
     <a class="layui-btn layui-btn-sm" lay-event="checkGoodsPicDetail">查看详情</a>
 </script>
 
+<script type="text/html" id="toolbarDemo">
+    <form class="layui-form" action="">
+        <div class="layui-form-item" style="height:30px;width:120px;">
+            <select id="searchOption" name="searchOption" lay-filter="searchOption">
+                <option value="0" selected="">商品名字</option>
+                <option value="1">分类名称</option>
+            </select>
+        </div>
+        <div class="layui-form-item" style="margin-left: 300px;">
+            <input autocomplete="off" type="text" class="text layui-input" style="position: absolute;left: 150px;top:10px;width:157px;" name="searchKeywords" id="searchKeywords" placeholder="请输入关键词">
+            <a id="serchBtn" lay-submit="" lay-filter="serchBtn" style="position: absolute;left: 276px;top:15px;">
+                <i class="layui-icon layui-icon-search" style="background:#fff;padding:5px;"></i>
+            </a>
+        </div>
+    </form>
+</script>
+
 <div>
 
 </div>
 
 </body>
 <script>
-    layui.use('table', function () {
+    layui.use(['table','form'], function () {
         var $ = layui.jquery;
         var table = layui.table;
+        var $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        form.render();
+
+        form.on('submit(serchBtn)', function(data) {
+            table.reload('goods_table', {
+                method: 'get',
+                where: {
+                    shopId:'1',
+                    searchOption: data.field.searchOption,
+                    searchKeywords:data.field.searchKeywords
+                },
+                page: {
+                    curr: 1
+                }
+            });
+            return false;
+        })
+
         table.render({
             elem: '#goods_table',
+            id:'goods_table',
             url: '/goods/getGoodsPage',
             method: 'get',
+            toolbar: '#toolbarDemo',
+            where:{
+                shopId:'1',
+            },
             cols: [[
-                {type: 'checkbox'},
                 {field: 'goodsId', width: 100, title: 'ID'},
                 {field: 'goodsName', title: '商品名称', sort: true},
                 {field: 'categoryName', width: 110, title: '商品分类', sort: true, align: 'center'},

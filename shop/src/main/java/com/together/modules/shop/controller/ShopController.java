@@ -2,8 +2,10 @@ package com.together.modules.shop.controller;
 
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.together.annotation.Pmap;
+import com.together.config.KdniaoTrackQueryAPI;
 import com.together.modules.shop.service.IShopService;
 import com.together.util.P;
 import com.together.util.R;
@@ -42,26 +44,11 @@ public class ShopController {
         return shopService.queryAllShop(p);
     }
 
-
-    /**
-     * 新增
-     * @param p
-     * @return
-     */
-    /*@PostMapping
-    public R saveShopById(@Pmap P p){
-        return R.ok(shopService.saveShopById(p));
-    }*/
-
-    /**
-     * 修改
-     * @param p
-     * @return
-     */
-    /*@PutMapping
-    public R updShopById(@Pmap P p){
-        return R.ok(shopService.updShopById(p));
-    }*/
+    @GetMapping("/getShipByShipSn")
+    public R getShipByShipSn(@Pmap P p) throws Exception {
+        KdniaoTrackQueryAPI api = new KdniaoTrackQueryAPI();
+        return R.success("操作成功", api.getOrderTracesByJson(p.getString("ship_channel"), p.getString("ship_sn")));
+    }
 
 
 }
