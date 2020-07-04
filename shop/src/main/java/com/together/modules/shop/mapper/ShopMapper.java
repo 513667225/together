@@ -16,7 +16,6 @@ import java.util.Map;
  */
 public interface ShopMapper extends BaseMapper<ShopEntity> {
 
-    List<Map<String, Object>> queryAllShop(Map<String, Object> map);
     int queryAllShopCount(Map<String, Object> map);
 
 }
