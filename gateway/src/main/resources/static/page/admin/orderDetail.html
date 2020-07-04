@@ -21,119 +21,127 @@
 
 <form class="layui-form" action="" lay-filter="order">
     <div class="layui-form-item">
-        <label class="layui-form-label">订单编号</label>
-        <div class="layui-input-block">
-            <input type="text" readonly="readonly" id="shopId" name="shopId" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        <div class="layui-inline">
+            <label class="layui-form-label">订单编号</label>
+            <div class="layui-input-block">
+                <input type="text" readonly="readonly" id="shopId" name="shopId" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">订单状态</label>
+            <div class="layui-input-block">
+                <input type="text" name="orderStatus" id="orderStatus" readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">售后状态</label>
+            <div class="layui-input-block">
+                <input type="text" readonly="readonly" id="aftersaleStatus" name="aftersaleStatus" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">订单状态</label>
-        <div class="layui-input-block">
-            <input type="text" name="orderStatus" id="orderStatus" readonly  autocomplete="off" class="layui-input">
+        <div class="layui-inline">
+            <label class="layui-form-label">收货人名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="orderConsignee" id="orderConsignee" readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">收货人手机号</label>
+            <div class="layui-input-block">
+                <input type="text" readonly="readonly" id="orderTel" name="orderTel" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">收货具体地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="orderAddress" id="orderAddress"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">商品总费用</label>
+            <div class="layui-input-block">
+                <input type="text" name="goodsPrice" id="goodsPrice" readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">配送费用</label>
+            <div class="layui-input-block">
+                <input type="text" name="freightPrice" id="freightPrice"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">拼豆减免费用</label>
+            <div class="layui-input-block">
+                <input type="text" name="pindouPrice" id="pindouPrice"  readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">售后状态</label>
-        <div class="layui-input-block">
-            <input type="text" readonly="readonly" id="aftersaleStatus" name="aftersaleStatus" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">实付费用</label>
+            <div class="layui-input-block">
+                <input type="text" name="actualPrice" id="actualPrice" readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">收货人名称</label>
-        <div class="layui-input-block">
-            <input type="text" name="orderConsignee" id="orderConsignee" readonly  autocomplete="off" class="layui-input">
+        <div class="layui-inline">
+            <label class="layui-form-label">微信付款编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="payId" id="payId" readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">微信付款时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="payTime" id="payTime"  readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">收货人手机号</label>
-        <div class="layui-input-block">
-            <input type="text" readonly="readonly" id="orderTel" name="orderTel" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">发货编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="shipSn" id="shipSn"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">发货开始时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="shipTime" id="shipTime"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">用户确认收货时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="confirmTime" id="confirmTime" readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">收货具体地址</label>
-        <div class="layui-input-block">
-            <input type="text" name="orderAddress" id="orderAddress"  readonly  autocomplete="off" class="layui-input">
+        <div class="layui-inline">
+            <label class="layui-form-label">订单关闭时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="endTime" id="endTime"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="addTime" id="addTime"  readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
-
     <div class="layui-form-item">
         <label class="layui-form-label">订单留言</label>
         <div class="layui-input-block">
             <input type="text" readonly="readonly" id="orderMessage" name="orderMessage" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">商品总费用</label>
-        <div class="layui-input-block">
-            <input type="text" name="goodsPrice" id="goodsPrice" readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">配送费用</label>
-        <div class="layui-input-block">
-            <input type="text" name="freightPrice" id="freightPrice"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">拼豆减免费用</label>
-        <div class="layui-input-block">
-            <input type="text" name="pindouPrice" id="pindouPrice"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">实付费用</label>
-        <div class="layui-input-block">
-            <input type="text" name="actualPrice" id="actualPrice" readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">微信付款编号</label>
-        <div class="layui-input-block">
-            <input type="text" name="payId" id="payId" readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">微信付款时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="payTime" id="payTime"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">发货编号</label>
-        <div class="layui-input-block">
-            <input type="text" name="shipSn" id="shipSn"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">发货开始时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="shipTime" id="shipTime"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">用户确认收货时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="confirmTime" id="confirmTime" readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">订单关闭时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="endTime" id="endTime"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">创建时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="addTime" id="addTime"  readonly  autocomplete="off" class="layui-input">
         </div>
     </div>
 
