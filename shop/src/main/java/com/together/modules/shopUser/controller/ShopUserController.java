@@ -39,6 +39,9 @@ public class ShopUserController {
         p.remove("page");
         p.remove("limit");
         p.remove("rowIndex");
+        if(""==p.getString("shopuser_name")){
+            p.remove("shopuser_name");
+        }
         Page<ShopUserEntity> pageObject = shopUserService.page(objectPage,new QueryWrapper<ShopUserEntity>().allEq(p));
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }

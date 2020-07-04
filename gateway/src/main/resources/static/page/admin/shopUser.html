@@ -40,11 +40,11 @@
 
         form.render();
         form.on('submit(serchBtn)', function(data) {
-            var sel = data.field.searchOption;
+            var sel = data.field.searchKeywords.trim();
             table.reload('shopUserTable', {
                 method: 'get',
                 where: {
-                    shopuser_name: data.field.searchKeywords,
+                    shopuser_name: sel,
                 },
                 page: {
                     curr: 1
