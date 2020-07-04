@@ -45,8 +45,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     }
 
     @Override
-    public R queryOrderGoods(P p) {
+    public R queryOrderGoods(P p) throws Exception {
         List<Map<String, Object>> maps = orderMapper.queryOrderGoods(p);
+        for (Map<String, Object> map : maps) {
+            MapUtil.mapKeySetLine2Upper(map);
+        }
         return R.success().data(maps);
     }
 
