@@ -42,7 +42,7 @@ public class OrderController {
 
 
     @RequestMapping("getOrderGoods")
-    public R getOrderGoods(@Pmap P p){
+    public R getOrderGoods(@Pmap P p) throws Exception {
         p.batchToInt("order_id");
         return iOrderService.queryOrderGoods(p);
     }
