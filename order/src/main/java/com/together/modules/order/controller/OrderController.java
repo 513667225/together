@@ -57,7 +57,7 @@ public class OrderController {
 
     /**
      * 修改
-     * @param orderEntity
+     * @param p
      * @return
      */
 
@@ -69,6 +69,7 @@ public class OrderController {
         orderEntity.setShipSn(p.getString("ship_sn"));
         orderEntity.setOrderId(p.getInt("order_id"));
         orderEntity.setShipChannel(p.getString("ship_channel"));
+        orderEntity.setShipTime(date);
 //        p.thisToEntityLine2Upper(orderEntity);
         return R.success("success",iOrderService.updateById(orderEntity));
     }
