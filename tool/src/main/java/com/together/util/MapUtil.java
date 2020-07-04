@@ -15,7 +15,8 @@ public class MapUtil {
      * @throws Exception
      */
     public  static String mapToSqlUpper2Line(Map map)throws Exception{
-        return mapToSql(mapKeySetUpper2Line(map));
+        mapKeySetUpper2Line(map);
+        return mapToSql(map);
     }
 
     /**
@@ -25,7 +26,8 @@ public class MapUtil {
      * @throws Exception
      */
     public  static String mapToSqlLine2Upper(Map map) throws Exception{
-        return mapToSql(mapKeySetLine2Upper(map));
+        mapKeySetLine2Upper(map);
+        return mapToSql(map);
     }
 
 
@@ -53,14 +55,17 @@ public class MapUtil {
      * @return
      * @throws Exception
      */
-    public static Map mapKeySetUpper2Line(Map map) throws Exception {
+    public static void mapKeySetUpper2Line(Map map) throws Exception {
         Set<Map.Entry> set = map.entrySet();
+        Set removeSet = new HashSet();
         Map map1 = new HashMap();
         for (Map.Entry entry : set) {
             String s = Map2JavaBeanUtil.transUpper2UnderLine(entry.getKey().toString());
             map1.put(s,entry.getValue());
+            removeSet.add(entry.getKey());
         }
-        return map1;
+        map.putAll(map1);
+        map.keySet().removeAll(removeSet);
     }
 
     /**
@@ -69,17 +74,19 @@ public class MapUtil {
      * @return
      * @throws Exception
      */
-    public static Map mapKeySetLine2Upper(Map map) throws Exception {
+    public static void mapKeySetLine2Upper(Map map) throws Exception {
         Set<Map.Entry> set = map.entrySet();
+        Set removeSet = new HashSet();
         Map map1 = new HashMap();
         for (Map.Entry entry : set) {
             String s = Map2JavaBeanUtil.transUnderLine2Upper(entry.getKey().toString());
             map1.put(s,entry.getValue());
-//            removeSet.add(entry.getKey());
+            removeSet.add(entry.getKey());
         }
-        return map1;
-//        map.keySet().remove(removeSet);
+        map.putAll(map1);
+        map.keySet().removeAll(removeSet);
     }
+
 
 
 }
