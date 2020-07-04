@@ -41,13 +41,22 @@ public class OrderController {
         return iOrderService.getOrderPage(p);
     }
 
-
+    /**
+     * 根据订单id查询商品
+     * @param p
+     * @return
+     */
     @RequestMapping("getOrderGoods")
     public R getOrderGoods(@Pmap P p) throws Exception {
         p.batchToInt("order_id");
         return iOrderService.queryOrderGoods(p);
     }
 
+    /**
+     * 根据店铺id查询订单
+     * @param p
+     * @return
+     */
     @RequestMapping("getShopOrders")
     public R getShopOrders(@Pmap P p) throws Exception {
         p.batchToInt("shop_id");
@@ -63,12 +72,12 @@ public class OrderController {
      */
     @RequestMapping("/queryOrdersById")
     public R queryOrdersById(@Pmap P p){
-        OrderEntity orderId = iOrderService.getById(p.getInt("orderId"));
+        OrderEntity orderId = iOrderService.getById(p.getInt("order_id"));
         return R.success("操作成功",orderId);
     }
 
     /**
-     * 修改
+     * 修改订单
      * @param p
      * @return
      */
@@ -83,10 +92,14 @@ public class OrderController {
         orderEntity.setShipChannel(p.getString("ship_channel"));
         orderEntity.setShipTime(date);
         orderEntity.setUpdateTime(date);
-//        p.thisToEntityLine2Upper(orderEntity);
         return R.success("success",iOrderService.updateById(orderEntity));
     }
 
+    /**
+     * 删除订单
+     * @param p
+     * @return
+     */
     @RequestMapping("/delOrders")
     public R delOrders(@Pmap P p){
         if (iOrderService.removeById(p.getInt("order_id"))) {
@@ -98,7 +111,7 @@ public class OrderController {
     }
 
     /**
-     * 增加
+     * 增加订单
      * @param p
      * @return
      */
