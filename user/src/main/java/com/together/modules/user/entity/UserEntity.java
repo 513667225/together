@@ -96,7 +96,7 @@ public class UserEntity implements Serializable {
 
 
     /**
-     * 
+     * 团队人数
      */
     private int goupSize;
 
@@ -104,6 +104,18 @@ public class UserEntity implements Serializable {
      * 直邀人数
      */
     private int underlingSize;
+
+
+    //顶层邀请人
+    private Integer topRefereeId;
+
+    public Integer getTopRefereeId() {
+        return topRefereeId;
+    }
+
+    public void setTopRefereeId(Integer topRefereeId) {
+        this.topRefereeId = topRefereeId;
+    }
 
     public int getGoupSize() {
         return goupSize;

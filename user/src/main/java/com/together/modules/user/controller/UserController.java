@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
 import com.together.modules.user.entity.UserEntity;
+import com.together.modules.user.entity.UserSuperstratumRelationDo;
 import com.together.modules.user.service.IUserService;
 import com.together.util.P;
 import com.together.util.R;
@@ -13,6 +14,7 @@ import com.together.util.utli.ValidateUtli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -46,6 +48,12 @@ public class UserController {
         p.remove("page");
         p.remove("limit");
         p.remove("rowIndex");
+        if(""==p.getString("user_mobile")){
+            p.remove("user_mobile");
+        }
+        if(""==p.getString("user_name")){
+            p.remove("user_name");
+        }
         Page<UserEntity> objectPage = new Page<>(page, limit);
         Page<UserEntity> pageObject=userService.page(objectPage,new QueryWrapper<UserEntity>().allEq(p));
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
@@ -95,29 +103,26 @@ public class UserController {
         userService.test(p);
         return R.success();
     }
-    @RequestMapping("")
-    public R updateUserPhone(){
+    @RequestMapping("/insertAndUpdatePhone")
+    public R updateUserPhone(@Pmap P p) throws Exception {
+        userService.updateUserPhone(p);
         return R.error("登录失败").data(ResponseUtli.NullToMap());
     }
 
 
+    //根据用户id查询推荐人和推荐人的推荐人
+//    @RequestMapping("/selectUserReferrer")
+//    public R selectUserReferrer(@Pmap P p) throws Exception {
+//        Map<String, Object> stringObjectMap = userService.selectUserReferrer(p);
+//        return R.success("success").data(stringObjectMap);
+//    }
 
-    /**
-     * 单个查询订单状态
-     * id 团购单id
-     * @return R
-     * @throws Exception
-     */
-    @RequestMapping("/getGroupUserState")
-    @ResponseBody
-    public R getGroupUserState(@Pmap P p) throws Exception {
-        ValidateUtli.validateParams(p,"id");
-        Map<String, Object> groupUserState = userService.getGroupUserState(p);
-        R r=R.success("success",groupUserState);
-        r.put("code",200);
-        return r;
+    //根据用户id查询上级服务经理
+    @RequestMapping("/UserReferrerDorecursion")
+    public R selectUserReferrerInManager(@Pmap P p) throws Exception {
+        ArrayList<UserSuperstratumRelationDo>  userSuperstratumRelationDos=userService.userReferrerDorecursion(p);
+        return R.success("success").data(userSuperstratumRelationDos);
     }
-
 
 
 

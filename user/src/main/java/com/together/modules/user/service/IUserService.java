@@ -3,8 +3,10 @@ package com.together.modules.user.service;
 import com.alibaba.fastjson.JSONObject;
 import com.together.modules.user.entity.UserEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.together.modules.user.entity.UserSuperstratumRelationDo;
 import com.together.util.P;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -26,6 +28,13 @@ public interface IUserService extends IService<UserEntity> {
     UserEntity getUserByName(P p);
     UserEntity getUserLogin(Map<String,Object> param);
     Map<String, Object> getGroupUserState(P p);
+    Map<String, Object> selectUserReferrer(P p) throws Exception;
 
     void test(P p);
+
+    Map<String, Object> selectUserReferrerInManager(P p);
+
+    void updateUserPhone(P p) throws Exception;
+
+    ArrayList<UserSuperstratumRelationDo> userReferrerDorecursion(P p) throws Exception;
 }

@@ -38,9 +38,9 @@ public class RedisConfig{
     @Bean
     public JedisPoolConfig jedisPoolConfig(){
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxTotal(1500);  //最大连接数
-        jedisPoolConfig.setMaxIdle(1500); //最大空闲连接数
-        jedisPoolConfig.setMinIdle(500);   //最小空闲连接数
+        jedisPoolConfig.setMaxTotal(15000);  //最大连接数
+        jedisPoolConfig.setMaxIdle(15000); //最大空闲连接数
+        jedisPoolConfig.setMinIdle(5000);   //最小空闲连接数
         jedisPoolConfig.setMaxWaitMillis(20000); //获取连接时最大等待时间
 //        jedisPoolConfig.setTestOnBorrow(true); //获取连接时检查是否可用
 //        jedisPoolConfig.setTestOnReturn(true); //返回连接时检查是否可用
@@ -65,7 +65,7 @@ public class RedisConfig{
 
     @Bean
     public JedisPool jedisPool(JedisPoolConfig jedisPoolConfig){
-        return new JedisPool(jedisPoolConfig,"203.195.134.30",6379);
+        return new JedisPool(jedisPoolConfig,"47.114.38.198",6379);
     }
 
     @Bean
@@ -74,7 +74,7 @@ public class RedisConfig{
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setDatabase(0);
         redisStandaloneConfiguration.setPort(6379);
-        redisStandaloneConfiguration.setHostName("203.195.134.30");
+        redisStandaloneConfiguration.setHostName("47.114.38.198");
         return new JedisConnectionFactory(redisStandaloneConfiguration, jedisClientConfiguration);
     }
 
