@@ -1,4 +1,4 @@
-package com.together.listener;
+package com.together.modules.sendOut.listener;
 
 
 import com.together.parameter.MqParameter;
@@ -12,11 +12,13 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ReMoneyListener {
+public class SendOutListener {
 
 
     @Autowired
     SetOperations setOperations;
+
+
 
     @Autowired
     MqUtil mqUtil;
