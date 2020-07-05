@@ -2,6 +2,7 @@ package com.together.modules.order.controller;
 
 
 import com.together.annotation.Pmap;
+import com.together.entity.GoodsEntity;
 import com.together.modules.order.entity.OrderEntity;
 import com.together.modules.order.service.IOrderService;
 import com.together.modules.order.serviceClient.GoodsServiceClient;
@@ -115,8 +116,10 @@ public class OrderController {
      * @param p
      * @return
      */
-    public R insertOrders(@Pmap P p,OrderEntity orderEntity){
-
+    public R insertOrders(@Pmap P p,OrderEntity orderEntity,GoodsEntity goodsEntity){
+        boolean save = iOrderService.save(orderEntity);
+        if (orderEntity.getOrderId()!=0){
+        }
         return R.success("success",iOrderService.save(orderEntity));
     }
 }
