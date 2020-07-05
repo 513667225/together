@@ -109,7 +109,11 @@ public class MapUtil {
      * @return
      */
     public static Integer getInt(Map map,String key){
-        return Integer.parseInt(getString(map, key));
+        String string = getString(map, key);
+        if ( string== null) {
+            return null;
+        }
+        return Integer.parseInt(string);
     }
 
     /**
