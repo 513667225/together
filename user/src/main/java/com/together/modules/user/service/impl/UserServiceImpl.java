@@ -4,13 +4,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.together.modules.user.entity.UserEntity;
+import com.together.modules.user.entity.UserSuperstratumRelationDo;
 import com.together.modules.user.mapper.UserMapper;
 import com.together.modules.user.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.together.modules.user.timing.UserRelationDepue;
 import com.together.util.P;
 import com.together.util.utli.PayConstants;
 import com.together.util.utli.RedisIdUtil;
 import com.together.util.utli.ResponseUtli;
+import com.together.util.utli.ValidateUtli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpMethod;
@@ -35,6 +38,7 @@ import java.util.*;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements IUserService {
+
 
 
     @Autowired
@@ -110,6 +114,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 userEntity.setUserStatus(0);
                 if(userReferrer!=null){
                     userEntity.setUserReferrer(userReferrer);//  推荐人id
+                    //维护顶层推荐人
+                    UserEntity userReferrerentity = baseMapper.selectById(userReferrer);
+                    if(userReferrerentity!=null&&userReferrerentity.getTopRefereeId()!=null){
+                        userEntity.setTopRefereeId(userReferrerentity.getTopRefereeId());
+                    }else{
+                        userEntity.setTopRefereeId(userReferrer);
+                    }
                 }
                 baseMapper.insert(userEntity);
                 //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
@@ -125,6 +136,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                     throw new RuntimeException();
                 }
             }
+            System.out.println(map.get("session_key"));
             //TODO: 保存session_key
             valueOperations.set(String.valueOf(userEntity.getUserId()),map.get("session_key"));
             return userEntity;
@@ -176,10 +188,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                break;
            case 2:
                userEntity.setManagerSize(userEntity.getManagerSize()+1);
+               UserRelationDepue.linkedBlockingQueue.add(userEntity.getUserId());
                ManagerSize=true;
                break;
            case 3:
                userEntity.setMajordomoSize(userEntity.getMajordomoSize()+1);
+               UserRelationDepue.linkedBlockingQueue.add(userEntity.getUserId());
                break;
        }
         return ManagerSize;
@@ -283,26 +297,92 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public void test(P p) {
-        UserEntity userEntity = baseMapper.selectById(10002);
-        for (int i = p.getInt("start"); i <= (p.getInt("size")+p.getInt("start")); i++) {
-            userEntity.setUserId(i);
-            userEntity.setMajordomoSize(0);
-            userEntity.setManagerSize(0);
-            userEntity.setMemberSize(0);
-            userEntity.setTeammanagerSize(0);
-            userEntity.setGoupSize(0);
-            userEntity.setUnderlingSize(0);
-            userEntity.setUserReferrer(p.getInt("referrer_id"));
-            userEntity.setUserLevel(0);
-            baseMapper.insert(userEntity);
-            //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
-            if(userEntity.getUserReferrer()!=null){
-                //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
-                isUpdateMessage(userEntity.getUserReferrer(),true,-1,false);
+    public Map<String, Object> selectUserReferrer(P p) throws Exception {
+        ValidateUtli.validateParams(p,"user_id");
+        Map<String,Object> map=new HashMap<>();
+        UserEntity userEntity = baseMapper.selectById(p.getInt("user_id"));
+        if(userEntity!=null){
+            UserEntity userEntity2 = returnData(map, userEntity, "directReferrerId");
+            if(userEntity2!=null){
+                returnData(map, userEntity2, "managerReferrerId");
             }
         }
+        return map;
     }
 
+    public UserEntity returnData(Map<String,Object> map,UserEntity userEntity,String key){
+        if(userEntity.getUserReferrer()!=null){
+            UserEntity userEntity2 = baseMapper.selectById(userEntity.getUserReferrer());
+            if(userEntity2.getUserLevel()==1||
+                    userEntity2.getUserLevel()==2||
+                    userEntity2.getUserLevel()==3){
+                map.put(key,userEntity.getUserReferrer());
+            }
+            return userEntity2;
+        }
+        map.put(key,null);
+        return null;
+    }
+
+
+
+
+    @Override
+    public void test(P p) {
+        UserEntity userEntity = baseMapper.selectById(10002);
+        UserRelationDepue.linkedBlockingQueue.add(userEntity.getUserId());
+//        for (int i = p.getInt("start"); i <= (p.getInt("size")+p.getInt("start")); i++) {
+//            userEntity.setUserId(i);
+//            userEntity.setMajordomoSize(0);
+//            userEntity.setManagerSize(0);
+//            userEntity.setMemberSize(0);
+//            userEntity.setTeammanagerSize(0);
+//            userEntity.setGoupSize(0);
+//            userEntity.setUnderlingSize(0);
+//            userEntity.setUserReferrer(p.getInt("referrer_id"));
+//            userEntity.setUserLevel(0);
+//            baseMapper.insert(userEntity);
+//            //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
+//            if(userEntity.getUserReferrer()!=null){
+//                //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
+//                isUpdateMessage(userEntity.getUserReferrer(),true,-1,false);
+//            }
+//        }
+    }
+
+    @Override
+    public Map<String, Object> selectUserReferrerInManager(P p) {
+        return null;
+    }
+
+    @Override
+    public void updateUserPhone(P p) throws Exception {
+        ValidateUtli.validateParams(p,"user_id");
+
+    }
+
+    @Override
+    public ArrayList<UserSuperstratumRelationDo> userReferrerDorecursion(P p) throws Exception {
+        ValidateUtli.validateParams(p,"user_id");
+        Integer user_id = p.getInt("user_id");
+        if(user_id!=null){
+//            UserReferrerDo userReferrerDo1 = userReferrerDos.get(user_referrer);  //取出推荐人
+            ArrayList<UserSuperstratumRelationDo> userSuperstratumRelationDos = new ArrayList<>();
+            selectUserSuperstratum(userSuperstratumRelationDos, user_id);
+            return userSuperstratumRelationDos;
+        }
+        return null;
+    }
+
+    //根据用户id  查询上层所有经理或者总监级别以上
+    public void selectUserSuperstratum(ArrayList<UserSuperstratumRelationDo> userSuperstratumRelationDos,Integer user_id){
+        UserSuperstratumRelationDo userSuperstratumRelationDo = baseMapper.selectUserSuperstratum(user_id);
+        if(userSuperstratumRelationDo.getUserLevel()==2 || userSuperstratumRelationDo.getUserLevel()==3){
+            userSuperstratumRelationDos.add(userSuperstratumRelationDo);
+        }
+        if(userSuperstratumRelationDo.getUserReferrer()!=null){
+            selectUserSuperstratum(userSuperstratumRelationDos,userSuperstratumRelationDo.getUserReferrer());
+        }
+    }
 
 }

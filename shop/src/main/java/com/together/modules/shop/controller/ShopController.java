@@ -2,8 +2,12 @@ package com.together.modules.shop.controller;
 
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
+import com.together.config.KdniaoTrackQueryAPI;
+import com.together.modules.shop.entity.ShopEntity;
 import com.together.modules.shop.service.IShopService;
 import com.together.util.P;
 import com.together.util.R;
@@ -37,31 +41,29 @@ public class ShopController {
     }
 
     @GetMapping("/getAllShop")
-    public R getAllShop(@Pmap P p){
-        p.batchToInt("page","limit");
-        return shopService.queryAllShop(p);
+    public R getAllShop(@Pmap P p)throws Exception {
+        Integer page = p.getInt("page");
+        Integer limit = p.getInt("limit");
+        p.initPageArg();
+        Page<ShopEntity> objectPage = new Page<>(page,limit);
+        p.remove("page");
+        p.remove("limit");
+        p.remove("rowIndex");
+        if(""==p.getString("shop_name")){
+            p.remove("shop_name");
+        }
+        if(""==p.getString("shop_category")){
+            p.remove("shop_category");
+        }
+        Page<ShopEntity> pageObject = shopService.page(objectPage,new QueryWrapper<ShopEntity>().allEq(p));
+        return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
 
-
-    /**
-     * 新增
-     * @param p
-     * @return
-     */
-    /*@PostMapping
-    public R saveShopById(@Pmap P p){
-        return R.ok(shopService.saveShopById(p));
-    }*/
-
-    /**
-     * 修改
-     * @param p
-     * @return
-     */
-    /*@PutMapping
-    public R updShopById(@Pmap P p){
-        return R.ok(shopService.updShopById(p));
-    }*/
+    @GetMapping("/getShipByShipSn")
+    public R getShipByShipSn(@Pmap P p) throws Exception {
+        KdniaoTrackQueryAPI api = new KdniaoTrackQueryAPI();
+        return R.success("操作成功", api.getOrderTracesByJson(p.getString("ship_channel"), p.getString("ship_sn")));
+    }
 
 
 }

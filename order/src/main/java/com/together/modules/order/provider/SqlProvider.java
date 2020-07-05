@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class SqlProvider {
 
-    public String queryOrderPage(Map<String, Object> params){
+    public String getOrderPage(Map<String, Object> params){
         String sql ="select o.*,u.user_mobile,s.shop_name from " +
                 "order_bot o left join user u on o.user_id = u.user_id " +
                 "left join shop s on o.shop_id = s.shop_id " +
@@ -12,7 +12,7 @@ public class SqlProvider {
         return sql;
     }
 
-    public String queryOrderPageCount(Map<String, Object> params){
+    public String getOrderPageConut(Map<String, Object> params){
         String sql ="SELECT COUNT(0)  from order_bot o left join user u on o.user_id = u.user_id ";
         return sql;
     }

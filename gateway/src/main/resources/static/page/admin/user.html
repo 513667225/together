@@ -3,48 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>普通用户</title>
-    <link rel="stylesheet" href="/js/layui/css/layui.css">
 
 </head>
+<link rel="stylesheet" href="/js/layui/css/layui.css">
+<script src="/js/layui/layui.all.js"></script>
 <body>
 <br>
 
+<script type="text/html" id="toolbarDemo">
 <form class="layui-form" action="">
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">用户名：</label>
+            <label class="layui-form-label" style="width: 100px">手机号：</label>
             <div class="layui-input-inline">
-                <input type="text" name="productName" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
+                <input type="text" name="userMobile" placeholder="请输入手机号" autocomplete="off" class="layui-input">
             </div>
 
-            <label class="layui-form-label">用户：</label>
+            <label class="layui-form-label" style="width: 100px">用户名：</label>
             <div class="layui-input-inline">
-                <select name="shopCategory" id="shopCategory">
-                    <option value="">请选择</option>
-                </select>
+                <input type="text" name="userName" placeholder="请输入用户名" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <div class="layui-input-inline">
-                <button id="query_btn" class="layui-btn layui-btn-warm">搜索</button>
+                <button class="layui-btn layui-btn-warm" lay-submit="search_submits" lay-filter="serchBtn">搜索</button>
             </div>
         </div>
     </div>
 </form>
-<table class="layui-table" lay-even="" lay-skin="nob" id="userTable"></table>
-<script src="/js/layui/layui.all.js"></script>
-<script src="/js/jquery-1.7.2.min.js"></script>
+</script>
+<table class="layui-table" id="userTable"></table>
 <script>
     layui.use(['table','form'],function () {
         var $ = layui.jquery;
-        var table =  layui.table;
-        var form = layui.form;
+        var table = layui.table;
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        form.on('submit(serchBtn)', function(data) {
+            var userMobile = data.field.userMobile.trim();
+            var userName = data.field.userName.trim();
+            table.reload('userTable', {
+                method: 'get',
+                where: {
+                    user_mobile: userMobile,
+                    user_name:userName
+                },
+                page: {
+                    curr: 1
+                }
+            });
+            return false;
+        })
+
         table.render({
             elem: '#userTable'
+            ,toolbar: '#toolbarDemo'
             ,url:'/user/getUserPage'
-            ,where:{
-
-            }
             ,method: 'get'
             ,cellMinWidth: 80
             ,cols: [[
@@ -90,7 +107,7 @@
                 //每页数据量的参数名，默认：limit
                 , limitName: 'limit'
             },
-            id:'shopList'
+            id:'userTable'
 
         });
     })

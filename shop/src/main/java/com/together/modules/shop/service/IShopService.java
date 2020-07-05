@@ -19,11 +19,6 @@ import java.util.Map;
 public interface IShopService extends IService<ShopEntity> {
 
     /**
-     * 管理员接口,查询所有店铺信息
-     */
-    R queryAllShop(Map<String, Object> map);
-
-    /**
      * 根据用户id查询店铺集合 分页
      * @return
      */

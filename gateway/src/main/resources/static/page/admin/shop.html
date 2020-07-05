@@ -3,34 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>所有用户</title>
-    <link rel="stylesheet" href="/js/layui/css/layui.css">
 
 </head>
+<link rel="stylesheet" href="/js/layui/css/layui.css">
+<script src="/js/layui/layui.all.js"></script>
 <body>
 <br>
 
-<div class="div_table">
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">店铺名称：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="shopName" id="shopName" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
+<script type="text/html" id="toolbarDemo">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 130px">店铺名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="shopName" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
+                </div>
             </div>
-
-            <!--<label class="layui-form-label">商品品类：</label>
-            <div class="layui-input-inline">
-                <select name="shopCategory" id="shopCategory">
-                    <option value="">请选择</option>
-                </select>
-            </div>-->
-        </div>
-        <div class="layui-inline">
-            <div class="layui-input-inline">
-                <button id="query_btn" class="layui-btn layui-btn-warm">搜索</button>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 130px">商品品类：</label>
+                <div class="layui-input-inline">
+                    <select name="shopCategory" id="shopCategory">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <button class="layui-btn layui-btn-warm" lay-submit="search_submits" lay-filter="serchBtn">搜索</button>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </form>
+</script>
 <table class="layui-table" lay-skin="nob" id="admin_shopTable" lay-filter="admin_shopTable"></table>
 
 <script type="text/html" id="shopBar">
@@ -38,25 +42,44 @@
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="goodsView">商品列表</a>
 </script>
 
-<script src="/js/layui/layui.all.js"></script>
+<script src="/js/jquery-1.7.2.min.js"></script>
+
 <script>
     var data
     layui.use(['table','form'],function () {
         var $ = layui.jquery;
-        var table =  layui.table;
-        var form = layui.form;
+        var table = layui.table;
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        form.on('submit(serchBtn)', function(data) {
+            var shopName = data.field.shopName.trim();
+            var shopCategory = data.field.shopCategory.trim();
+            table.reload('admin_shopTable', {
+                method: 'get',
+                where: {
+                    shop_name: shopName,
+                    shop_category:shopCategory,
+                },
+                page: {
+                    curr: 1
+                }
+            });
+            return false;
+        })
         table.render({
             elem: '#admin_shopTable'
+            ,id:"admin_shopTable"
             ,url:'/shop/getAllShop'
-            ,where:{
-
-            }
+            ,toolbar: '#toolbarDemo'
             ,method: 'get'
             ,cellMinWidth: 80
             ,height: 300
             ,cols: [[
                 {type:'checkbox'}
-                ,{field:'shopId' , title: 'id', sort: true}
+                ,{field:'shopId' , title: 'id'}
                 ,{field:'shopName' , title: '店铺名称'}
                 ,{field:'shopSlogan', title: '公告语'}
                 ,{field:'shopDetail', title: '详情介绍'}
@@ -101,8 +124,6 @@
                 //每页数据量的参数名，默认：limit
                 , limitName: 'limit'
             },
-            id:'shopList'
-
         });
         //监听工具条
         table.on('tool(admin_shopTable)', function(obj) {
@@ -126,32 +147,9 @@
                     shadeClose:true,
                     content: "allGoods.html?shopId="+shopId
                 });
-            }else if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
-                    layer.close(index);
-                });
-            } else if(obj.event === 'edit'){
-                layer.alert('编辑行：<br>'+ JSON.stringify(data))
             }
         });
-        //获取商品类别
-        //getShopCategory();
-        // 执行搜索，表格重载
-        $('#query_btn').on('click', function () {
-            // 搜索条件
-            var shopName = $('#shopName').val();
-            /*var send_data = $('#send_data').val();*/
-            table.reload('admin_shopTable', {
-                method: 'get'
-                , where: {
-                    shopName: shopName,
-                }
-                , page: {
-                    curr: 1
-                }
-            });
-        });
+        getShopCategory();
     })
 
     /**
@@ -164,7 +162,7 @@
             ,success:function(res){
                 if(res.msg){
                     for(var i =0;i<res.data.length;i++){
-                        $("#shopCategory").append("<option value=\""+res.data[i].categoryId+"\">"+res.data[i].categoryName+"</option>");
+                        $("#shopCategory").append("<option value=\""+res.data[i].categoryName+"\">"+res.data[i].categoryName+"</option>");
                     }
                     //重新渲染
                     layui.form.render("select");

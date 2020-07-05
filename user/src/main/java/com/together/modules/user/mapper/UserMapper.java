@@ -3,6 +3,10 @@ package com.together.modules.user.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.together.modules.user.entity.UserEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.together.modules.user.entity.UserReferrerDo;
+import com.together.modules.user.entity.UserSuperstratumRelationDo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface UserMapper extends BaseMapper<UserEntity> {
 
     UserEntity selectOne(QueryWrapper<Object> eq);
+
+    List<UserReferrerDo> selectByuserReferrerId(Integer referrerId);
+
+    UserSuperstratumRelationDo selectUserSuperstratum(Integer user_id);
 }

@@ -28,7 +28,6 @@ public class GoodsController {
     @GetMapping("/getGoodsPage")
     public R getGoodsPage(@Pmap P p) throws Exception {
         System.out.println(p);
-        p.put("shopId",1);
         p.batchToInt("page","limit");
         return iGoodsService.queryGoodsByShopId(p);
     }
@@ -48,5 +47,7 @@ public class GoodsController {
         GoodsEntity goodsId = iGoodsService.getById(p.getInt("goodsId"));
         return R.success("操作成功",goodsId);
     }
+
+
 
 }

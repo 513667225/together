@@ -2,6 +2,7 @@ package com.together.modules.order.controller;
 
 
 import com.together.annotation.Pmap;
+import com.together.entity.GoodsEntity;
 import com.together.modules.order.entity.OrderEntity;
 import com.together.modules.order.service.IOrderService;
 import com.together.modules.order.serviceClient.GoodsServiceClient;
@@ -38,16 +39,34 @@ public class OrderController {
     @RequestMapping("getOrderPage")
     public R getOrderPage(@Pmap P p)throws Exception{
         p.batchToInt("page","limit");
+        if(""==p.getString("order_tel")){
+            p.remove("order_tel");
+        }
+        if(""==p.getString("order_consignee")){
+            p.remove("order_consignee");
+        }
+        if(""==p.getString("ship_sn")){
+            p.remove("ship_sn");
+        }
         return iOrderService.getOrderPage(p);
     }
 
-
+    /**
+     * 根据订单id查询商品
+     * @param p
+     * @return
+     */
     @RequestMapping("getOrderGoods")
     public R getOrderGoods(@Pmap P p) throws Exception {
         p.batchToInt("order_id");
         return iOrderService.queryOrderGoods(p);
     }
 
+    /**
+     * 根据店铺id查询订单
+     * @param p
+     * @return
+     */
     @RequestMapping("getShopOrders")
     public R getShopOrders(@Pmap P p) throws Exception {
         p.batchToInt("shop_id");
@@ -55,8 +74,20 @@ public class OrderController {
         return iOrderService.queryOrderByShopId(p);
     }
 
+
     /**
-     * 修改
+     * 根据订单ID查询订单
+     * @param p
+     * @return
+     */
+    @RequestMapping("/queryOrdersById")
+    public R queryOrdersById(@Pmap P p){
+        OrderEntity orderId = iOrderService.getById(p.getInt("order_id"));
+        return R.success("操作成功",orderId);
+    }
+
+    /**
+     * 修改订单
      * @param p
      * @return
      */
@@ -70,17 +101,34 @@ public class OrderController {
         orderEntity.setOrderId(p.getInt("order_id"));
         orderEntity.setShipChannel(p.getString("ship_channel"));
         orderEntity.setShipTime(date);
-//        p.thisToEntityLine2Upper(orderEntity);
+        orderEntity.setUpdateTime(date);
         return R.success("success",iOrderService.updateById(orderEntity));
     }
 
     /**
-     * 增加
+     * 删除订单
      * @param p
      * @return
      */
-    public R insertOrders(@Pmap P p,OrderEntity orderEntity){
+    @RequestMapping("/delOrders")
+    public R delOrders(@Pmap P p){
+        if (iOrderService.removeById(p.getInt("order_id"))) {
+            return R.success("删除成功");
+        }
+        else{
+            return R.error("删除失败");
+        }
+    }
 
+    /**
+     * 增加订单
+     * @param p
+     * @return
+     */
+    public R insertOrders(@Pmap P p,OrderEntity orderEntity,GoodsEntity goodsEntity){
+        boolean save = iOrderService.save(orderEntity);
+        if (orderEntity.getOrderId()!=0){
+        }
         return R.success("success",iOrderService.save(orderEntity));
     }
 }

@@ -3,42 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>普通用户</title>
-    <link rel="stylesheet" href="/js/layui/css/layui.css">
+
 
 </head>
-<body>
-<br>
-
-<form class="layui-form" action="">
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">用户名：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="shopuserName" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <div class="layui-input-inline">
-                <button id="query_btn" class="layui-btn layui-btn-warm">搜索</button>
-            </div>
-        </div>
-    </div>
-</form>
-<table class="layui-table" lay-even="" lay-skin="nob" id="shopUserTable"></table>
+<link rel="stylesheet" href="/js/layui/css/layui.css">
 <script src="/js/layui/layui.all.js"></script>
+<body>
+<table class="layui-table" lay-filter="shopUserTable" id="shopUserTable"></table>
+
+<br>
+<script type="text/html" id="toolbarDemo">
+    <form class="layui-form" action="">
+        <div class="layui-form-item" style="height:30px;width:120px;">
+            <select id="searchOption" name="searchOption" lay-filter="searchOption">
+                <option value="0" selected="">用户名</option>
+            </select>
+        </div>
+        <div class="layui-form-item" style="margin-left: 300px;">
+            <input autocomplete="off" type="text" class="text layui-input" style="position: absolute;left: 150px;top:10px;width:157px;" name="searchKeywords" id="searchKeywords" placeholder="请输入关键词">
+            <a id="serchBtn" lay-submit="" lay-filter="serchBtn" style="position: absolute;left: 276px;top:15px;">
+                <i class="layui-icon layui-icon-search" style="background:#fff;padding:5px;"></i>
+            </a>
+        </div>
+    </form>
+</script>
+
+
 <script>
     layui.use(['table','form'],function () {
         var $ = layui.jquery;
-        var table =  layui.table;
-        var form = layui.form;
-        table.render({
-            elem: '#shopUserTable'
-            ,url:'/shopUser/getShopUserPage'
-            ,where:{
+        var table = layui.table;
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
 
-            }
+        form.render();
+        form.on('submit(serchBtn)', function(data) {
+            var sel = data.field.searchKeywords.trim();
+            table.reload('shopUserTable', {
+                method: 'get',
+                where: {
+                    shopuser_name: sel,
+                },
+                page: {
+                    curr: 1
+                }
+            });
+            return false;
+        })
+
+        table.render({
+            elem: '#shopUserTable',
+            id:'shopUserTable'
+            ,url:'/shopUser/getShopUserPage'
             ,method: 'get'
             ,cellMinWidth: 80
+            ,toolbar: '#toolbarDemo'
             ,cols: [[
                 {type:'checkbox'}
                 ,{field:'shopuserId' , title: 'id', sort: true}
@@ -75,7 +96,6 @@
                 //每页数据量的参数名，默认：limit
                 , limitName: 'limit'
             },
-            id:'shopUserList'
 
         });
     })
