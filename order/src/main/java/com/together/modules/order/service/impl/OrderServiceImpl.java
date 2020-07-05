@@ -32,7 +32,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
 
     @Override
     public R getOrderPage(P p) throws Exception{
-        List<Map<String, Object>> maps = orderMapper.queryOrderPage(p);
+        List<Map<String, Object>> maps = orderMapper.getOrderPage(p);
         for (Map<String, Object> map : maps) {
             MapUtil.mapKeySetLine2Upper(map);
         }
@@ -41,7 +41,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
 
     @Override
     public int getOrderPageConut(P p) {
-        return orderMapper.queryOrderPageCount(p);
+        return orderMapper.getOrderPageConut(p);
     }
 
     @Override
