@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * <p>
@@ -110,14 +111,14 @@ public class UserController {
 
 
     //根据用户id查询推荐人和推荐人的推荐人
-//    @RequestMapping("/selectUserReferrer")
-//    public R selectUserReferrer(@Pmap P p) throws Exception {
-//        Map<String, Object> stringObjectMap = userService.selectUserReferrer(p);
-//        return R.success("success").data(stringObjectMap);
-//    }
+    @RequestMapping("/selectUserReferrer")
+    public R selectUserReferrer(@Pmap P p) throws Exception {
+        Map<String, Object> stringObjectMap = userService.selectUserReferrer(p);
+        return R.success("success").data(stringObjectMap);
+    }
 
     //根据用户id查询上级服务经理
-    @RequestMapping("/UserReferrerDorecursion")
+    @RequestMapping("/selectSeniorByUser")
     public R selectUserReferrerInManager(@Pmap P p) throws Exception {
         ArrayList<UserSuperstratumRelationDo>  userSuperstratumRelationDos=userService.userReferrerDorecursion(p);
         return R.success("success").data(userSuperstratumRelationDos);
