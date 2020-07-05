@@ -149,43 +149,23 @@ public class P extends HashMap<String,Object> {
 
 
     public String getString(String key) {
-        Object value =   this.get(key);
-        if (value == null) {
-            return null;
-        }
-        return String.valueOf(value);
+        return MapUtil.getString(this,key);
     }
 
     public Integer getInt(String key) {
-        String value =  (String) this.get(key);
-        if (value == null) {
-            return null;
-        }
-        return Integer.parseInt(value);
+        return MapUtil.getInt(this,key);
     }
 
     public Long getLong(String key) {
-        String value =  (String) this.get(key);
-        if (value == null) {
-            return null;
-        }
-        return Long.parseLong(value);
+        return MapUtil.getLong(this,key);
     }
 
     public Double getDouble(String key) {
-        String value =  (String) this.get(key);
-        if (value == null) {
-            return null;
-        }
-        return Double.parseDouble(value);
+        return MapUtil.getDouble(this,key);
     }
 
     public Float getFloat(String key) {
-        String value =  (String) this.get(key);
-        if (value == null) {
-            return null;
-        }
-        return Float.parseFloat(value);
+        return MapUtil.getFloat(this,key);
     }
 
     public BigDecimal getBigDecimal(String key) {

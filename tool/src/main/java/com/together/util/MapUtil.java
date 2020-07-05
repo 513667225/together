@@ -1,5 +1,6 @@
 package com.together.util;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -87,6 +88,58 @@ public class MapUtil {
         map.keySet().removeAll(removeSet);
     }
 
+    /**
+     * 根据key返回String类型的值
+     * @param map
+     * @param key
+     * @return
+     */
+    public static String getString(Map map,String key){
+        Object o = map.get(key);
+        if (o == null) {
+            return null;
+        }
+        return String.valueOf(o);
+    }
 
+    /**
+     * 根据key返回int类型的值
+     * @param map
+     * @param key
+     * @return
+     */
+    public static Integer getInt(Map map,String key){
+        return Integer.parseInt(getString(map, key));
+    }
+
+    /**
+     * 根据key返回Double类型的值
+     * @param map
+     * @param key
+     * @return
+     */
+    public static Double getDouble(Map map,String key){
+        return Double.parseDouble(getString(map, key));
+    }
+
+    /**
+     * 根据key返回Long类型的值
+     * @param map
+     * @param key
+     * @return
+     */
+    public static Long getLong(Map map,String key){
+        return Long.parseLong(getString(map, key));
+    }
+
+    /**
+     * 根据key返回Float类型的值
+     * @param map
+     * @param key
+     * @return
+     */
+    public static Float getFloat(Map map,String key){
+        return Float.parseFloat(getString(map, key));
+    }
 
 }
