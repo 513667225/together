@@ -1,10 +1,8 @@
 package com.together.config;
 
 import com.together.parameter.MqParameter;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -27,6 +25,18 @@ public class MqConfig {
         connectionFactory.setVirtualHost("/");
         connectionFactory.setPublisherConfirms(true);
         return connectionFactory;
+    }
+
+    @Bean
+    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(ConnectionFactory connectionFactory){
+        SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory = new SimpleRabbitListenerContainerFactory();
+        simpleRabbitListenerContainerFactory.setConnectionFactory(connectionFactory);
+        simpleRabbitListenerContainerFactory.setBatchListener(true);
+//        simpleRabbitListenerContainerFactory.
+        simpleRabbitListenerContainerFactory.setConsumerBatchEnabled(true);
+        simpleRabbitListenerContainerFactory.setBatchSize(100);
+        simpleRabbitListenerContainerFactory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        return simpleRabbitListenerContainerFactory;
     }
 
     @Bean

@@ -1,5 +1,6 @@
 package com.together.entity;
 
+import com.together.enun.GoodsLevel;
 import com.together.enun.TogetherNumber;
 
 public class Spell {
@@ -13,36 +14,43 @@ public class Spell {
 
     private TogetherNumber togetherNumber;
 
+    private GoodsLevel goodsLevel;
+
     private int gameCount = 0;
 
+    public Spell(int userId, int goodsId, TogetherNumber togetherNumber, GoodsLevel goodsLevel) {
+        this.userId = userId;
+        this.goodsId = goodsId;
+//        this.group = group;
+        this.togetherNumber = togetherNumber;
+        this.goodsLevel = goodsLevel;
+//        this.gameCount = gameCount;
+    }
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
+    }
 
     public String getGroup() {
-
         return group;
     }
 
     public void setGroup(String group) {
         this.group = group;
     }
-
-    public Spell() {
-    }
-
-
-    public Integer getGameCount() {
-        return gameCount;
-    }
-
-    public void setGameCount(Integer gameCount) {
-        this.gameCount = gameCount;
-    }
-
-    public Spell(Integer userId, Integer goodsId, TogetherNumber togetherNumber) {
-        this.userId = userId;
-        this.goodsId = goodsId;
-        this.togetherNumber = togetherNumber;
-    }
-
 
     public TogetherNumber getTogetherNumber() {
         return togetherNumber;
@@ -52,23 +60,19 @@ public class Spell {
         this.togetherNumber = togetherNumber;
     }
 
-
-    public Integer getUserId() {
-        return userId;
+    public GoodsLevel getGoodsLevel() {
+        return goodsLevel;
     }
 
-
-    public Integer getGoodsId() {
-        return goodsId;
+    public void setGoodsLevel(GoodsLevel goodsLevel) {
+        this.goodsLevel = goodsLevel;
     }
 
-    public void setGoodsId(Integer goodsId) {
-        this.goodsId = goodsId;
+    public int getGameCount() {
+        return gameCount;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setGameCount(int gameCount) {
+        this.gameCount = gameCount;
     }
-
-
 }

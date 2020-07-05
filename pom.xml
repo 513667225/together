@@ -17,6 +17,7 @@
         <module>order</module>
         <module>spell</module>
         <module>ReMoney</module>
+        <module>sendOut</module>
     </modules>
 
     <parent>
