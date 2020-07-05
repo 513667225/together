@@ -39,6 +39,15 @@ public class OrderController {
     @RequestMapping("getOrderPage")
     public R getOrderPage(@Pmap P p)throws Exception{
         p.batchToInt("page","limit");
+        if(""==p.getString("order_tel")){
+            p.remove("order_tel");
+        }
+        if(""==p.getString("order_consignee")){
+            p.remove("order_consignee");
+        }
+        if(""==p.getString("ship_sn")){
+            p.remove("ship_sn");
+        }
         return iOrderService.getOrderPage(p);
     }
 
