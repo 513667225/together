@@ -2,12 +2,11 @@ package com.together.modules.user.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.modules.user.entity.UserEntity;
-import com.together.modules.user.entity.UserSuperstratumRelationDo;
+import com.together.entity.UserSuperstratumRelationDo;
 import com.together.modules.user.mapper.UserMapper;
 import com.together.modules.user.service.IUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.modules.user.timing.UserRelationDepue;
 import com.together.util.P;
 import com.together.util.utli.PayConstants;
@@ -52,6 +51,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         //baseMapper.selectOne(wrapper)
         return null;
     }
+
+    // 算法名
+    public static final String KEY_NAME = "AES";
+    // 加解密算法/模式/填充方式
+    // ECB模式只用密钥即可对数据进行加密解密，CBC模式需要添加一个iv
+    public static final String CIPHER_ALGORITHM = "AES/CBC/PKCS7Padding";
 
 
 

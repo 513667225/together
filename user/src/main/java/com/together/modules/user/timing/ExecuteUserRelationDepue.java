@@ -3,9 +3,8 @@ package com.together.modules.user.timing;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.modules.user.entity.UserEntity;
 import com.together.modules.user.entity.UserReferrerDo;
-import com.together.modules.user.entity.UserSuperstratumRelationDo;
+import com.together.entity.UserSuperstratumRelationDo;
 import com.together.modules.user.mapper.UserMapper;
-import com.together.modules.user.service.IUserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 

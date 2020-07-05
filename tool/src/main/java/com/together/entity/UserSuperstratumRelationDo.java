@@ -1,4 +1,4 @@
-package com.together.modules.user.entity;
+package com.together.entity;
 
 public class UserSuperstratumRelationDo {
     private Integer user_id;

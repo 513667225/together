@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.together.modules.user.entity.UserEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.together.modules.user.entity.UserReferrerDo;
-import com.together.modules.user.entity.UserSuperstratumRelationDo;
+import com.together.entity.UserSuperstratumRelationDo;
 
 import java.util.List;
 

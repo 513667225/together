@@ -23,7 +23,7 @@
     </select>
 
 
-    <resultMap id="UserSuperstratum" type="com.together.modules.user.entity.UserSuperstratumRelationDo">
+    <resultMap id="UserSuperstratum" type="com.together.entity.UserSuperstratumRelationDo">
         <id column="user_id" property="user_id"/>
         <!-- 定义普通列封装规则 -->
         <result column="top_referee_id" property="topRefereeId"/>

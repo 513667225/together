@@ -1,9 +1,8 @@
 package com.together.modules.user.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.together.modules.user.entity.UserEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.together.modules.user.entity.UserSuperstratumRelationDo;
+import com.together.entity.UserSuperstratumRelationDo;
 import com.together.util.P;
 
 import java.util.ArrayList;
