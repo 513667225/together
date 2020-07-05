@@ -1,5 +1,6 @@
 package com.together.modules.user.utli;
 
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 
 import javax.crypto.Cipher;
@@ -11,12 +12,13 @@ import java.security.AlgorithmParameters;
 import java.security.Key;
 import java.security.Security;
 
-public class Test {
+public class WxDecryptUtli {
 
 
     public static void main(String[] args) {
 
-//        Test.wxDecrypt()
+        JSONObject jsonObject = WxDecryptUtli.wxDecrypt("DOC7pCQzV25LJq5BOL4s63lNoyXQSx6qIx1D3YUm37dAUCKaj9tbRzkffqJmNVp3AOPKm3FovfJH4S6RcAI9b0tqO35z+PjwcF/DlCe00mkXGdgf7yFsZEVNcDSQGc3daTI3lmLRielRt09UD6EHpzKWu8fApkfkA7twCnryD6b5GONe0NsW+QhkHAxFAE4T8IJ7WPm+obf6WjfvyZag8w==", "vZBaO3EpNvzLN2DRUkr6Bw==", "Eu5xLHzMg2btogUEbNZzYg==");
+        System.out.println(jsonObject.toString());
     }
 
 

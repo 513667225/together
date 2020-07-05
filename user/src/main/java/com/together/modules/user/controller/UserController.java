@@ -103,10 +103,11 @@ public class UserController {
         userService.test(p);
         return R.success();
     }
-    @RequestMapping("/insertAndUpdatePhone")
+
+    @PostMapping("/insertAndUpdatePhone")
     public R updateUserPhone(@Pmap P p) throws Exception {
-        userService.updateUserPhone(p);
-        return R.error("登录失败").data(ResponseUtli.NullToMap());
+        R r = userService.updateUserPhone(p);
+        return r;
     }
 
 
@@ -123,13 +124,6 @@ public class UserController {
         ArrayList<UserSuperstratumRelationDo>  userSuperstratumRelationDos=userService.userReferrerDorecursion(p);
         return R.success("success").data(userSuperstratumRelationDos);
     }
-
-
-    public R getAndInsertUserPhone(@Pmap P p){
-      return R.success();
-    }
-
-
 
 
     /**

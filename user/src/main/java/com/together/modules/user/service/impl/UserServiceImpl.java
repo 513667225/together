@@ -8,7 +8,9 @@ import com.together.entity.UserSuperstratumRelationDo;
 import com.together.modules.user.mapper.UserMapper;
 import com.together.modules.user.service.IUserService;
 import com.together.modules.user.timing.UserRelationDepue;
+import com.together.modules.user.utli.WxDecryptUtli;
 import com.together.util.P;
+import com.together.util.R;
 import com.together.util.utli.PayConstants;
 import com.together.util.utli.RedisIdUtil;
 import com.together.util.utli.ResponseUtli;
@@ -151,6 +153,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         }
         return null;
     }
+
+    public void updateSessionKey(String code,String user_id) {
+        try {
+            Map<String, Object> map = new HashMap<String, Object>();
+            String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + PayConstants.WX_APPID + "&secret=" + PayConstants.WX_SECRET + "&js_code=" + code + "&grant_type=authorization_code";
+
+            //ClientHttpRequestFactory
+            SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+            requestFactory.setConnectTimeout(30000);// 设置超时
+            requestFactory.setReadTimeout(30000);
+
+            //利用复杂构造器可以实现超时设置,内部实际实现为 HttpClient
+            RestTemplate restTemplate = new RestTemplate(requestFactory);
+
+            ResponseEntity<String> exchange = null;
+            try{
+                exchange= restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+            }catch (ResourceAccessException e){
+                log.error("请求微信超时,请重试");
+            }
+            if (exchange != null && exchange.getStatusCode() == HttpStatus.OK) {
+                String body = exchange.getBody();
+                JSONObject parseObject = JSONObject.parseObject(body);
+                Set<Map.Entry<String, Object>> entrySet = parseObject.entrySet();
+                for (Map.Entry<String, Object> entry : entrySet) {
+                    map.put(entry.getKey(), entry.getValue().toString());
+                }
+            }
+            valueOperations.set(user_id,map.get("session_key"));
+        } catch (Exception e) {
+            log.error("更新session_key出错:{}",e);
+        }
+    }
+
 
     //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
     private void isUpdateMessage(Integer userReferrer,boolean isUnderling,Integer isUpdateDirectly,Boolean updateDirectly) {
@@ -361,9 +397,39 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public void updateUserPhone(P p) throws Exception {
-        ValidateUtli.validateParams(p,"user_id");
-
+    public R updateUserPhone(P p) throws Exception {
+        String code = p.getString("code");
+        String user_id = p.getString("user_id");
+        if(code!=null&&user_id!=null){
+            updateSessionKey(code,user_id);
+        }else{
+            try {
+                ValidateUtli.validateParams(p,"user_id","encryptedData","iv");
+            }catch (Exception e){
+                return R.error("参数错误");
+            }
+        }
+        String encryptedData = p.getString("encryptedData");
+        String iv = p.getString("iv");
+        Object o = valueOperations.get(user_id);
+        if(o!=null){
+            String sessionKey = String.valueOf(o);
+            try {
+                cn.hutool.json.JSONObject jsonObject = WxDecryptUtli.wxDecrypt(encryptedData, sessionKey, iv);
+                Object phoneNumber = jsonObject.get("phoneNumber");
+                if(phoneNumber!=null){
+                    UserEntity userEntity=new UserEntity();
+                    userEntity.setUserId(Integer.valueOf(user_id));
+                    userEntity.setUserMobile(String.valueOf(phoneNumber));
+                    baseMapper.updateById(userEntity);
+                    return R.success("success");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                return R.error("解密手机号失败");
+            }
+        }
+        return R.error("sessionkey过期");
     }
 
     @Override
