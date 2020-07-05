@@ -54,7 +54,7 @@ public class MyBatisConfig {
         dataSource.setDriverClassName(Driver.class.getName());
         dataSource.setPassword("root");
         dataSource.setUsername("root");
-        dataSource.setUrl("jdbc:mysql://192.168.0.111:3306/together");
+        dataSource.setUrl("jdbc:mysql://192.168.0.111:3306/together?useUnicode=true&characterEncoding=utf-8");
         return dataSource;
     }
 

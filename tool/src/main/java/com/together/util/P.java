@@ -3,6 +3,7 @@ package com.together.util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,8 +48,7 @@ public class P extends HashMap<String,Object> {
      * @throws Exception
      */
     public void thisToEntityUpper2Line(Object obj) throws Exception {
-        MapUtil.mapKeySetUpper2Line(this);
-        thisToEntity(obj);
+        thisToEntity(obj,true);
     }
 
     /**
@@ -69,9 +69,9 @@ public class P extends HashMap<String,Object> {
      * @throws Exception
      */
     public <T> T thisToEntityUpper2Line(Class<T> toClass) throws Exception {
-//        this.keySet()
-        MapUtil.mapKeySetUpper2Line(this);
-        return thisToEntity(toClass);
+        T t = toClass.newInstance();
+        thisToEntity(t,true);
+        return t;
     }
 
     /**
@@ -97,6 +97,11 @@ public class P extends HashMap<String,Object> {
         Map2JavaBeanUtil.transMap2Bean(this,toObj);
     }
 
+    public void thisToEntity(Object toObj,boolean b) throws Exception {
+
+        Map2JavaBeanUtil.transMap2Bean(this,toObj,b);
+    }
+
     /**
      *  参考 @see R  里面的同方法
      *  区别： 此方法是将自己本身转化
@@ -107,6 +112,7 @@ public class P extends HashMap<String,Object> {
 
         return (T) Map2JavaBeanUtil.transMap2Bean(this,toClass);
     }
+
 
 
     /**
@@ -137,46 +143,29 @@ public class P extends HashMap<String,Object> {
     }
 
 
+    public Date getDate(String key){
+        return new Date(getLong(key));
+    }
 
 
     public String getString(String key) {
-        Object value =   this.get(key);
-        if (value == null) {
-            return null;
-        }
-        return String.valueOf(value);
+        return MapUtil.getString(this,key);
     }
 
     public Integer getInt(String key) {
-        String value =  (String) this.get(key);
-        if (value == null) {
-            return null;
-        }
-        return Integer.parseInt(value);
+        return MapUtil.getInt(this,key);
     }
 
     public Long getLong(String key) {
-        String value =  (String) this.get(key);
-        if (value == null) {
-            return null;
-        }
-        return Long.parseLong(value);
+        return MapUtil.getLong(this,key);
     }
 
     public Double getDouble(String key) {
-        String value =  (String) this.get(key);
-        if (value == null) {
-            return null;
-        }
-        return Double.parseDouble(value);
+        return MapUtil.getDouble(this,key);
     }
 
     public Float getFloat(String key) {
-        String value =  (String) this.get(key);
-        if (value == null) {
-            return null;
-        }
-        return Float.parseFloat(value);
+        return MapUtil.getFloat(this,key);
     }
 
     public BigDecimal getBigDecimal(String key) {

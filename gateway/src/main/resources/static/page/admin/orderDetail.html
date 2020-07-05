@@ -21,119 +21,127 @@
 
 <form class="layui-form" action="" lay-filter="order">
     <div class="layui-form-item">
-        <label class="layui-form-label">订单编号</label>
-        <div class="layui-input-block">
-            <input type="text" readonly="readonly" id="shop_id" name="shop_id" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        <div class="layui-inline">
+            <label class="layui-form-label">订单编号</label>
+            <div class="layui-input-block">
+                <input type="text" readonly="readonly" id="shopId" name="shopId" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">订单状态</label>
+            <div class="layui-input-block">
+                <input type="text" name="orderStatus" id="orderStatus" readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">售后状态</label>
+            <div class="layui-input-block">
+                <input type="text" readonly="readonly" id="aftersaleStatus" name="aftersaleStatus" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">订单状态</label>
-        <div class="layui-input-block">
-            <input type="text" name="order_status" id="order_status" readonly  autocomplete="off" class="layui-input">
+        <div class="layui-inline">
+            <label class="layui-form-label">收货人名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="orderConsignee" id="orderConsignee" readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">收货人手机号</label>
+            <div class="layui-input-block">
+                <input type="text" readonly="readonly" id="orderTel" name="orderTel" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">收货具体地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="orderAddress" id="orderAddress"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">商品总费用</label>
+            <div class="layui-input-block">
+                <input type="text" name="goodsPrice" id="goodsPrice" readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">配送费用</label>
+            <div class="layui-input-block">
+                <input type="text" name="freightPrice" id="freightPrice"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">拼豆减免费用</label>
+            <div class="layui-input-block">
+                <input type="text" name="pindouPrice" id="pindouPrice"  readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">售后状态</label>
-        <div class="layui-input-block">
-            <input type="text" readonly="readonly" id="aftersale_status" name="aftersale_status" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">实付费用</label>
+            <div class="layui-input-block">
+                <input type="text" name="actualPrice" id="actualPrice" readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">收货人名称</label>
-        <div class="layui-input-block">
-            <input type="text" name="order_consignee"  readonly  autocomplete="off" class="layui-input">
+        <div class="layui-inline">
+            <label class="layui-form-label">微信付款编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="payId" id="payId" readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">微信付款时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="payTime" id="payTime"  readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">收货人手机号</label>
-        <div class="layui-input-block">
-            <input type="text" readonly="readonly" id="order_tel" name="order_tel" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">发货编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="shipSn" id="shipSn"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">发货开始时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="shipTime" id="shipTime"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">用户确认收货时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="confirmTime" id="confirmTime" readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">收货具体地址</label>
-        <div class="layui-input-block">
-            <input type="text" name="order_address"  readonly  autocomplete="off" class="layui-input">
+        <div class="layui-inline">
+            <label class="layui-form-label">订单关闭时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="endTime" id="endTime"  readonly  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="addTime" id="addTime"  readonly  autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
-
     <div class="layui-form-item">
         <label class="layui-form-label">订单留言</label>
         <div class="layui-input-block">
-            <input type="text" readonly="readonly" id="order_message" name="order_message" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">商品总费用</label>
-        <div class="layui-input-block">
-            <input type="text" name="goods_price"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">配送费用</label>
-        <div class="layui-input-block">
-            <input type="text" name="freight_price"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">拼豆减免费用</label>
-        <div class="layui-input-block">
-            <input type="text" name="pindou_price"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">实付费用</label>
-        <div class="layui-input-block">
-            <input type="text" name="actual_price"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">微信付款编号</label>
-        <div class="layui-input-block">
-            <input type="text" name="pay_id"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">微信付款时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="pay_time"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">发货编号</label>
-        <div class="layui-input-block">
-            <input type="text" name="ship_sn"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">发货开始时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="ship_time"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">用户确认收货时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="confirm_time"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">订单关闭时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="end_time"  readonly  autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">创建时间</label>
-        <div class="layui-input-block">
-            <input type="text" name="add_time"  readonly  autocomplete="off" class="layui-input">
+            <input type="text" readonly="readonly" id="orderMessage" name="orderMessage" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
         </div>
     </div>
 
@@ -155,29 +163,28 @@
 
         //表单赋值
         function init(){
-
             form.val('order', {
-                "shop_id": orderBasicData.shop_id
-                ,"order_sn": orderBasicData.order_sn
-                ,"order_status": orderBasicData.order_status
-                ,"aftersale_status": orderBasicData.aftersale_status // "name": "value"
-                ,"order_consignee": orderBasicData.order_consignee
-                ,"order_tel": orderBasicData.order_tel
-                ,"order_address": orderBasicData.order_address //复选框选中状态
-                ,"order_message": orderBasicData.order_message //开关状态
-                ,"goods_price": orderBasicData.goods_price
-                ,"freight_price": orderBasicData.freight_price
-                ,"pindou_price":orderBasicData.pindou_price
-                ,"order_price":orderBasicData.order_price
-                ,"actual_price":orderBasicData.actual_price
-                ,"pay_id":orderBasicData.pay_id
-                ,"pay_time": orderBasicData.pay_time
-                ,"ship_sn": orderBasicData.ship_sn
-                ,"ship_channel": orderBasicData.ship_channel
-                ,"ship_time":orderBasicData.ship_time
-                ,"confirm_time":orderBasicData.confirm_time
+                "shopId": orderBasicData.shopId
+                ,"orderSn": orderBasicData.orderSn
+                ,"orderStatus": orderBasicData.orderStatus
+                ,"aftersaleStatus": orderBasicData.aftersaleStatus // "name": "value"
+                ,"orderConsignee": orderBasicData.orderConsignee
+                ,"orderTel": orderBasicData.orderTel
+                ,"orderAddress": orderBasicData.orderAddress //复选框选中状态
+                ,"orderMessage": orderBasicData.orderMessage //开关状态
+                ,"goodsPrice": orderBasicData.goodsPrice
+                ,"freightPrice": orderBasicData.freightPrice
+                ,"pindouPrice":orderBasicData.pindouPrice
+                ,"orderPrice":orderBasicData.order_price
+                ,"actualPrice":orderBasicData.actualPrice
+                ,"payId":orderBasicData.payId
+                ,"payTime": orderBasicData.payTime
+                ,"shipSn": orderBasicData.shipSn
+                ,"shipChannel": orderBasicData.shipChannel
+                ,"shipTime":orderBasicData.shipTime
+                ,"confirmTime":orderBasicData.confirmTime
                 ,"comments":orderBasicData.comments
-                ,"end_time":orderBasicData.end_time
+                ,"endTime":orderBasicData.endTime
             });
         }
 

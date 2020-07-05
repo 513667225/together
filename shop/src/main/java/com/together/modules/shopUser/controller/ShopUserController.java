@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+
 /**
  * <p>
  *  前端控制器
@@ -39,8 +42,32 @@ public class ShopUserController {
         p.remove("page");
         p.remove("limit");
         p.remove("rowIndex");
+        if(""==p.getString("shopuser_name")){
+            p.remove("shopuser_name");
+        }
         Page<ShopUserEntity> pageObject = shopUserService.page(objectPage,new QueryWrapper<ShopUserEntity>().allEq(p));
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
+    }
+
+    /**
+     * 商家登录方法
+     */
+    @RequestMapping("loinShopUser")
+    public R loinShopUser (@Pmap P p, HttpServletRequest request) throws Exception {
+        ShopUserEntity shopUserEntity = new ShopUserEntity();
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("shopuser_name", p.getString("shopuser_name"));
+        queryWrapper.eq("shopuser_password", p.getString("shopuser_password"));
+        ShopUserEntity one = shopUserService.getOne(queryWrapper);
+        if (null!=one||!"".equals(one)){
+            one.setUpdateTime(new Date());
+            one.setAddTime(new Date());
+            shopUserService.updateById(one);
+        }
+        request.getSession().setAttribute("shopUserEntity",one);
+        p.setRequest(request);
+//        System.out.println(request.getSession().getAttribute("shopUserEntity"));
+        return R.success("success",one);
     }
 }
 

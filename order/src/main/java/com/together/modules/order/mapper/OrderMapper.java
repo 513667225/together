@@ -19,11 +19,11 @@ import java.util.Map;
  */
 public interface OrderMapper extends BaseMapper<OrderEntity> {
 
-    @SelectProvider(value = SqlProvider.class,method = "queryOrderPage")
-    public List<Map<String,Object>> queryOrderPage(Map<String, Object> map);
+    @SelectProvider(value = SqlProvider.class,method = "getOrderPage")
+    public List<Map<String,Object>> getOrderPage(Map<String, Object> map);
 
-    @SelectProvider(value = SqlProvider.class,method = "queryOrderPageCount")
-    public int queryOrderPageCount(Map<String, Object> map);
+    @SelectProvider(value = SqlProvider.class,method = "getOrderPageConut")
+    public int getOrderPageConut(Map<String, Object> map);
 
     /**
      * 根据订单id查询该订单的所有商品集合

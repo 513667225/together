@@ -19,4 +19,5 @@ import java.util.Map;
 public interface GoodsMapper extends BaseMapper<GoodsEntity> {
     List<Map<String, Object>> queryGoodsByShopId(Map<String, Object> map);
     int queryGoodsByShopIdCount(Map<String, Object> map);
+
 }

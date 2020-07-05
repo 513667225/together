@@ -32,17 +32,6 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
     @Autowired
     ShopMapper shopMapper;
 
-    /**
-     * 查询所有店铺信息
-     * @param map
-     * @return
-     */
-    @Override
-    public R queryAllShop(Map<String, Object> map) {
-        int shopCount = shopMapper.queryAllShopCount(map);
-        return R.success().data(shopMapper.queryAllShop(map)).set("total",shopCount);
-    }
-
     @Override
     public IPage getShopPage(P p) {
         Integer page = p.getInt("page");
