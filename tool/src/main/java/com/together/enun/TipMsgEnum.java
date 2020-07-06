@@ -5,18 +5,23 @@ package com.together.enun;
  */
 public enum  TipMsgEnum {
 
-    TOKEN_OF_OVERDUE(1001,"Token过期"),
-    TOKEN_OF_Excption(1002,"Token异常"),
-    TOKEN_CREATE_Excption(1003,"JWT签名失败"),
-    TOKEN_NULL_Excption(1004,"无Token参数"),
-    PARAMETER_NULL_Excption(1005,"缺少必须参数");
-
+    DEFAULT_ERROR_MSG(500,"系统异常");
 
 
     private  int code;
 
     private String msg;
 
+
+
+    public  static TipMsgEnum forMsg(String msg){
+        for (TipMsgEnum value : values()) {
+            if (value.getMsg().equals(msg)) {
+                return value;
+            }
+        }
+        return DEFAULT_ERROR_MSG;
+    }
 
       TipMsgEnum(int code,String msg){
           this.code = code;
