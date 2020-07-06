@@ -23,4 +23,6 @@ public interface UserMapper extends BaseMapper<UserEntity> {
     List<UserReferrerDo> selectByuserReferrerId(Integer referrerId);
 
     UserSuperstratumRelationDo selectUserSuperstratum(Integer user_id);
+
+    List<UserEntity> selectUserALlInviter(Integer user_id);
 }

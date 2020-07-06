@@ -36,4 +36,9 @@
         select user_id ,top_referee_id ,user_level ,user_referrer from `user` where user_id = #{user_id}
     </select>
 
+
+    <select id="selectUserALlInviter" resultType="com.together.modules.user.entity.UserEntity">
+        select * from `user` where user_referrer=#{user_id}
+    </select>
+
 </mapper>
