@@ -79,6 +79,29 @@ public class ShopEntity implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 地区代理管理员
+     */
+    private Integer adminId;
+
+    private  String userId;
+
+    public Integer getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public Integer getShopId() {
         return shopId;
     }

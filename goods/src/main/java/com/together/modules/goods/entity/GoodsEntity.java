@@ -93,6 +93,19 @@ public class GoodsEntity implements Serializable {
      */
     private Integer spokesmanId;
 
+    /**
+     * 商品库存
+     */
+    private Integer goodsInventory;
+
+    public Integer getGoodsInventory() {
+        return goodsInventory;
+    }
+
+    public void setGoodsInventory(Integer goodsInventory) {
+        this.goodsInventory = goodsInventory;
+    }
+
     public Integer getGoodsLevel() {
         return goodsLevel;
     }

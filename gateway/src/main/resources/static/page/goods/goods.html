@@ -187,15 +187,14 @@
     })
 
     function addGoods() {
-        layer.open({
-            type: 1,
-            title: false,
-            closeBtn: 0,
-            area: ['auto'],
-            skin: 'layui-layer-nobg',
-            shadeClose: true,
-            content: "<img src='" + url + "'>"
+        var index = layer.open({
+            type:2,
+            title:'增加商品',
+            area : ['1000px' , '800px'],
+            shadeClose:true,
+            content: "goodsDetail.html"
         });
+        layer.full(index);
     }
 
     function showImg(url) {
@@ -217,17 +216,6 @@
         m = m < 10 ? '0' + m : m;
         var d = date.getDate();
         d = d < 10 ? ("0" + d) : d;
-
-
-
-
-
-
-
-
-
-
-
         var h = date.getHours();
         h = h < 10 ? ("0" + h) : h;
         var M = date.getMinutes();
