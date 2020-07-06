@@ -57,6 +57,9 @@ public class ShopUserController {
     public R loinShopUser (@Pmap P p, HttpServletRequest request) throws Exception {
         MapUtil.mapKeySetUpper2Line(p);
         ShopUserEntity one = shopUserService.getOne(new QueryWrapper<ShopUserEntity>().allEq(p));
+        request.getSession().setAttribute("shopUserEntity",one);
+        p.setRequest(request);
+        System.out.println(request.getSession().getAttribute("shopUserEntity"));
         return R.success("success",one);
     }
 }
