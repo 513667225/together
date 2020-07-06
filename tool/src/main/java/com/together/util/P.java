@@ -169,8 +169,9 @@ public class P extends HashMap<String,Object> {
     }
 
     public BigDecimal getBigDecimal(String key) {
-        String value = (String)  this.get(key);
-        if (value == null) {
+//        String.v
+        String value = String.valueOf(this.get(key));
+        if (value.equals("null")) {
             return null;
         }
         return new BigDecimal(value);

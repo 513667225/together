@@ -3,6 +3,7 @@ package com.together.modules.admin.service;
 import com.together.modules.admin.entity.AdminEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.together.util.P;
+import com.together.util.R;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ import java.util.List;
 public interface IAdminService extends IService<AdminEntity> {
 
     List getProxyInfo(P p) throws Exception;
+
+    R update(P p);
 
 
 }

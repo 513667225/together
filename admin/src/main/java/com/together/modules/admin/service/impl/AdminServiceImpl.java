@@ -1,5 +1,6 @@
 package com.together.modules.admin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.together.modules.admin.entity.AdminEntity;
 import com.together.modules.admin.mapper.AdminMapper;
 import com.together.modules.admin.service.IAdminService;
@@ -36,5 +37,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
             returnList.addAll(orderList);
         }
         return returnList;
+    }
+
+    @Override
+    public R update(P p) {
+        UpdateWrapper<AdminEntity> adminEntityUpdateWrapper = new UpdateWrapper<AdminEntity>().setSql("balance=balance+"+p.getBigDecimal("balance")).eq("admin_id",p.getInt("admin_id"));
+        return R.success("success", update(adminEntityUpdateWrapper));
     }
 }
