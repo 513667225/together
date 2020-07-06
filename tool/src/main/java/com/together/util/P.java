@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -125,6 +126,21 @@ public class P extends HashMap<String,Object> {
         return (T) Map2JavaBeanUtil.transMap2Bean(this,toClass);
     }
 
+
+    /**
+     * 根据key循环移除空值
+     * @param map
+     */
+    public void removeByKey(Map map){
+        Iterator<Entry<String, String>> iterator  = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Entry<String, String> entry = iterator.next();
+            String value = entry.getValue();
+            if("".equals(value)||null==value){
+                this.remove(entry.getKey());
+            }
+        }
+    }
 
 
     /**

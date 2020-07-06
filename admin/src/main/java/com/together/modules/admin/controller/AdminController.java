@@ -37,12 +37,7 @@ public class AdminController {
         p.remove("page");
         p.remove("limit");
         p.remove("rowIndex");
-        if(""==p.getString("admin_name")){
-            p.remove("admin_name");
-        }
-        if(""==p.getString("admin_nikename")){
-            p.remove("admin_nikename");
-        }
+        p.removeByKey(p);
         Page<AdminEntity> pageObject = adminService.page(objectPage,new QueryWrapper<AdminEntity>().allEq(p));
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
