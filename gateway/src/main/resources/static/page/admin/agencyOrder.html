@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>代理订单信息</title>
+</head>
+<link rel="stylesheet" href="/js/layui/css/layui.css">
+<script src="/js/layui/layui.all.js"></script>
+<body>
+<table class="layui-hide" id="agencyOrder_table" lay-skin="line" lay-filter="agencyOrder_table">
+</table>
+
+</body>
+<script>
+    var data
+    layui.use('table', function () {
+        var $ = layui.jquery;
+        var table = layui.table;
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        table.render({
+            elem: '#agencyOrder_table',
+            id:'agencyOrder_table',
+            url: '/admin/getProxyInfo',
+            where:{
+                adminId:1
+            },
+            method: 'get',
+            cellMinWidth: 80,
+            cols: [[
+                {type: 'checkbox'},
+                {field: 'shopId', title: '订单编号'},
+                {field: 'orderStatus', title: '订单状态'},
+                {field: 'aftersaleStatus', title: '售后状态'},
+                {field: 'orderConsignee', title: '收货人名称'},
+                {field: 'orderTel', title: '收货人手机号'},
+                {field: 'orderAddress', title: '收货具体地址'},
+                {field: 'orderMessage', title: '订单留言', sort: true},
+                {field: 'goodsPrice', title: '商品总费用', sort: true},
+                {field: 'freightPrice',title: '配送费用'},
+                {field: 'pindouPrice', title: '拼豆减免费用', sort: true},
+                {field: 'actualPrice', title: '实付费用', sort: true},
+                {field: 'payId',title: '微信付款编号'},
+                {field: 'payTime', title: '微信付款时间'
+                    ,templet: function (d) {
+                        return createTime(d.pay_time);
+                    }
+                },
+                {field: 'shipSn', title: '发货编号', sort: true},
+                {field: 'shipTime', title: '发货开始时间', sort: true
+                    ,templet: function (d) {
+                        return createTime(d.shipTime);
+                    }
+                },
+                {field: 'confirmTime',title: '用户确认收货时间'
+                    ,templet: function (d) {
+                        return createTime(d.confirmTime);
+                    }
+                },
+                {field: 'endTime', title: '订单关闭时间'
+                    ,templet: function (d) {
+                        return createTime(d.endTime);
+                    }
+                },
+                {field: 'addTime', title: '创建时间'
+                    ,templet: function (d) {
+                        return createTime(d.addTime);
+                    }
+                },
+                {field: 'order_detail', title: '订单详情', toolbar: '#orderDetail', align: 'center'},
+            ]],
+            page: true,
+            limits: [5, 10, 20, 50],
+            limit: 5,
+            loading: true,
+            count: 1000,
+            request: {
+                pageName: 'page', // 页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+        });
+
+    })
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+        return str;
+    }
+
+
+</script>
+</html>

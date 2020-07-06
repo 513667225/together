@@ -48,4 +48,11 @@ public class AdminController {
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
 
+
+
+    @GetMapping("/getProxyInfo")
+    public R getProxyInfo(@Pmap P p) throws Exception {
+        return R.success("success",adminService.getProxyInfo(p));
+    }
+
 }

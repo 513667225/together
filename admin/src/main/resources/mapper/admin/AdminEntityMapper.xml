@@ -2,4 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.together.modules.admin.mapper.AdminMapper">
 
+    <resultMap id="adminEntityMap" type="com.together.modules.admin.entity.AdminEntity">
+        <id property="adminId" column="admin_id"/>
+        <result property="adminNikename" column="admin_nikename"/>
+        <result property="adminName" column="admin_name"/>
+        <result property="adminPassword" column="admin_password"/>
+        <result property="adminLevel" column="admin_level"/>
+        <result property="regionId" column="region_id"/>
+        <result property="adminBoss" column="admin_boss"/>
+    </resultMap>
+
+    <select id="getProxyInfo" resultType="java.lang.Integer">
+        SELECT admin_id
+        FROM
+            (
+            SELECT
+                @ids AS _ids,
+                ( SELECT @ids := GROUP_CONCAT( admin_id ) FROM admin WHERE FIND_IN_SET( admin_boss, @ids ) ) AS cids,
+                @l := @l + 1 AS LEVEL
+            FROM
+                admin,
+                ( SELECT @ids := #{adminId}, @l := 0 ) b
+            WHERE
+                @ids IS NOT NULL
+            ) admin_id,
+            admin DATA
+        WHERE
+            FIND_IN_SET( DATA.admin_id, admin_id._ids )
+        ORDER BY
+            LEVEL,
+            admin_id
+    </select>
+
+    <select id="getOrderList" resultType="java.util.Map">
+        select admin.admin_id,admin.admin_name,admin.admin_level,shop.shop_id,orders.* from order_bot orders left join shop on orders.shop_id = shop.shop_id LEFT JOIN admin
+        on admin.admin_id = shop.admin_id where admin.admin_id = #{adminId}
+    </select>
+
+
 </mapper>

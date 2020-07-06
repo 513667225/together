@@ -13,7 +13,6 @@ import com.together.modules.user.utli.WxDecryptUtli;
 import com.together.util.P;
 import com.together.util.R;
 import com.together.util.utli.PayConstants;
-import com.together.util.utli.RedisIdUtil;
 import com.together.util.utli.ResponseUtli;
 import com.together.util.utli.ValidateUtli;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,7 +122,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 userEntity.setAddTime(date);
                 userEntity.setUpdateTime(date);
                 userEntity.setUserLastLoginTime(date);
-                userEntity.setUserId(RedisIdUtil.nextId("userId"));
                 userEntity.setUserLevel(0);
                 userEntity.setUserNickname(userName);
                 userEntity.setUserAvatar(avatarUrl);
