@@ -28,16 +28,6 @@ public class CategoryEntity implements Serializable {
     private String categoryName;
 
     /**
-     * 类目关键字，以JSON数组格式
-     */
-    private String categoryKeywords;
-
-    /**
-     * 类目广告语介绍
-     */
-    private String categorySlogan;
-
-    /**
      * 父类目ID
      */
     private Integer pid;
@@ -81,22 +71,6 @@ public class CategoryEntity implements Serializable {
 
     public CategoryEntity setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-        return this;
-    }
-    public String getCategoryKeywords() {
-        return categoryKeywords;
-    }
-
-    public CategoryEntity setCategoryKeywords(String categoryKeywords) {
-        this.categoryKeywords = categoryKeywords;
-        return this;
-    }
-    public String getCategorySlogan() {
-        return categorySlogan;
-    }
-
-    public CategoryEntity setCategorySlogan(String categorySlogan) {
-        this.categorySlogan = categorySlogan;
         return this;
     }
     public Integer getPid() {
@@ -153,8 +127,6 @@ public class CategoryEntity implements Serializable {
         return "CategoryEntity{" +
             "categoryId=" + categoryId +
             ", categoryName=" + categoryName +
-            ", categoryKeywords=" + categoryKeywords +
-            ", categorySlogan=" + categorySlogan +
             ", pid=" + pid +
             ", iconUrl=" + iconUrl +
             ", picUrl=" + picUrl +
