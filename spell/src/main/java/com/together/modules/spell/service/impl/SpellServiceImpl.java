@@ -82,7 +82,7 @@ public class SpellServiceImpl implements SpellService {
 
     @Override
     public R startTogetherMq(int userId, int goodsId, TogetherNumber togetherNumber, GoodsLevel goodsLevel) {
-        Spell spell = new Spell(userId, goodsId, togetherNumber,goodsLevel);
+        Spell spell = new Spell(userId, goodsId, togetherNumber,goodsLevel,0);
         mqUtil.testSend(MqParameter.CREATE_GROUP_EXCHANGE_NAME, MqParameter.CREATE_GROUP_EXCHANGE_KEY_NAME, JSON.toJSONString(spell));
         return null;
     }
