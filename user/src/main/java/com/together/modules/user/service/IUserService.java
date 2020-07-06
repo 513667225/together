@@ -6,6 +6,7 @@ import com.together.entity.UserSuperstratumRelationDo;
 import com.together.util.P;
 import com.together.util.R;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -37,4 +38,6 @@ public interface IUserService extends IService<UserEntity> {
     R updateUserPhone(P p) throws Exception;
 
     ArrayList<UserSuperstratumRelationDo> userReferrerDorecursion(P p) throws Exception;
+
+    void createCodeImag(String path, String user_id, HttpServletResponse response);
 }

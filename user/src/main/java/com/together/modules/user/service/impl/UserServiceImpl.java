@@ -8,6 +8,7 @@ import com.together.entity.UserSuperstratumRelationDo;
 import com.together.modules.user.mapper.UserMapper;
 import com.together.modules.user.service.IUserService;
 import com.together.modules.user.timing.UserRelationDepue;
+import com.together.modules.user.utli.HttpUtli;
 import com.together.modules.user.utli.WxDecryptUtli;
 import com.together.util.P;
 import com.together.util.R;
@@ -17,6 +18,7 @@ import com.together.util.utli.ResponseUtli;
 import com.together.util.utli.ValidateUtli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +26,16 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.*;
 
 /**
@@ -454,6 +463,61 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if(userSuperstratumRelationDo.getUserReferrer()!=null){
             selectUserSuperstratum(userSuperstratumRelationDos,userSuperstratumRelationDo.getUserReferrer());
         }
+    }
+
+    @Autowired
+    RestTemplate restTemplate;
+
+    /***
+     * TODO: 创建会员分享的二维码
+     * TODO: @param path 扫码进入的小程序页面路径
+     * TODO: @param lineColor 设置颜色
+     * TODO: @param response
+     */
+    public void createCodeImag(String path, String user_id, HttpServletResponse response){
+        try{
+            String access_token = HttpUtli.getAccessToken().toString();
+            response.setContentType("image/jpeg");
+            String requestUrl="https://api.weixin.qq.com/wxa/getwxacode?access_token="+access_token;
+            JSONObject object=new JSONObject();
+            object.put("path",path);
+            object.put("line_color",this.lineColor());
+            object.put("scene",user_id);
+            MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+            HttpEntity requestEntity = new HttpEntity(object, headers);
+            ResponseEntity<byte[]> exchange = restTemplate.exchange(requestUrl, HttpMethod.POST, requestEntity, byte[].class);
+            byte[] body = exchange.getBody();
+            InputStream inputStream = new ByteArrayInputStream(body);
+            OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+            //创建存放文件内容的数组
+            byte[] buff =new byte[1024];
+            //所读取的内容使用n来接收
+            int n;
+            //当没有读取完时,继续读取,循环
+            while((n=inputStream.read(buff))!=-1){
+                //将字节数组的数据全部写入到输出流中
+                outputStream.write(buff,0,n);
+            }
+            //强制将缓存区的数据进行输出
+            outputStream.flush();
+            //关流
+            outputStream.close();
+            inputStream.close();
+        }catch (Exception e){
+            log.error("创建分享会员二维码失败:{}",e);
+        }
+    }
+
+    /**
+     * TODO:二维码颜色
+     */
+    public JSONObject lineColor() {
+        Map<String,Object> map=new HashMap<>();
+        map.put("r",255);
+        map.put("g",0);
+        map.put("b",0);
+        JSONObject jsonObject=new JSONObject(map);
+        return jsonObject;
     }
 
 }

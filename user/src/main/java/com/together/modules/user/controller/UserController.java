@@ -1,14 +1,20 @@
 package com.together.modules.user.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.together.annotation.PassToken;
 import com.together.annotation.Pmap;
+import com.together.entity.Audience;
 import com.together.modules.user.entity.UserEntity;
 import com.together.entity.UserSuperstratumRelationDo;
+import com.together.modules.user.entity.UserEntityDo;
 import com.together.modules.user.service.IUserService;
+import com.together.modules.user.utli.UserEntityToUserEntityDoUtli;
 import com.together.util.P;
 import com.together.util.R;
+import com.together.util.utli.JwtUtil;
 import com.together.util.utli.ResponseUtli;
 import com.together.util.utli.ValidateUtli;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * <p>
@@ -31,6 +38,9 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    Audience audience;
 
 
 
@@ -82,14 +92,15 @@ public class UserController {
      * @param p
      * @return
      */
+    @PassToken
     @PostMapping("/login")
     public R save(@Pmap P p){
         try {
             ValidateUtli.validateParams(p,"code","userName","avatarUrl");
             UserEntity userEntity = userService.getUserLogin(p);
-            R r=R.success("success", ResponseUtli.StringToMap("userId",userEntity.getUserId()));
-            r.put("code",200);
-            return r;
+            UserEntityDo userEntityDo= UserEntityToUserEntityDoUtli.userEntityToUserEntityDoUtli(userEntity);
+            String token = JwtUtil.createJWT(UUID.randomUUID().toString(), JSON.toJSONString(userEntityDo));
+            return R.success("success", ResponseUtli.StringToMap("user",userEntityDo,"token",token));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -134,6 +145,13 @@ public class UserController {
     @PutMapping
     public R updateById(@RequestBody UserEntity userEntity){
         return R.success("success",userService.updateById(userEntity));
+    }
+
+
+    @RequestMapping("/createCodeImag")
+    public void createCodeImag(@Pmap P p) throws Exception {
+        ValidateUtli.validateParams(p,"path","user_id");
+        userService.createCodeImag(p.getString("path"),p.getString("user_id"),p.getResponse());
     }
 
 }

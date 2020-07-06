@@ -5,7 +5,12 @@ package com.together.enun;
  */
 public enum  TipMsgEnum {
 
-    LACK_OF_INTEGRAL(1001,"积分不足");
+    TOKEN_OF_OVERDUE(1001,"Token过期"),
+    TOKEN_OF_Excption(1002,"Token异常"),
+    TOKEN_CREATE_Excption(1003,"JWT签名失败"),
+    TOKEN_NULL_Excption(1004,"无Token参数"),
+    PARAMETER_NULL_Excption(1005,"缺少必须参数");
+
 
 
     private  int code;
