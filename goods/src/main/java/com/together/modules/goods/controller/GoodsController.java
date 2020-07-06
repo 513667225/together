@@ -3,14 +3,22 @@ package com.together.modules.goods.controller;
 
 import com.together.annotation.Pmap;
 import com.together.enun.TipMsgEnum;
+import com.together.config.FileUtil;
 import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.service.IGoodsService;
+import com.together.util.MapUtil;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
 /**
  * <p>
@@ -49,6 +57,24 @@ public class GoodsController {
         return R.success("操作成功",goodsId);
     }
 
+    //图片上传
+    @RequestMapping("/addGoods")
+    public R addGoods(@Pmap P p) throws Exception {
+        MapUtil.mapKeySetUpper2Line(p);
+        return iGoodsService.addGoods(p);
+    }
+
+    //图片上传
+    @RequestMapping("/uploadGoods")
+    public R uploadGoodsList(@RequestParam MultipartFile file) throws IOException {
+        FileUtil fileUtil = new FileUtil();
+        String basePath = this.getClass().getResource("/static").getPath();
+        String prefix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        String filePath = basePath + "/upload/shop/" + new Date().getTime() + prefix;
+        File desFile = new File(filePath);
+        File outfile = fileUtil.write(desFile,file.getInputStream(),file.getSize(),1024*40);
+        return R.success().set("fileName",outfile.getName()).set("filePath",filePath);
+    }
 
     /**
      * shadow
@@ -58,7 +84,6 @@ public class GoodsController {
      */
     @GetMapping("/queryAllGoods")
     public R queryAllGoods(@Pmap P p) throws Exception {
-
         p.batchToInt("page","limit");
         return  iGoodsService.queryGoodsByShopId(p);
     }

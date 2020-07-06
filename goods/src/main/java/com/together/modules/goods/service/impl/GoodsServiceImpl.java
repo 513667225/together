@@ -42,5 +42,10 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
         return R.success("msg",goodsMapper.queryAllGoods(map));
     }
 
+    @Override
+    public R addGoods(Map<String, Object> map) {
+        return R.success("success",goodsMapper.addGoods(map));
+    }
+
 
 }

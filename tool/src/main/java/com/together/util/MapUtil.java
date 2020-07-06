@@ -5,87 +5,108 @@ import java.util.*;
 
 /**
  * map操作帮助类
- * @author  Agu
+ *
+ * @author Agu
  */
 public class MapUtil {
 
     /**
      * 将map里面所有key 生成为sql语句 同时驼峰转下划线
+     *
      * @param map
      * @return
      * @throws Exception
      */
-    public  static String mapToSqlUpper2Line(Map map)throws Exception{
+    public static String mapToSqlUpper2Line(Map map) throws Exception {
         mapKeySetUpper2Line(map);
         return mapToSql(map);
     }
 
     /**
      * 将map里面所有key 生成为sql语句 同时下划线转驼峰
+     *
      * @param map
      * @return
      * @throws Exception
      */
-    public  static String mapToSqlLine2Upper(Map map) throws Exception{
+    public static String mapToSqlLine2Upper(Map map) throws Exception {
         mapKeySetLine2Upper(map);
         return mapToSql(map);
     }
 
 
-    public static String mapToSqlByLike(Map map,String... likeKeys){
+    public static String mapToSqlByLike(Map map, String... likeKeys) {
         List<String> list = new ArrayList();
         for (String likeKey : likeKeys) {
             list.add(likeKey);
         }
-        return mapToSql(map,list);
+        return mapToSql(map, list);
     }
 
-    public  static String mapToSql(Map map){
+    public static String mapToSql(Map map) {
 
         return mapToSql(map);
     }
 
+    public static String mapToAddSql(Map map) {
+        Set<Map.Entry> set = map.entrySet();
+        String sql = "(";
+        String valueUrl = "values(";
+        for (Map.Entry entry : set) {
+            String key = String.valueOf(entry.getKey());
+            String value = String.valueOf(entry.getValue());
+            sql += "`" + key + "`,";
+            valueUrl += "#{" + key + "},";
+        }
+        sql = sql.substring(0, sql.lastIndexOf(",")) + ")";
+        valueUrl = valueUrl.substring(0, valueUrl.lastIndexOf(",")) + ")";
+        sql = sql + valueUrl;
+        return sql;
+    }
+
     /**
      * map转化为sql 格式:key=#{key}
+     *
      * @param map
      * @return
      */
-    public  static String mapToSql(Map map,List<String> likes){
+    public static String mapToSql(Map map, List<String> likes) {
         Set<Map.Entry> set = map.entrySet();
         String sql = "";
-        String rowIndex="";
-        String limitSql="limit";
-        String limitTemp="";
+        String rowIndex = "";
+        String limitSql = "limit";
+        String limitTemp = "";
         List<String> list = new ArrayList<>();
-        if (set.size()>0) {
+        if (set.size() > 0) {
             sql = "where ";
         }
         for (Map.Entry entry : set) {
             String key = String.valueOf(entry.getKey());
             String value = String.valueOf(entry.getValue());
-            if(key.equals("rowIndex")){
-                rowIndex = " "+value+",";
+            if (key.equals("rowIndex")) {
+                rowIndex = " " + value + ",";
                 continue;
             }
-            if (key.equals("limit")){
+            if (key.equals("limit")) {
                 limitTemp = value;
                 continue;
             }
-            if(likes.contains(key)){
-                sql += key+" like '%${"+key+"}%' and ";
+            if (likes.contains(key)) {
+                sql += key + " like '%${" + key + "}%' and ";
                 continue;
             }
-            sql += key+"=#{"+key+"} and ";
+            sql += key + "=#{" + key + "} and ";
         }
-        sql = sql.substring(0,sql.lastIndexOf("and"));
+        sql = sql.substring(0, sql.lastIndexOf("and"));
 
-        sql+=" "+limitSql +rowIndex+limitTemp;
+        sql += " " + limitSql + rowIndex + limitTemp;
         return sql;
     }
 
 
     /**
      * map里面所有key 驼峰转下划线
+     *
      * @param map
      * @return
      * @throws Exception
@@ -96,7 +117,7 @@ public class MapUtil {
         Map map1 = new HashMap();
         for (Map.Entry entry : set) {
             String s = Map2JavaBeanUtil.transUpper2UnderLine(entry.getKey().toString());
-            map1.put(s,entry.getValue());
+            map1.put(s, entry.getValue());
             removeSet.add(entry.getKey());
         }
         map.putAll(map1);
@@ -105,6 +126,7 @@ public class MapUtil {
 
     /**
      * map里面所有key 下划线转驼峰
+     *
      * @param map
      * @return
      * @throws Exception
@@ -115,7 +137,7 @@ public class MapUtil {
         Map map1 = new HashMap();
         for (Map.Entry entry : set) {
             String s = Map2JavaBeanUtil.transUnderLine2Upper(entry.getKey().toString());
-            map1.put(s,entry.getValue());
+            map1.put(s, entry.getValue());
             removeSet.add(entry.getKey());
         }
         map.putAll(map1);
@@ -124,11 +146,12 @@ public class MapUtil {
 
     /**
      * 根据key返回String类型的值
+     *
      * @param map
      * @param key
      * @return
      */
-    public static String getString(Map map,String key){
+    public static String getString(Map map, String key) {
         Object o = map.get(key);
         if (o == null) {
             return null;
@@ -138,13 +161,14 @@ public class MapUtil {
 
     /**
      * 根据key返回int类型的值
+     *
      * @param map
      * @param key
      * @return
      */
-    public static Integer getInt(Map map,String key){
+    public static Integer getInt(Map map, String key) {
         String string = getString(map, key);
-        if ( string== null) {
+        if (string == null) {
             return null;
         }
         return Integer.parseInt(string);
@@ -152,31 +176,34 @@ public class MapUtil {
 
     /**
      * 根据key返回Double类型的值
+     *
      * @param map
      * @param key
      * @return
      */
-    public static Double getDouble(Map map,String key){
+    public static Double getDouble(Map map, String key) {
         return Double.parseDouble(getString(map, key));
     }
 
     /**
      * 根据key返回Long类型的值
+     *
      * @param map
      * @param key
      * @return
      */
-    public static Long getLong(Map map,String key){
+    public static Long getLong(Map map, String key) {
         return Long.parseLong(getString(map, key));
     }
 
     /**
      * 根据key返回Float类型的值
+     *
      * @param map
      * @param key
      * @return
      */
-    public static Float getFloat(Map map,String key){
+    public static Float getFloat(Map map, String key) {
         return Float.parseFloat(getString(map, key));
     }
 

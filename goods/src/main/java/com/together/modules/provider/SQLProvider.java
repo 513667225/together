@@ -14,4 +14,9 @@ public class SQLProvider {
         return sql;
     }
 
+    public String addGoods(Map<String, Object> map){
+        String s = "INSERT INTO `goods`";
+        return s+MapUtil.mapToAddSql(map);
+    }
+
 }

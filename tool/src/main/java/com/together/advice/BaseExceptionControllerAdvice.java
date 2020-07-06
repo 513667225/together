@@ -15,6 +15,7 @@ public class BaseExceptionControllerAdvice {
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public R customException(Exception e) {
+        e.printStackTrace();
         TipMsgEnum tipMsgEnum = TipMsgEnum.forMsg(e.getMessage());
         return R.error(tipMsgEnum);
     }
