@@ -7,14 +7,6 @@
 <link rel="stylesheet" href="/js/layui/css/layui.css">
 <script src="/js/layui/layui.all.js"></script>
 <body>
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>代理</legend>
-</fieldset>
-<div style="display: inline-block; width: 180px; height: 210px; padding: 10px; border: 1px solid #ddd; overflow: auto;">
-    <ul id="proxy"></ul>
-</div>
-
-
 <table class="layui-hide" id="agencyOrder_table" lay-skin="line" lay-filter="agencyOrder_table">
 </table>
 
@@ -23,108 +15,23 @@
     var data
     layui.use('table', function () {
         var $ = layui.jquery;
-        var tree = layui.tree;
         var table = layui.table;
         var form = layui.form
             , layer = layui.layer
             , layedit = layui.layedit
             , laydate = layui.laydate;
 
-        tree.render({
-            elem: '#admin_shopTable'
-            ,id:"admin_shopTable"
-            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
-            ,url:'/shop/getAllShop'
-            ,method: 'get'
-            ,cellMinWidth: 80
-            ,height: 300
-            ,cols: [[
-                {type:'checkbox'}
-                ,{field:'shopId' , title: 'id'}
-                ,{field:'shopName' , title: '店铺名称'}
-                ,{field:'shopSlogan', title: '公告语'}
-                ,{field:'shopDetail', title: '详情介绍'}
-                ,{field:'shopIcon' , title: '商家头像',}
-                ,{field:'shopPic', title: '商家店面图片'}
-                ,{field:'shopCategory', title: '商家品类'}
-                ,{field:'shopAddress', title: '商家地址'}
-                ,{field:'shopTel', title: '商家电话'}
-                ,{field:'shopTime', title: '营业时间',sort: true
-                    ,templet: function (d) {
-                        return createTime(d.shopTime);
-                    }}
-                ,{field:'aptitudeId', title: '商家资质ID'}
-                ,{field:'addTime', title: '创建时间',sort:true
-                    ,templet: function (d) {
-                        return createTime(d.addTime);
-                    }
-                }
-                ,{field:'shopuserId', title: '商铺用户ID',sort:true}
-                ,{fixed: 'right', title: '操作', toolbar: '#shopBar', align: 'center',width: 200, }
-            ]]
-            ,page: true
-            ,limits : [5,10]
-            ,limit:10
-            ,loading:true
-            //将原始数据解析成 table 组件所规定的数据
-            ,parseData: function (res) {
-                return {
-                    //解析接口状态
-                    "code": res.code,
-                    //解析提示文本
-                    "msg": res.msg,
-                    //解析数据长度
-                    "count": res.count,
-                    //解析数据列表
-                    "data": res.data
-                };
-            },
-            request: {
-                // 页码的参数名称，默认：page
-                pageName: 'page'
-                //每页数据量的参数名，默认：limit
-                , limitName: 'limit'
-            },
-        });
-
-        layui.tree({
-            elem: '#proxy' //指定元素
-            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
-            ,click: function(item){ //点击节点回调
-                layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
-                console.log(item);
-            }
-            ,nodes: [ //节点
-                {
-                    name: '常用文件夹'
-                    ,id: 1
-                    ,alias: 'changyong'
-                    ,children: [
-                        {
-                            name: '所有未读（设置跳转）'
-                            ,id: 11
-                            ,href: 'http://www.layui.com/'
-                            ,alias: 'weidu'
-                        }, {
-                            name: '置顶邮件'
-                            ,id: 12
-                        }, {
-                            name: '标签邮件'
-                            ,id: 13
-                        }
-                    ]
-                }],
-        });
-
         table.render({
             elem: '#agencyOrder_table',
-            id: 'agencyOrder_table',
-            url: '/orders/getOrderPage',
+            id:'agencyOrder_table',
+            url: '/admin/getProxyInfo',
+            where:{
+                adminId:1
+            },
             method: 'get',
             cellMinWidth: 80,
             cols: [[
                 {type: 'checkbox'},
-                {field: 'orderId', title: 'id'},
                 {field: 'shopId', title: '订单编号'},
                 {field: 'orderStatus', title: '订单状态'},
                 {field: 'aftersaleStatus', title: '售后状态'},
@@ -133,38 +40,33 @@
                 {field: 'orderAddress', title: '收货具体地址'},
                 {field: 'orderMessage', title: '订单留言', sort: true},
                 {field: 'goodsPrice', title: '商品总费用', sort: true},
-                {field: 'freightPrice', title: '配送费用'},
+                {field: 'freightPrice',title: '配送费用'},
                 {field: 'pindouPrice', title: '拼豆减免费用', sort: true},
                 {field: 'actualPrice', title: '实付费用', sort: true},
-                {field: 'payId', title: '微信付款编号'},
-                {
-                    field: 'payTime', title: '微信付款时间'
-                    , templet: function (d) {
+                {field: 'payId',title: '微信付款编号'},
+                {field: 'payTime', title: '微信付款时间'
+                    ,templet: function (d) {
                         return createTime(d.pay_time);
                     }
                 },
                 {field: 'shipSn', title: '发货编号', sort: true},
-                {
-                    field: 'shipTime', title: '发货开始时间', sort: true
-                    , templet: function (d) {
+                {field: 'shipTime', title: '发货开始时间', sort: true
+                    ,templet: function (d) {
                         return createTime(d.shipTime);
                     }
                 },
-                {
-                    field: 'confirmTime', title: '用户确认收货时间'
-                    , templet: function (d) {
+                {field: 'confirmTime',title: '用户确认收货时间'
+                    ,templet: function (d) {
                         return createTime(d.confirmTime);
                     }
                 },
-                {
-                    field: 'endTime', title: '订单关闭时间'
-                    , templet: function (d) {
+                {field: 'endTime', title: '订单关闭时间'
+                    ,templet: function (d) {
                         return createTime(d.endTime);
                     }
                 },
-                {
-                    field: 'addTime', title: '创建时间'
-                    , templet: function (d) {
+                {field: 'addTime', title: '创建时间'
+                    ,templet: function (d) {
                         return createTime(d.addTime);
                     }
                 },
@@ -180,6 +82,7 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
         });
+
     })
     function createTime(v) {
         var date = new Date(v);

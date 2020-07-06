@@ -12,7 +12,7 @@
             and b.category_name like '%${searchKeywords}%'
         </if>
         limit #{rowIndex},#{limit}
-    </select>
+        </select>
 
     <select id="queryGoodsByShopIdCount" resultType="int" parameterType="java.util.Map">
         SELECT COUNT(0) FROM goods a left join category b on a.category_id=b.category_id where a.shop_id=#{shopId}

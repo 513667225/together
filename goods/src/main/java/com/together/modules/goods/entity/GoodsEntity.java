@@ -129,6 +129,14 @@ public class GoodsEntity implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 商品性质
+     * 1、默认类型，2、拼团商品、3、热门商品
+     */
+    private Integer goodsNature;
+
+
+
     public Integer getGoodsId() {
         return goodsId;
     }
