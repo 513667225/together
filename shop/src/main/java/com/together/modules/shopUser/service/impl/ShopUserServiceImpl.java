@@ -6,7 +6,6 @@ import com.together.modules.shopUser.mapper.ShopUserMapper;
 import com.together.modules.shopUser.service.IShopUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.util.P;
-import com.together.util.utli.RedisIdUtil;
 import com.together.util.utli.ValidateUtli;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +35,7 @@ public class ShopUserServiceImpl extends ServiceImpl<ShopUserMapper, ShopUserEnt
             shopUserEntity.setShopuserName(p.getString("shopuserName"));
             shopUserEntity.setUpdateTime(new Date());
             shopUserEntity.setShopuserPassword(p.getString("shopuserName"));
-            shopUserEntity.setShopuserId(RedisIdUtil.nextId("shop_user_id"));
+            shopUserEntity.setShopuserId(p.getInt("shopuser_id"));
             baseMapper.insert(shopUserEntity);
         }
         return shopUserEntity;

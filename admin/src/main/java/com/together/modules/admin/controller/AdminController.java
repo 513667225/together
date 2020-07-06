@@ -51,8 +51,8 @@ public class AdminController {
 
 
     @GetMapping("/getProxyInfo")
-    public R getProxyInfo(@Pmap P p){
-        return R.success();
+    public R getProxyInfo(@Pmap P p) throws Exception {
+        return R.success("success",adminService.getProxyInfo(p));
     }
 
 }
