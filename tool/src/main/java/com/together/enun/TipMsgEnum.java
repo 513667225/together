@@ -5,8 +5,12 @@ package com.together.enun;
  */
 public enum  TipMsgEnum {
 
-    DEFAULT_ERROR_MSG(500,"系统异常");
-
+    DEFAULT_ERROR_MSG(500,"系统异常"),
+    TOKEN_OF_OVERDUE(1001,"Token过期"),
+    TOKEN_OF_Excption(1002,"Token异常"),
+    TOKEN_CREATE_Excption(1003,"JWT签名失败"),
+    TOKEN_NULL_Excption(1004,"无Token参数"),
+    PARAMETER_NULL_Excption(1005,"缺少必须参数");
 
     private  int code;
 

@@ -4,6 +4,7 @@ import com.together.enun.TipMsgEnum;
 import com.together.util.R;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Agu
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class BaseExceptionControllerAdvice {
 
+    @ResponseBody
     @ExceptionHandler(Exception.class)
     public R customException(Exception e) {
         TipMsgEnum tipMsgEnum = TipMsgEnum.forMsg(e.getMessage());
