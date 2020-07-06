@@ -20,10 +20,6 @@ import java.util.Map;
  */
 public interface IOrderService extends IService<OrderEntity> {
 
-
-
-    R getOrderPage(P p) throws Exception;
-
     int getOrderPageConut(P p);
 
     R queryOrderGoods(P p) throws Exception;

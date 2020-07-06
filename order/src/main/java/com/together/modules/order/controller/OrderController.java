@@ -1,6 +1,8 @@
 package com.together.modules.order.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
 import com.together.entity.GoodsEntity;
 import com.together.modules.order.entity.OrderEntity;
@@ -9,6 +11,7 @@ import com.together.modules.order.serviceClient.GoodsServiceClient;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,9 +39,15 @@ public class OrderController {
     private GoodsServiceClient goodsServiceClient;
 
     //分页查询
-    @RequestMapping("getOrderPage")
+    @GetMapping("/getOrderPage")
     public R getOrderPage(@Pmap P p)throws Exception{
-        p.batchToInt("page","limit");
+        Integer page = p.getInt("page");
+        Integer limit = p.getInt("limit");
+        p.initPageArg();
+        Page<OrderEntity> objectPage = new Page<>(page,limit);
+        p.remove("page");
+        p.remove("limit");
+        p.remove("rowIndex");
         if(""==p.getString("order_tel")){
             p.remove("order_tel");
         }
@@ -48,7 +57,8 @@ public class OrderController {
         if(""==p.getString("ship_sn")){
             p.remove("ship_sn");
         }
-        return iOrderService.getOrderPage(p);
+        Page<OrderEntity> pageObject = iOrderService.page(objectPage,new QueryWrapper<OrderEntity>().allEq(p).orderByDesc("add_time"));
+        return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
 
     /**

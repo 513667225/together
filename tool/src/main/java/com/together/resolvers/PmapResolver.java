@@ -1,6 +1,7 @@
 package com.together.resolvers;
 
 import com.together.annotation.Pmap;
+import com.together.entity.ShopEntity;
 import com.together.util.P;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -30,6 +31,8 @@ public class PmapResolver extends RequestParamMapMethodArgumentResolver {
         HttpServletRequest nativeRequest = webRequest.getNativeRequest(HttpServletRequest.class);
         p.setRequest(nativeRequest);
         p.setResponse(nativeResponse);
+        ShopEntity shopUserEntity = (ShopEntity) p.getRequest().getSession().getAttribute("shopUserEntity");
+        p.setShopEntity(shopUserEntity);
         Integer limit = p.getInt("limit");
         Integer page = p.getInt("page");
         if (limit!=null&&page!=null)
