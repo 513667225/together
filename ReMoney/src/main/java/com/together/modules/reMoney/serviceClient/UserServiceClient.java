@@ -19,4 +19,7 @@ public interface UserServiceClient {
     R selectSeniorByUser(@RequestParam("user_id") int user_id);
 
 
+//    @RequestMapping
+
+
 }

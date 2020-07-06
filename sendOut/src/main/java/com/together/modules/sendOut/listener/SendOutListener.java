@@ -30,6 +30,7 @@ public class SendOutListener {
         //list:中奖的那3个人
         List list = setOperations.pop(message, SystemParameter.BINGO_NUMBER);
         //TODO:处理3人扣钱发货
+
         //吧剩下的97人放到失败者队列进行结算或是后续操作
         mqUtil.testSend(MqParameter.LOSER_EXCHANGE_NAME,MqParameter.LOSER_QUEUE_NAME,message);
     }
