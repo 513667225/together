@@ -150,11 +150,12 @@ public class UserController {
 
     /**
      * 修改
-     * @param userEntity
+     * @param p
      * @return
      */
     @PutMapping("/updateById")
-    public R updateById(@RequestBody UserEntity userEntity){
+    public R updateById(@Pmap P p) throws Exception {
+        UserEntity userEntity = p.thisToEntity(UserEntity.class);
         return R.success("success",userService.updateById(userEntity));
     }
 

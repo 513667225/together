@@ -3,6 +3,7 @@ package com.together.modules.userAddress.controller;
 
 import com.together.annotation.Pmap;
 import com.together.enun.TipMsgEnum;
+import com.together.modules.user.entity.UserEntity;
 import com.together.modules.userAddress.entity.UserAddressEntity;
 import com.together.modules.userAddress.service.IUserAddressService;
 import com.together.util.P;
@@ -47,13 +48,14 @@ public class UserAddressController {
 
     /**
      * 用户地址新增
-     * @param userAddressEntity
+     * @param p
      * @return
      * @throws Exception
      */
     @RequestMapping("/insertUserAddress")
-    public R insertUserAddress(@RequestBody UserAddressEntity userAddressEntity) throws Exception {
+    public R insertUserAddress(@Pmap P p) throws Exception {
         try {
+            UserAddressEntity userAddressEntity = p.thisToEntity(UserAddressEntity.class);
             userAddressService.save(userAddressEntity);
             return R.success();
         }catch (Exception e){
@@ -80,13 +82,14 @@ public class UserAddressController {
 
     /**
      * 用户地址修改
-     * @param userAddressEntity
+     * @param p
      * @return
      * @throws Exception
      */
     @RequestMapping("/updateUserAddress")
-    public R updateUserAddress(@RequestBody UserAddressEntity userAddressEntity) throws Exception {
+    public R updateUserAddress(@Pmap P p) throws Exception {
         try {
+            UserAddressEntity userAddressEntity=p.thisToEntity(UserAddressEntity.class);
             userAddressService.updateById(userAddressEntity);
             return R.success();
         }catch (Exception e){
