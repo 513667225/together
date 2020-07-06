@@ -126,6 +126,13 @@ public class R extends HashMap {
     public static R error() {
         return R.ok().set(R.MSG_KEY, "操作失败").set(CODE_KEY, R.ERROR_CODE);
     }
+    public static R error(String msg) {
+        return R.ok().set(R.MSG_KEY, msg).set(CODE_KEY, R.ERROR_CODE);
+    }
+
+    public static R error(String msg, Object object) {
+        return R.ok().set(R.MSG_KEY, msg).set(R.DATA_KEY, object).set(CODE_KEY, R.ERROR_CODE);
+    }
 
     public static R error(TipMsgEnum tipMsgEnum) {
         return R.ok().set(R.MSG_KEY, tipMsgEnum.getMsg()).set(CODE_KEY, tipMsgEnum.getCode());
