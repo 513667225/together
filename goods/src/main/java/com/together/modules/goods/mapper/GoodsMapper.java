@@ -28,7 +28,7 @@ public interface GoodsMapper extends BaseMapper<GoodsEntity> {
     @SelectProvider(value = SQLProvider.class,method = "queryAllGoods")
     List<Map<String, Object>> queryAllGoods(Map<String, Object> map);
 
-    @InsertProvider(value = SQLProvider.class, method = "addGoods")
-    int addGoods(Map<String, Object> map);
+//    @InsertProvider(value = SQLProvider.class, method = "addGoods")
+//    int addGoods(Map<String, Object> map);
 
 }

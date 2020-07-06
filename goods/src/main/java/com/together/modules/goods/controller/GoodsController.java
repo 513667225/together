@@ -2,10 +2,9 @@ package com.together.modules.goods.controller;
 
 
 import com.together.annotation.Pmap;
-import com.together.enun.TipMsgEnum;
-import com.together.config.FileUtil;
 import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.service.IGoodsService;
+import com.together.util.FileUtil;
 import com.together.util.MapUtil;
 import com.together.util.P;
 import com.together.util.R;
@@ -87,6 +86,5 @@ public class GoodsController {
         p.batchToInt("page","limit");
         return  iGoodsService.queryGoodsByShopId(p);
     }
-
 
 }

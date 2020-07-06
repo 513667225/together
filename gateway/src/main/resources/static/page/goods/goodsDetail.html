@@ -22,14 +22,6 @@
         </div>
     </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">商品标语</label>
-        <div class="layui-input-block">
-            <input name="goodsBrief" id="goodsBrief" type="text" class="layui-input"
-                   placeholder="请输入商品宣传标语,不超过30个字" lay-verify="required" autocomplete="off">
-        </div>
-    </div>
-
     <div class="layui-form-item" pane="">
         <label class="layui-form-label">是否上架</label>
         <div class="layui-input-block">
@@ -107,6 +99,9 @@
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>商品规格信息</legend>
     </fieldset>
+    <blockquote class="layui-elem-quote layui-text">
+        Tips:商品规格图片,建议图片比列为16:9
+    </blockquote>
     <div class="layui-form-item">
         <label class="layui-form-label">规格名字</label>
         <div class="layui-input-block">
@@ -114,9 +109,6 @@
                    lay-verify="required" autocomplete="off">
         </div>
     </div>
-    <blockquote class="layui-elem-quote layui-text">
-        Tips:商品规格图片,建议图片比列为16:9
-    </blockquote>
     <div class="layui-form-item">
         <label class="layui-form-label">商品宣传图</label>
         <div class="layui-upload-drag" id="specificationPicUpload">
@@ -164,12 +156,14 @@
     </div>
 
     <!-- 提交按钮 -->
-    <div class="layui-form-item">
+    <div class="layui-form-item" style="margin-top:40px">
         <div class="layui-input-block" style="text-align: center;">
-            <button type="button" class="layui-btn" lay-submit lay-filter="doSubmit" id="submitBtn">
+            <button type="button" class="layui-btn" lay-filter="doSubmit" id="submitBtn">
                 <span class="layui-icon layui-icon-add-1"></span>
                 提交
             </button>
+            <button id="submitBtn1" style="display: none"></button>
+            <button id="submitBtn2" style="display: none"></button>
             <button type="reset" class="layui-btn layui-btn-warm">
                 <span class="layui-icon layui-icon-refresh-1"></span>
                 重置
@@ -206,7 +200,6 @@
         </form>
     </div>
 </div>
-<!--<button id="kkk">aaaaaaaaasgfasgagsasgasgddaaaaaaaaaaaaaaaaaaaaa</button>-->
 </body>
 <script>
     var goodsGrallyList={};
@@ -243,7 +236,7 @@
         //初始化
         init();
 
-        // //提交表单
+        //提交表单
         // form.on('submit(doSubmit)', function (data) {
         //     // alert(tinymce.get("#goodsDetail").getContent());
         //     console.log(table2Json('attributeTable'));
@@ -342,6 +335,8 @@
             allDone: function (res) {
                 goodsGrallyList.data=dataArray;
                 layer.msg("商品宣传图上传成功!");
+
+                specificationPicUpload.upload();
             }
         });
         //图片json长度
@@ -354,13 +349,13 @@
         }
 
         //商品规格图片上传
-        upload.render({
+        var specificationPicUpload=upload.render({
             elem: '#specificationPicUpload',
             url: '/goods/uploadGoods',
             acceptMime: 'image/*',
             auto: false,
             size: 5120,
-            bindAction: '#submitBtn',
+           // bindAction: '#submitBtn',
             choose:function(obj){
                 var files = obj.pushFile();
                 var len = getJsonLength(files);
@@ -382,9 +377,8 @@
             },
             done:function(res){
                 layer.msg("商品规格图片上传成功")
-                console.log(res);
                 specificationPicFilePath = res.filePath;
-                $("#goodsAddSubmit").submit();
+
             }
         });
 
