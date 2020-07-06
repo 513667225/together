@@ -18,12 +18,15 @@ public class Spell {
 
     private int gameCount = 0;
 
-    public Spell(int userId, int goodsId, TogetherNumber togetherNumber, GoodsLevel goodsLevel) {
+    private int admin_id;
+
+    public Spell(int userId, int goodsId, TogetherNumber togetherNumber, GoodsLevel goodsLevel,int admin_id) {
         this.userId = userId;
         this.goodsId = goodsId;
 //        this.group = group;
         this.togetherNumber = togetherNumber;
         this.goodsLevel = goodsLevel;
+        this.admin_id = admin_id;
 //        this.gameCount = gameCount;
     }
 
@@ -74,5 +77,13 @@ public class Spell {
 
     public void setGameCount(int gameCount) {
         this.gameCount = gameCount;
+    }
+
+    public int getAdmin_id() {
+        return admin_id;
+    }
+
+    public void setAdmin_id(int admin_id) {
+        this.admin_id = admin_id;
     }
 }
