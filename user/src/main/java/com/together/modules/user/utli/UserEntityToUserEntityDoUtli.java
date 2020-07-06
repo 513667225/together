@@ -20,6 +20,10 @@ public class UserEntityToUserEntityDoUtli {
             userEntityDo.setUnderlingSize(userEntity.getUnderlingSize());
             userEntityDo.setUserMobile(userEntity.getUserMobile());
             userEntityDo.setUserAvatar(userEntity.getUserAvatar());
+            userEntityDo.setShopping_gold(userEntity.getShopping_gold());
+            userEntityDo.setIntegral(userEntity.getIntegral());
+            userEntityDo.setSpell_bean(userEntity.getSpell_bean());
+            userEntityDo.setBalance(userEntity.getBalance());
             return userEntityDo;
         }
         return null;

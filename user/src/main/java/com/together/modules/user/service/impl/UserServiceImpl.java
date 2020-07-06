@@ -3,8 +3,11 @@ package com.together.modules.user.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.together.enun.TipMsgEnum;
 import com.together.modules.user.entity.UserEntity;
 import com.together.entity.UserSuperstratumRelationDo;
+import com.together.modules.user.entity.UserEntityDo;
+import com.together.modules.user.entity.UserReferrerDo;
 import com.together.modules.user.mapper.UserMapper;
 import com.together.modules.user.service.IUserService;
 import com.together.modules.user.timing.UserRelationDepue;
@@ -345,7 +348,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public Map<String, Object> selectUserReferrer(P p) throws Exception {
+    public Map<String, Object> selectUserReferrerTo(P p) throws Exception {
         ValidateUtli.validateParams(p,"user_id");
         Map<String,Object> map=new HashMap<>();
         UserEntity userEntity = baseMapper.selectById(p.getInt("user_id"));
@@ -504,6 +507,42 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         }catch (Exception e){
             log.error("创建分享会员二维码失败:{}",e);
         }
+    }
+
+    @Override
+    public void updateMoney(P p) throws Exception {
+        Double shopping_gold1 = p.getDouble("shopping_gold");
+        Double integral = p.getDouble("integral");
+        Double spell_bean = p.getDouble("spell_bean");
+        Double balance = p.getDouble("balance");
+        if(shopping_gold1==null&&integral==null&&spell_bean==null&&balance==null){
+            return;
+        }
+        UserEntity userEntity=new UserEntity();
+        if(shopping_gold1!=null){
+            userEntity.setShopping_gold(shopping_gold1);
+        }
+        if(integral!=null){
+            userEntity.setIntegral(integral);
+        }
+        if(spell_bean!=null){
+            userEntity.setSpell_bean(spell_bean);
+        }
+        if(balance!=null){
+            userEntity.setBalance(balance);
+        }
+        try {
+            baseMapper.updateById(userEntity);
+        }catch (Exception e){
+            throw new Exception(TipMsgEnum.UPDATE_MONRY_FAIL.getMsg());
+        }
+
+    }
+
+    @Override
+    public List<UserEntity> selectUserALlInviter(P p) {
+        List<UserEntity> lists = baseMapper.selectUserALlInviter(p.getInt("user_id"));
+        return lists;
     }
 
     /**

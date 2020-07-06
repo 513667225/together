@@ -12,6 +12,7 @@ import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -53,14 +54,19 @@ public class ShopUserController {
     /**
      * 商家登录方法
      */
-    @GetMapping("loinShopUser")
-    public R loinShopUser (@Pmap P p, HttpServletRequest request) throws Exception {
-        MapUtil.mapKeySetUpper2Line(p);
-        ShopUserEntity one = shopUserService.getOne(new QueryWrapper<ShopUserEntity>().allEq(p));
-        request.getSession().setAttribute("shopUserEntity",one);
-        p.setRequest(request);
-        System.out.println(request.getSession().getAttribute("shopUserEntity"));
-        return R.success("success",one);
+    @GetMapping("/loinShopUser")
+    public R loinShopUser (@Pmap P p) throws Exception {
+        String shopuserPassword = p.getString("shopuserPassword");
+        ShopUserEntity one = shopUserService.getOne(new QueryWrapper<ShopUserEntity>().eq("shopuser_name",p.getString("shopuserName")));
+        if(null!=one){
+            if(one.getShopuserPassword().equals(shopuserPassword)){
+                p.getRequest();
+                return R.success("登录成功",p);
+            }else{
+                return R.success("密码错误,请重新输入");
+            }
+        }
+        return R.success("当前用户不存在，请注册信息");
     }
 }
 

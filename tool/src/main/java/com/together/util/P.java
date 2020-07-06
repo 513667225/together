@@ -1,5 +1,7 @@
 package com.together.util;
 
+import com.together.entity.ShopEntity;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
@@ -14,6 +16,16 @@ import java.util.Map;
 public class P extends HashMap<String,Object> {
 
     private HttpServletRequest request;
+
+    private ShopEntity shopEntity;
+
+    public ShopEntity getShopEntity() {
+        return shopEntity;
+    }
+
+    public void setShopEntity(ShopEntity shopEntity) {
+        this.shopEntity = shopEntity;
+    }
 
     public HttpServletRequest getRequest() {
         return request;

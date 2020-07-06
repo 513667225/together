@@ -1,5 +1,6 @@
 package com.together.modules.user.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
@@ -19,7 +20,7 @@ public class UserEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "user_id")
+    @TableId(value = "user_id",type= IdType.AUTO)
     private Integer userId;
 
 
@@ -108,6 +109,50 @@ public class UserEntity implements Serializable {
 
     //顶层邀请人
     private Integer topRefereeId;
+
+    //购物金
+    private double shopping_gold;
+
+    //积分
+    private double integral;
+
+    //拼豆
+    private double spell_bean;
+
+    //余额
+    private double balance;
+
+    public double getShopping_gold() {
+        return shopping_gold;
+    }
+
+    public void setShopping_gold(double shopping_gold) {
+        this.shopping_gold = shopping_gold;
+    }
+
+    public double getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(double integral) {
+        this.integral = integral;
+    }
+
+    public double getSpell_bean() {
+        return spell_bean;
+    }
+
+    public void setSpell_bean(double spell_bean) {
+        this.spell_bean = spell_bean;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 
     public Integer getTopRefereeId() {
         return topRefereeId;

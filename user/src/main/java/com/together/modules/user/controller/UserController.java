@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -47,7 +48,7 @@ public class UserController {
     @RequestMapping(value = "/getUserById",method = RequestMethod.GET)
     R getUserById(@RequestParam("userId") int userId){
         UserEntity userEntity = userService.getById(userId);
-        return R.success().data(userEntity);
+        return R.success().data(UserEntityToUserEntityDoUtli.userEntityToUserEntityDoUtli(userEntity));
     }
 
     @GetMapping("/getUserPage")
@@ -123,11 +124,21 @@ public class UserController {
 
 
     //根据用户id查询推荐人和推荐人的推荐人
-    @RequestMapping("/selectUserReferrer")
-    public R selectUserReferrer(@Pmap P p) throws Exception {
-        Map<String, Object> stringObjectMap = userService.selectUserReferrer(p);
+    @RequestMapping("/selectUserReferrerTo")
+    public R selectUserReferrerTo(@Pmap P p) throws Exception {
+        ValidateUtli.validateParams(p,"userId");
+        Map<String, Object> stringObjectMap = userService.selectUserReferrerTo(p);
         return R.success("success").data(stringObjectMap);
     }
+
+    //根据用户id查询所有邀请人
+    @RequestMapping("/selectUserReferrer")
+    public R selectUserALlInviter(@Pmap P p) throws Exception {
+        ValidateUtli.validateParams(p,"userId");
+        List<UserEntity> userEntityList=userService.selectUserALlInviter(p);
+        return R.success("success").data(userEntityList);
+    }
+
 
     //根据用户id查询上级服务经理
     @RequestMapping("/selectSeniorByUser")
@@ -139,12 +150,21 @@ public class UserController {
 
     /**
      * 修改
-     * @param userEntity
+     * @param p
      * @return
      */
-    @PutMapping
-    public R updateById(@RequestBody UserEntity userEntity){
+    @PutMapping("/updateById")
+    public R updateById(@Pmap P p) throws Exception {
+        UserEntity userEntity = p.thisToEntity(UserEntity.class);
         return R.success("success",userService.updateById(userEntity));
+    }
+
+    //修改余额，拼豆，购物金，积分
+    @PutMapping("/updateMoney")
+    public R updateMoney(@Pmap P p) throws Exception {
+        ValidateUtli.validateParams(p,"user_id");
+        userService.updateMoney(p);
+        return R.success("success");
     }
 
 
