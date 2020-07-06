@@ -5,13 +5,23 @@ package com.together.enun;
  */
 public enum  TipMsgEnum {
 
-    LACK_OF_INTEGRAL(1001,"积分不足");
+    DEFAULT_ERROR_MSG(500,"系统异常");
 
 
     private  int code;
 
     private String msg;
 
+
+
+    public  static TipMsgEnum forMsg(String msg){
+        for (TipMsgEnum value : values()) {
+            if (value.getMsg().equals(msg)) {
+                return value;
+            }
+        }
+        return DEFAULT_ERROR_MSG;
+    }
 
       TipMsgEnum(int code,String msg){
           this.code = code;
