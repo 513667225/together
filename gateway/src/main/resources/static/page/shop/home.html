@@ -79,7 +79,7 @@
         });
 
         //首页选项卡
-        var tabheight = layui.jquery(window).height() - 95;
+        var tabheight = layui.jquery(window).height() - 194;
         contentTxt = '<iframe src="/page/shop/index.html" scrolling="no" width="100%" height="' + (tabheight) + 'PX"></iframe>';
         layui.element.tabAdd('tabDemo', {
             title: '首页',
@@ -98,7 +98,7 @@
             /*layer.msg('切换-' + name)*/
         } else {
             //动态控制iframe高度
-            var tabheight = layui.jquery(window).height() - 95;
+            var tabheight = layui.jquery(window).height() - 194;
             contentTxt = '<iframe src="' + href + '" scrolling="no" width="100%" height="' + (tabheight) + 'PX"></iframe>';
             //新增一个Tab项
             layui.element.tabAdd('tabDemo', {

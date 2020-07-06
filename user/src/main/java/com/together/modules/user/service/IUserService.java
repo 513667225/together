@@ -4,6 +4,7 @@ import com.together.modules.user.entity.UserEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.together.entity.UserSuperstratumRelationDo;
 import com.together.util.P;
+import com.together.util.R;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -33,7 +34,7 @@ public interface IUserService extends IService<UserEntity> {
 
     Map<String, Object> selectUserReferrerInManager(P p);
 
-    void updateUserPhone(P p) throws Exception;
+    R updateUserPhone(P p) throws Exception;
 
     ArrayList<UserSuperstratumRelationDo> userReferrerDorecursion(P p) throws Exception;
 }
