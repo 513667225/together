@@ -2,6 +2,7 @@ package com.together.modules.goods.controller;
 
 
 import com.together.annotation.Pmap;
+import com.together.enun.TipMsgEnum;
 import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.service.IGoodsService;
 import com.together.util.P;
@@ -48,6 +49,19 @@ public class GoodsController {
         return R.success("操作成功",goodsId);
     }
 
+
+    /**
+     * shadow
+     * @param p
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/queryAllGoods")
+    public R queryAllGoods(@Pmap P p) throws Exception {
+
+        p.batchToInt("page","limit");
+        return  iGoodsService.queryGoodsByShopId(p);
+    }
 
 
 }

@@ -21,4 +21,6 @@ public interface IGoodsService extends IService<GoodsEntity> {
 
     R queryGoodsByShopId(Map<String, Object> map) throws Exception;
 
+    R queryAllGoods(Map<String, Object> map) throws Exception;
+
 }

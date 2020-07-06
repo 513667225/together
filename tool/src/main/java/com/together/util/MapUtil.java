@@ -32,20 +32,54 @@ public class MapUtil {
     }
 
 
+    public static String mapToSqlByLike(Map map,String... likeKeys){
+        List<String> list = new ArrayList();
+        for (String likeKey : likeKeys) {
+            list.add(likeKey);
+        }
+        return mapToSql(map,list);
+    }
+
+    public  static String mapToSql(Map map){
+
+        return mapToSql(map);
+    }
+
     /**
      * map转化为sql 格式:key=#{key}
      * @param map
      * @return
      */
-    public  static String mapToSql(Map map){
+    public  static String mapToSql(Map map,List<String> likes){
         Set<Map.Entry> set = map.entrySet();
         String sql = "";
+        String rowIndex="";
+        String limitSql="limit";
+        String limitTemp="";
+        List<String> list = new ArrayList<>();
+        if (set.size()>0) {
+            sql = "where ";
+        }
         for (Map.Entry entry : set) {
             String key = String.valueOf(entry.getKey());
             String value = String.valueOf(entry.getValue());
+            if(key.equals("rowIndex")){
+                rowIndex = " "+value+",";
+                continue;
+            }
+            if (key.equals("limit")){
+                limitTemp = value;
+                continue;
+            }
+            if(likes.contains(key)){
+                sql += key+" like '%${"+key+"}%' and ";
+                continue;
+            }
             sql += key+"=#{"+key+"} and ";
         }
         sql = sql.substring(0,sql.lastIndexOf("and"));
+
+        sql+=" "+limitSql +rowIndex+limitTemp;
         return sql;
     }
 

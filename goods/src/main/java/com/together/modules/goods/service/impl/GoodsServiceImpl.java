@@ -35,8 +35,12 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
         }
         return R.success().data(maps).set("total",goodsByShopIdCount);
     }
-    
 
+    //
+    @Override
+    public R queryAllGoods(Map<String, Object> map) throws Exception {
+        return R.success("msg",goodsMapper.queryAllGoods(map));
+    }
 
 
 }
