@@ -64,48 +64,39 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
     @Transactional
     @Override
     public R addGoods(Map<String, Object> map) {
+        P p = (P) map;
         GoodsEntity goodsEntity = new GoodsEntity();
         //goods_id	goods_name	category_id	shop_id	goods_gallery	goods_price	goods_brief	is_on_sale	sort_order
         // pic_url	goods_unit	goods_detail	goods_level	spokesman_id	add_time	update_time	goods_inventory
-        goodsEntity.setGoodsName((String) map.get("goodsName"));
-        goodsEntity.setCategoryId((Integer) map.get("categoryId2"));
-        goodsEntity.setShopId((Integer) map.get("shopId"));
-        goodsEntity.setGoodsGallery((String) map.get("goodsGallery"));
-        goodsEntity.setGoodsPrice((BigDecimal) map.get("goodsPrice"));
-        goodsEntity.setGoodsBrief((String) map.get("goodsBrief"));
-        if("on".equals((String) map.get("isOnSale"))){
+        goodsEntity.setGoodsName(p.getString("goodsName"));
+        goodsEntity.setCategoryId(p.getInt("category2"));
+        goodsEntity.setShopId(p.getInt("shopId"));
+        goodsEntity.setGoodsGallery(p.getString("goodsGallery"));
+        goodsEntity.setGoodsPrice(p.getBigDecimal("goodsPrice"));
+        goodsEntity.setGoodsBrief(p.getString("goodsBrief"));
+        if("on".equals(p.getString("isOnSale"))){
             goodsEntity.setIsOnSale(true);
         }else{
             goodsEntity.setIsOnSale(false);
         }
         goodsEntity.setSortOrder(0);
-        goodsEntity.setPicUrl((String) map.get("picUrl"));
-        goodsEntity.setGoodsUnit((String) map.get("goodsUnit"));
-        goodsEntity.setGoodsDetail((String) map.get("goodsDetail"));
-        BigDecimal goodsPrice = (BigDecimal) map.get("goodsPrice");
-        if(goodsPrice.compareTo(BigDecimal.valueOf(99)) == 1 && goodsPrice.compareTo(BigDecimal.valueOf(199))== -1){
-            goodsEntity.setGoodsLevel(1);
-        }else if(goodsPrice.compareTo(BigDecimal.valueOf(199)) == 1 && goodsPrice.compareTo(BigDecimal.valueOf(299))== -1){
-            goodsEntity.setGoodsLevel(2);
-        }else if(goodsPrice.compareTo(BigDecimal.valueOf(299)) == -1){
-            goodsEntity.setGoodsLevel(3);
-        }else{
-            goodsEntity.setGoodsLevel(0);
-        }
+        goodsEntity.setPicUrl(p.getString("picUrl"));
+        goodsEntity.setGoodsUnit(p.getString("goodsUnit"));
+        goodsEntity.setGoodsDetail(p.getString("goodsDetail"));
         goodsEntity.setSpokesmanId(0);
-        goodsEntity.setGoodsInventory((Integer) map.get("goodsInventory"));
+        goodsEntity.setGoodsInventory(p.getInt("goodsInventory"));
         goodsEntity.setAddTime(new Date());
         goodsEntity.setUpdateTime(new Date());
         goodsMapper.insert(goodsEntity);
         Integer goodsId = goodsEntity.getGoodsId();
-        JSONArray attributeEntity = JSONObject.parseArray((String) map.get("attributeEntity"));
+        JSONArray attributeEntity = JSONObject.parseArray(p.getString("attributeEntity"));
         if (attributeEntity.size()>0){
             for (int i = 0; i < attributeEntity.size(); i++) {
                 GoodsAttributeEntity goodsAttributeEntity = new GoodsAttributeEntity();
                 JSONObject jsonObject = attributeEntity.getJSONObject(i);
                 goodsAttributeEntity.setGoodsId(goodsId);
                 goodsAttributeEntity.setAttributeName((String) jsonObject.get("attributeName"));
-                goodsAttributeEntity.setAttributeName((String) jsonObject.get("attributeValue"));
+                goodsAttributeEntity.setAttributeValue((String) jsonObject.get("attributeValue"));
                 goodsAttributeEntity.setAddTime(new Date());
                 goodsAttributeEntity.setUpdateTime(new Date());
                 goodsAttributeMapper.insert(goodsAttributeEntity);
@@ -113,8 +104,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
         }
         GoodsSpecificationEntity goodsSpecificationEntity = new GoodsSpecificationEntity();
         goodsSpecificationEntity.setGoodsId(goodsId);
-        goodsSpecificationEntity.setSpecificationName((String) map.get("specificationName"));
-        goodsSpecificationEntity.setPicUrl((String) map.get("specificationPic"));
+        goodsSpecificationEntity.setSpecificationName(p.getString("specificationName"));
+        goodsSpecificationEntity.setPicUrl(p.getString("specificationPic"));
         goodsSpecificationEntity.setAddTime(new Date());
         goodsSpecificationEntity.setUpdateTime(new Date());
         int insert = goodsSpecificationMapper.insert(goodsSpecificationEntity);

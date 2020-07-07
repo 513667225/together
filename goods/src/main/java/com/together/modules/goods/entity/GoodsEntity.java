@@ -88,6 +88,13 @@ public class GoodsEntity implements Serializable {
      */
     private Integer goodsInventory;
 
+    /**
+     * 商品类型  1、默认类型，2、拼团商品、3、热门商品
+     * @return
+     */
+    private Integer goodsNature;
+
+
     public Integer getGoodsInventory() {
         return goodsInventory;
     }
@@ -118,14 +125,6 @@ public class GoodsEntity implements Serializable {
      * 更新时间
      */
     private Date updateTime;
-
-    /**
-     * 商品性质
-     * 1、默认类型，2、拼团商品、3、热门商品
-     */
-    private Integer goodsNature;
-
-
 
     public Integer getGoodsId() {
         return goodsId;
@@ -186,6 +185,14 @@ public class GoodsEntity implements Serializable {
     }
     public Boolean getIsOnSale() {
         return isOnSale;
+    }
+
+    public Integer getGoodsNature() {
+        return goodsNature;
+    }
+
+    public void setGoodsNature(Integer goodsNature) {
+        this.goodsNature = goodsNature;
     }
 
     public GoodsEntity setIsOnSale(Boolean isOnSale) {

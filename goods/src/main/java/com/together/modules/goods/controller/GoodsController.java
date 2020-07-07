@@ -1,6 +1,7 @@
 package com.together.modules.goods.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.together.annotation.Pmap;
 import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.service.IGoodsService;
@@ -58,8 +59,17 @@ public class GoodsController {
 
     @RequestMapping("/addGoods")
     public R addGoods(@Pmap P p) throws Exception {
-        MapUtil.mapKeySetUpper2Line(p);
         p.put("shopId",1);
+        Double goodsPrice = p.getDouble("goodsPrice");
+        if(goodsPrice < 199 && goodsPrice<=99){
+            p.put("goodsLevel",1);
+        }else if(goodsPrice < 399 && goodsPrice<=199){
+            p.put("goodsLevel",2);
+        }else if(goodsPrice<=399){
+            p.put("goodsLevel",3);
+        }else{
+            p.put("goodsLevel",0);
+        }
         return iGoodsService.addGoods(p);
     }
 
@@ -72,7 +82,7 @@ public class GoodsController {
         String filePath = basePath + "/upload/shop/" + new Date().getTime() + prefix;
         File desFile = new File(filePath);
         File outfile = fileUtil.write(desFile,file.getInputStream(),file.getSize(),1024*40);
-        return R.success().set("fileName",outfile.getName()).set("filePath",filePath);
+        return R.success().set("fileName",outfile.getName()).set("filePath",outfile.getName());
     }
 
     /**
@@ -85,6 +95,12 @@ public class GoodsController {
     public R queryAllGoods(@Pmap P p) throws Exception {
         p.batchToInt("page","limit");
         return  iGoodsService.queryGoodsByShopId(p);
+    }
+
+    @RequestMapping("/updateGoods")
+    public R updateAdmin(@Pmap P p) throws Exception {
+        GoodsEntity goodsEntity = p.thisToEntity(GoodsEntity.class);
+        return R.success("操作成功",iGoodsService.update(goodsEntity,new QueryWrapper<GoodsEntity>().eq("goods_id",p.getInt("goodsId"))));
     }
 
 }

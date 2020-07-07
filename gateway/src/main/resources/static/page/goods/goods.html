@@ -104,7 +104,7 @@
                     align: 'center',
                     templet: function (data) {
                         var url = data.picUrl;
-                        return "<div onclick='showImg(\"" + url + "\")'><img src='" + url + "' style='height:35px;width=35px'></div>";
+                        return "<div onclick='showImg(\"/upload/shop/" + url + "\")'><img src='" + url + "' style='height:35px;width=35px'></div>";
                     }
                 },
                 {field: 'goodsUnit', width: 100, title: '商品单位', align: 'center'},
@@ -205,7 +205,7 @@
             area: ['auto'],
             skin: 'layui-layer-nobg',
             shadeClose: true,
-            content: "<img src='" + url + "'>"
+            content: "<img src='/upload/shop/" + url + "'>"
         });
     }
 
