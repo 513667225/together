@@ -65,7 +65,11 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
         return R.success("success",insertGoods);
     }
 
-
+    @Override
+    public List<GoodsEntity> queryLimitNature(P p) {
+        List<GoodsEntity> goodsEntities=baseMapper.queryLimitNature(p);
+        return goodsEntities;
+    }
 
 
 }

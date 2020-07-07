@@ -3,6 +3,7 @@ package com.together.modules.goods.mapper;
 import com.together.modules.goods.entity.GoodsEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.together.modules.provider.SQLProvider;
+import com.together.util.P;
 import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
@@ -27,6 +28,9 @@ public interface GoodsMapper extends BaseMapper<GoodsEntity> {
 
     @SelectProvider(value = SQLProvider.class,method = "queryAllGoods")
     List<Map<String, Object>> queryAllGoods(Map<String, Object> map);
+
+    @SelectProvider(value = SQLProvider.class,method = "queryLimitNature")
+    List<GoodsEntity> queryLimitNature(P p);
 
 //    @InsertProvider(value = SQLProvider.class, method = "addGoods")
 //    int addGoods(Map<String, Object> map);

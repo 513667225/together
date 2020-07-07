@@ -17,4 +17,5 @@ import java.util.List;
 public interface IUserAddressService extends IService<UserAddressEntity> {
 
     List<UserAddressEntity> selectAllUserAddress(P p);
+
 }

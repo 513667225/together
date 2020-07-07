@@ -2,6 +2,7 @@ package com.together.modules.goods.service;
 
 import com.together.modules.goods.entity.GoodsEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.together.util.P;
 import com.together.util.R;
 
 import java.util.List;
@@ -25,4 +26,5 @@ public interface IGoodsService extends IService<GoodsEntity> {
 
     R addGoods(Map<String, Object> map);
 
+    List<GoodsEntity> queryLimitNature(P p);
 }

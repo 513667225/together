@@ -84,6 +84,32 @@ public class OrderController {
         return iOrderService.queryOrderByShopId(p);
     }
 
+    /**
+     * 根据用户id查询所有订单
+     * @param p
+     * @return
+     */
+    @RequestMapping("/getUserOrders")
+    public R getUserOrders(@Pmap P p) throws Exception {
+        p.batchToInt("userId");
+        p.batchToInt("page","limit");
+        return iOrderService.queryOrderByShopId(p);
+    }
+
+
+    /**
+     * 根据用户id及订单状态查询订单
+     * @param p
+     * @return
+     */
+    @RequestMapping("/getUserOrdersEqStatus")
+    public R getUserOrdersEqStatus(@Pmap P p) throws Exception {
+        p.batchToInt("userId");
+        p.batchToInt("orderStatus");
+        p.batchToInt("page","limit");
+        return iOrderService.getUserOrdersEqStatus(p);
+    }
+
 
     /**
      * 根据订单ID查询订单
