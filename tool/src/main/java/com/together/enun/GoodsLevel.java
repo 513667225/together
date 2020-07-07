@@ -3,7 +3,10 @@ package com.together.enun;
 import com.together.parameter.ReMoney;
 
 /**
- * 拼团返现档次对应的钱
+ * reward 拼团返现档次对应的钱
+ * shopOutBonus 省() 代分红
+ * theHost 主播分红
+ * directPush直(indirectPush间)推 分红
  *@author  Agu
  */
 public enum GoodsLevel {
@@ -12,6 +15,11 @@ public enum GoodsLevel {
 
 
     private int reward;
+
+    private double provinceManage;
+//    private  double cityManage;
+    private double theHost;
+
 
     private  double directPush;
     private  double indirectPush;
@@ -44,6 +52,8 @@ public enum GoodsLevel {
         this.reward = reward;
         this.directPush = reward* ReMoney.directPush;
         this.indirectPush = reward* ReMoney.indirectPush;
+        this.provinceManage = reward;
+        this.theHost = reward/2;
      }
 
     public  static GoodsLevel forNumber(int i){
@@ -56,4 +66,20 @@ public enum GoodsLevel {
     }
 
 
+    public double getProvinceManage() {
+        return provinceManage;
+    }
+
+    public void setProvinceManage(double provinceManage) {
+        this.provinceManage = provinceManage;
+    }
+
+
+    public double getTheHost() {
+        return theHost;
+    }
+
+    public void setTheHost(double theHost) {
+        this.theHost = theHost;
+    }
 }
