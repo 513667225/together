@@ -1,6 +1,8 @@
 package com.together.modules.sendOut.listener;
 
 
+import com.together.entity.Spell;
+import com.together.modules.sendOut.service.SendOutService;
 import com.together.parameter.MqParameter;
 import com.together.parameter.SystemParameter;
 import com.together.util.MqUtil;
@@ -19,6 +21,8 @@ public class SendOutListener {
     SetOperations setOperations;
 
 
+    @Autowired
+    SendOutService sendOutService;
 
     @Autowired
     MqUtil mqUtil;
@@ -28,14 +32,15 @@ public class SendOutListener {
 //        setOperations.mo
         System.out.println(Integer.parseInt(message));
         //list:中奖的那3个人
-        List list = setOperations.pop(message, SystemParameter.BINGO_NUMBER);
-        //TODO:处理3人扣钱发货
+        List<Spell> list = setOperations.pop(message, SystemParameter.BINGO_NUMBER);
         //商户分钱
         mqUtil.testSend(MqParameter.SHOP_SHARE_EXCHANGE_NAME,MqParameter.SHOP_SHARE_EXCHANGE_KEY_NAME,list);
         //世代省代分红
         mqUtil.testSend(MqParameter.SHARE_OUT_BONUS_EXCHANGE_NAME,MqParameter.SHARE_OUT_BONUS_EXCHANGE_KEY_NAME,list);
         //吧剩下的97人放到失败者队列进行结算或是后续操作
         mqUtil.testSend(MqParameter.LOSER_EXCHANGE_NAME,MqParameter.LOSER_QUEUE_NAME,message);
+        //TODO:处理3人扣钱发货
+        sendOutService.createOrder(list);
     }
 
 }

@@ -10,6 +10,9 @@ import com.together.modules.sendOut.service.ShareOutBonus;
 public class ShareOutBonusImpl implements ShareOutBonus {
 
 
+
+
+
     @Override
     public void shareOutBonus(int admin_id, GoodsLevel goodsLevel) {
 

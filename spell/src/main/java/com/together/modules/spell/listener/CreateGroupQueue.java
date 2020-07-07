@@ -29,6 +29,8 @@ public class CreateGroupQueue  {
     @Autowired
     MqUtil mqUtil;
 ///
+
+
     @RabbitListener(queues = MqParameter.CREATE_GROUP_QUEUE_NAME,containerFactory = "simpleRabbitListenerContainerFactory")
     public  void get(List<Message> listMessage, Channel channel) throws Exception{
 
