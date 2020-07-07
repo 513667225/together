@@ -57,5 +57,40 @@ public class MqConfig {
     }
 
 
+    @Bean
+    public DirectExchange shareExchange() {
+        return new DirectExchange(MqParameter.SHARE_OUT_BONUS_EXCHANGE_NAME);
+    }
+
+    @Bean
+    public Queue shareQueue() {
+        //名字  是否持久化
+        return new Queue(MqParameter.SHARE_OUT_BONUS_QUEUE_NAME, true);
+    }
+
+    @Bean
+    public Binding shareBinding() {
+        //绑定一个队列  to: 绑定到哪个交换机上面 with：绑定的路由建（routingKey）
+        return BindingBuilder.bind(shareQueue()).to(shareExchange()).with(MqParameter.SHARE_OUT_BONUS_EXCHANGE_KEY_NAME);
+    }
+
+
+
+    @Bean
+    public DirectExchange shoutExchange() {
+        return new DirectExchange(MqParameter.SHOP_SHARE_EXCHANGE_NAME);
+    }
+
+    @Bean
+    public Queue shoutQueue() {
+        //名字  是否持久化
+        return new Queue(MqParameter.SHOP_SHARE_QUEUE_NAME, true);
+    }
+
+    @Bean
+    public Binding shoutBinding() {
+        //绑定一个队列  to: 绑定到哪个交换机上面 with：绑定的路由建（routingKey）
+        return BindingBuilder.bind(shoutQueue()).to(shoutExchange()).with(MqParameter.SHOP_SHARE_EXCHANGE_KEY_NAME);
+    }
 
 }

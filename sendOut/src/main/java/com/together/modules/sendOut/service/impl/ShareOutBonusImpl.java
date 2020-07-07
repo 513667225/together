@@ -15,5 +15,10 @@ public class ShareOutBonusImpl implements ShareOutBonus {
 
     }
 
+    @Override
+    public void shopShare() {
+
+    }
+
 
 }

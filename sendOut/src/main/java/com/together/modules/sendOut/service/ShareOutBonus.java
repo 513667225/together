@@ -9,4 +9,6 @@ public interface ShareOutBonus {
 
      void shareOutBonus(int admin_id, GoodsLevel goodsLevel);
 
+     void shopShare();
+
 }
