@@ -2,6 +2,7 @@ package com.together.modules.spell.controller;
 
 
 import com.together.annotation.Pmap;
+import com.together.entity.Spell;
 import com.together.enun.GoodsLevel;
 import com.together.enun.TogetherNumber;
 import com.together.modules.spell.service.SpellService;
@@ -38,11 +39,12 @@ public class SpellController {
 
         Integer userId = p.getInt("userId");
         Integer goodsId = p.getInt("goodsId");
+        Spell spell = p.thisToEntity(Spell.class);
 //        R goodsResult = goodsServiceClient.queryGoodsById(goodsId);
 //        GoodsEntity goodsEntity = goodsResult.thisToEntity(GoodsEntity.class);
 ////        System.out.println(goodsResult.get("data"));
 //        R userResult = userServiceClient.getUserById(userId);
-        spellService.startTogetherMq(userId,goodsId, TogetherNumber.forNumber(1), GoodsLevel.forNumber(1));
+        spellService.startTogetherMq(spell);
         return R.success();
     }
 
