@@ -26,6 +26,8 @@ public interface IOrderService extends IService<OrderEntity> {
 
     R queryOrderByShopId(P p) throws Exception;
 
+    int newOrder(P p) throws Exception;
+
 
 
 

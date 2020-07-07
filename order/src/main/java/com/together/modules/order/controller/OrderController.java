@@ -11,11 +11,7 @@ import com.together.modules.order.serviceClient.GoodsServiceClient;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -141,4 +137,10 @@ public class OrderController {
         }
         return R.success("success",iOrderService.save(orderEntity));
     }
+
+    @PostMapping("/newOrder")
+    public R newOrder(@Pmap P p) throws Exception {
+        return R.success("success",iOrderService.newOrder(p));
+    }
+
 }

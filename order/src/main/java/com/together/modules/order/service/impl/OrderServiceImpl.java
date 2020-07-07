@@ -7,6 +7,7 @@ import com.together.modules.order.entity.OrderEntity;
 import com.together.modules.order.mapper.OrderMapper;
 import com.together.modules.order.service.IOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.together.modules.order.service.client.UserAddressServiceClient;
 import com.together.util.MapUtil;
 import com.together.util.P;
 import com.together.util.R;
@@ -29,6 +30,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
 
     @Autowired
     OrderMapper orderMapper;
+    @Autowired
+    UserAddressServiceClient client;
 
     @Override
     public int getOrderPageConut(P p) {
@@ -51,5 +54,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
             MapUtil.mapKeySetLine2Upper(map);
         }
         return R.success().data(maps);
+    }
+
+    @Override
+    public int newOrder(P p) throws Exception {
+        R r = client.selectAllUserAddress(p);
+        OrderEntity orderEntity = new OrderEntity();
+        p.thisToEntity(orderEntity);
+        return 0;
     }
 }
