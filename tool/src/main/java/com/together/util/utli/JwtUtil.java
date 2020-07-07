@@ -6,7 +6,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.commons.net.util.Base64;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -17,11 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * 需要咨询java高级VIP课程的同学可以加安其拉老师的QQ：3164703201
- * 需要往期视频的同学可以加木兰老师的QQ：2746251334
- * author：鲁班学院-商鞅老师
- */
 @Component
 public class JwtUtil {
 
