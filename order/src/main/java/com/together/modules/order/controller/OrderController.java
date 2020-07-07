@@ -164,7 +164,7 @@ public class OrderController {
         return R.success("success",iOrderService.save(orderEntity));
     }
 
-    @PostMapping("/newOrder")
+    @GetMapping("/newOrder")
     public R newOrder(@Pmap P p) throws Exception {
         return R.success("success",iOrderService.newOrder(p));
     }

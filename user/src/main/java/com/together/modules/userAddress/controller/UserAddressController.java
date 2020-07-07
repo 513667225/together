@@ -1,6 +1,7 @@
 package com.together.modules.userAddress.controller;
 
 
+import com.together.annotation.PassToken;
 import com.together.annotation.Pmap;
 import com.together.enun.TipMsgEnum;
 import com.together.modules.user.entity.UserEntity;
@@ -52,7 +53,7 @@ public class UserAddressController {
      * @throws Exception
      */
     @RequestMapping("/selectByuserAddress")
-    public R selectByuserAddress(@Pmap P p) throws Exception {
+    public R selectByuserAddress(@Pmap @RequestBody P p) throws Exception {
         ValidateUtli.validateParams(p,"addressId");
         UserAddressEntity userAddressEntity= userAddressService.getById(p.getInt("addressId"));
         return R.success().data(userAddressEntity);
