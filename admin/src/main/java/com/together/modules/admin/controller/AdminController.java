@@ -55,4 +55,21 @@ public class AdminController {
         return adminService.update(p);
     }
 
+
+    /**
+     * 商家登录方法
+     */
+    @GetMapping("/adminLogin")
+    public R adminLogin (@Pmap P p) throws Exception {
+        String adminPassword = p.getString("adminPassword");
+        AdminEntity one = adminService.getOne(new QueryWrapper<AdminEntity>().eq("admin_name",p.getString("adminName")));
+        if(null!=one){
+            if(one.getAdminPassword().equals(adminPassword)){
+                return R.success("登录成功",p);
+            }else{
+                return R.success("密码错误,请重新输入");
+            }
+        }
+        return R.success("当前用户不存在，请注册信息");
+    }
 }

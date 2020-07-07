@@ -24,11 +24,6 @@ public class GoodsEntity implements Serializable {
     private Integer goodsId;
 
     /**
-     * 商品编号
-     */
-    private String goodsSn;
-
-    /**
      * 商品名称
      */
     private String goodsName;
@@ -47,11 +42,6 @@ public class GoodsEntity implements Serializable {
      * 商品宣传图片列表，采用JSON数组格式
      */
     private String goodsGallery;
-
-    /**
-     * 商品关键字，采用逗号间隔
-     */
-    private String goodsKeywords;
 
     /**
      * 商品价格
@@ -98,6 +88,13 @@ public class GoodsEntity implements Serializable {
      */
     private Integer goodsInventory;
 
+    /**
+     * 商品类型  1、默认类型，2、拼团商品、3、热门商品
+     * @return
+     */
+    private Integer goodsNature;
+
+
     public Integer getGoodsInventory() {
         return goodsInventory;
     }
@@ -129,28 +126,12 @@ public class GoodsEntity implements Serializable {
      */
     private Date updateTime;
 
-    /**
-     * 商品性质
-     * 1、默认类型，2、拼团商品、3、热门商品
-     */
-    private Integer goodsNature;
-
-
-
     public Integer getGoodsId() {
         return goodsId;
     }
 
     public GoodsEntity setGoodsId(Integer goodsId) {
         this.goodsId = goodsId;
-        return this;
-    }
-    public String getGoodsSn() {
-        return goodsSn;
-    }
-
-    public GoodsEntity setGoodsSn(String goodsSn) {
-        this.goodsSn = goodsSn;
         return this;
     }
     public String getGoodsName() {
@@ -186,14 +167,6 @@ public class GoodsEntity implements Serializable {
         this.goodsGallery = goodsGallery;
         return this;
     }
-    public String getGoodsKeywords() {
-        return goodsKeywords;
-    }
-
-    public GoodsEntity setGoodsKeywords(String goodsKeywords) {
-        this.goodsKeywords = goodsKeywords;
-        return this;
-    }
     public BigDecimal getGoodsPrice() {
         return goodsPrice;
     }
@@ -212,6 +185,14 @@ public class GoodsEntity implements Serializable {
     }
     public Boolean getIsOnSale() {
         return isOnSale;
+    }
+
+    public Integer getGoodsNature() {
+        return goodsNature;
+    }
+
+    public void setGoodsNature(Integer goodsNature) {
+        this.goodsNature = goodsNature;
     }
 
     public GoodsEntity setIsOnSale(Boolean isOnSale) {
@@ -279,12 +260,10 @@ public class GoodsEntity implements Serializable {
     public String toString() {
         return "GoodsEntity{" +
                 "goodsId=" + goodsId +
-                ", goodsSn='" + goodsSn + '\'' +
                 ", goodsName='" + goodsName + '\'' +
                 ", categoryId=" + categoryId +
                 ", shopId=" + shopId +
                 ", goodsGallery='" + goodsGallery + '\'' +
-                ", goodsKeywords='" + goodsKeywords + '\'' +
                 ", goodsPrice=" + goodsPrice +
                 ", goodsBrief='" + goodsBrief + '\'' +
                 ", isOnSale=" + isOnSale +

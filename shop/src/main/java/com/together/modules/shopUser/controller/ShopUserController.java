@@ -60,7 +60,6 @@ public class ShopUserController {
         ShopUserEntity one = shopUserService.getOne(new QueryWrapper<ShopUserEntity>().eq("shopuser_name",p.getString("shopuserName")));
         if(null!=one){
             if(one.getShopuserPassword().equals(shopuserPassword)){
-                p.getRequest();
                 return R.success("登录成功",p);
             }else{
                 return R.success("密码错误,请重新输入");

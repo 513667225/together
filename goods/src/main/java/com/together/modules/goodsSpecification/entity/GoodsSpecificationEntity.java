@@ -1,5 +1,7 @@
 package com.together.modules.goodsSpecification.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import java.io.Serializable;
@@ -17,6 +19,7 @@ public class GoodsSpecificationEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "specification_id", type = IdType.AUTO)
     private Integer specificationId;
 
     private Integer goodsId;
@@ -25,11 +28,6 @@ public class GoodsSpecificationEntity implements Serializable {
      * 商品规格名称
      */
     private String specificationName;
-
-    /**
-     * 商品规格值
-     */
-    private String specificationValue;
 
     /**
      * 商品规格图片
@@ -70,14 +68,6 @@ public class GoodsSpecificationEntity implements Serializable {
         this.specificationName = specificationName;
         return this;
     }
-    public String getSpecificationValue() {
-        return specificationValue;
-    }
-
-    public GoodsSpecificationEntity setSpecificationValue(String specificationValue) {
-        this.specificationValue = specificationValue;
-        return this;
-    }
     public String getPicUrl() {
         return picUrl;
     }
@@ -109,7 +99,6 @@ public class GoodsSpecificationEntity implements Serializable {
             "specificationId=" + specificationId +
             ", goodsId=" + goodsId +
             ", specificationName=" + specificationName +
-            ", specificationValue=" + specificationValue +
             ", picUrl=" + picUrl +
             ", addTime=" + addTime +
             ", updateTime=" + updateTime +
