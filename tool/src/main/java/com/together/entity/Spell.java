@@ -1,57 +1,69 @@
 package com.together.entity;
 
 import com.together.enun.GoodsLevel;
+import com.together.enun.GoodsLevel;
+import com.together.enun.TogetherNumber;
 import com.together.enun.TogetherNumber;
 
 public class Spell {
 
     //拼团的用户ID
-    private  int userId;
+    private  int user_id;
     //拼团的商品ID
-    private  int goodsId;
+    private  int goods_id;
     //属于的团号
     private String group;
     //总共拼团次数
-    private TogetherNumber togetherNumber;
+    private TogetherNumber together_number;
     //拼团商品的档次
-    private GoodsLevel goodsLevel;
+    private GoodsLevel goods_level;
     //已经拼团的次数
-    private int gameCount = 0;
+    private int game_count = 0;
     //省(市)代理ID
     private int admin_id;
     //商品价格
     private  double goods_price;
+    //商家本钱
+    private  double shop_capital;
     //是否为拼团卷
     private  boolean isCoupons;
+    //当前拼团商品的商户ID
+    private int shopuser_id;
+    //发货地址id
+    private  int address_id;
 
 
-    public Spell(int userId, int goodsId, TogetherNumber togetherNumber, GoodsLevel goodsLevel,int admin_id,double goods_price,boolean isCoupons) {
-        this.userId = userId;
-        this.goodsId = goodsId;
+
+    public Spell(int user_id, int goods_id, TogetherNumber together_number, GoodsLevel goods_level, int admin_id, double goods_price, boolean isCoupons, int shopuser_id, double shop_capital,int address_id) {
+        this.user_id = user_id;
+        this.goods_id = goods_id;
 //        this.group = group;
-        this.togetherNumber = togetherNumber;
-        this.goodsLevel = goodsLevel;
+        this.together_number = together_number;
+        this.goods_level = goods_level;
         this.admin_id = admin_id;
         this.goods_price = goods_price;
         this.isCoupons = isCoupons;
-//        this.gameCount = gameCount;
+//        this.game_count = game_count;
+        this.shopuser_id = shopuser_id;
+        this.shop_capital = shop_capital;
+        this.address_id = address_id;
     }
 
 
-    public int getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-    public int getGoodsId() {
-        return goodsId;
+    public int getGoods_id() {
+        return goods_id;
     }
 
-    public void setGoodsId(int goodsId) {
-        this.goodsId = goodsId;
+    public void setGoods_id(int goods_id) {
+        this.goods_id = goods_id;
     }
 
     public String getGroup() {
@@ -62,28 +74,28 @@ public class Spell {
         this.group = group;
     }
 
-    public TogetherNumber getTogetherNumber() {
-        return togetherNumber;
+    public TogetherNumber getTogether_number() {
+        return together_number;
     }
 
-    public void setTogetherNumber(TogetherNumber togetherNumber) {
-        this.togetherNumber = togetherNumber;
+    public void setTogether_number(TogetherNumber together_number) {
+        this.together_number = together_number;
     }
 
-    public GoodsLevel getGoodsLevel() {
-        return goodsLevel;
+    public GoodsLevel getGoods_level() {
+        return goods_level;
     }
 
-    public void setGoodsLevel(GoodsLevel goodsLevel) {
-        this.goodsLevel = goodsLevel;
+    public void setGoods_level(GoodsLevel goods_level) {
+        this.goods_level = goods_level;
     }
 
-    public int getGameCount() {
-        return gameCount;
+    public int getGame_count() {
+        return game_count;
     }
 
-    public void setGameCount(int gameCount) {
-        this.gameCount = gameCount;
+    public void setGame_count(int game_count) {
+        this.game_count = game_count;
     }
 
     public int getAdmin_id() {
@@ -100,5 +112,17 @@ public class Spell {
 
     public boolean isCoupons() {
         return isCoupons;
+    }
+
+    public int getShopuser_id() {
+        return shopuser_id;
+    }
+
+    public double getShop_capital() {
+        return shop_capital;
+    }
+
+    public int getAddress_id() {
+        return address_id;
     }
 }
