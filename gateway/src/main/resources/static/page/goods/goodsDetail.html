@@ -8,11 +8,7 @@
 <script src="/js/layui/layui.all.js"></script>
 <body>
 
-<blockquote class="layui-elem-quote layui-text">
-    Tips:为了用户观感,设计商品详情页内容时内容和图片大小宽建议为200PX,且内容尽量以图片的形式展示
-</blockquote>
-
-<form class="layui-form layui-form-pane" action="">
+<form class="layui-form layui-form-pane" action="/goods/addGoods" id="goodsAddSubmit">
 
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>商品基本信息</legend>
@@ -23,14 +19,6 @@
         <div class="layui-input-block">
             <input name="goodsName" id="goodsName" type="text" class="layui-input"
                    placeholder="请输入商品名称,不超过20个字" lay-verify="required" autocomplete="off">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">商品标语</label>
-        <div class="layui-input-block">
-            <input name="goodsBrief" id="goodsBrief" type="text" class="layui-input"
-                   placeholder="请输入商品宣传标语,不超过30个字" lay-verify="required" autocomplete="off">
         </div>
     </div>
 
@@ -80,6 +68,26 @@
         </div>
     </div>
 
+    <!-- 商品宣传图片上传 -->
+    <blockquote class="layui-elem-quote layui-text">
+        Tips:商品宣传图列表,建议图片比列为16:9,商品宣传图数量不可超过5张
+    </blockquote>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品宣传图</label>
+        <div class="layui-upload-drag" id="goodsGalleryListUpload">
+            <i class="layui-icon"></i>
+            <p>点击上传或者拖拽图片上传</p>
+        </div>
+    </div>
+
+    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+        预览图：
+        <div class="layui-upload-list" id="goodsGalleryPreview"></div>
+    </blockquote>
+
+    <blockquote class="layui-elem-quote layui-text">
+        Tips:为了用户观感,设计商品详情页内容时内容和图片大小宽建议为200PX,且内容尽量以图片的形式展示
+    </blockquote>
     <div class="layui-form-item">
         <label class="layui-form-label">商品详情页</label>
         <div class="layui-input-block">
@@ -87,23 +95,44 @@
         </div>
     </div>
 
+    <!-- 商品规格信息 -->
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>商品规格信息</legend>
     </fieldset>
+    <blockquote class="layui-elem-quote layui-text">
+        Tips:商品规格图片,建议图片比列为16:9
+    </blockquote>
+    <div class="layui-form-item">
+        <label class="layui-form-label">规格名字</label>
+        <div class="layui-input-block">
+            <input name="goodsUnit" id="specificationName" type="text" placeholder="请输入商品规格,例如:红色衣服,XL" class="layui-input"
+                   lay-verify="required" autocomplete="off">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品宣传图</label>
+        <div class="layui-upload-drag" id="specificationPicUpload">
+            <i class="layui-icon"></i>
+            <p>点击上传或者拖拽图片上传</p>
+        </div>
+    </div>
+    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+        预览图：
+        <div class="layui-upload-list" id="specificationPicPreview"></div>
+    </blockquote>
 
-
-
+    <!-- 商品参数设置 -->
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>商品参数设置</legend>
     </fieldset>
-
+    <!-- 商品参数 -->
     <div class="layui-form-item">
         <label class="layui-form-label">商品参数</label>
         <div class="layui-input-inline">
             <button type="button" id="addAttribute" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe608;</i> 添加参数</button>
         </div>
     </div>
-
+    <!-- 商品参数表格 -->
     <div style="padding: 20px; background-color: #F2F2F2;">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
@@ -126,12 +155,15 @@
         </div>
     </div>
 
-    <div class="layui-form-item">
+    <!-- 提交按钮 -->
+    <div class="layui-form-item" style="margin-top:40px">
         <div class="layui-input-block" style="text-align: center;">
-            <button type="button" class="layui-btn" lay-submit lay-filter="doSubmit">
+            <button type="button" class="layui-btn" lay-filter="doSubmit" id="submitBtn">
                 <span class="layui-icon layui-icon-add-1"></span>
                 提交
             </button>
+            <button id="submitBtn1" style="display: none"></button>
+            <button id="submitBtn2" style="display: none"></button>
             <button type="reset" class="layui-btn layui-btn-warm">
                 <span class="layui-icon layui-icon-refresh-1"></span>
                 重置
@@ -168,33 +200,22 @@
         </form>
     </div>
 </div>
-<button id="kkkkkk">aaaaaaaaaaaaaaaaaaaaaaaaaa</button>
 </body>
 <script>
+    var goodsGrallyList={};
+    goodsGrallyList.title="xxx";
+    goodsGrallyList.id="xxx"
+    goodsGrallyList.start=0;
+    var dataArray = new Array();
 
-    // tinymce.init({
-    //     selector: '#goodsDetail',
-    //     language: "zh_CN",
-    //     images_upload_url:'上传的后台接口',
-    //     width: '99%',
-    //     height: 300,
-    //     plugins: [
-    //         "advlist autolink lists link image charmap preview",
-    //         "searchreplace visualblocks fullscreen",
-    //         "insertdatetime table contextmenu paste",
-    //         "emoticons textcolor autoresize autosave"
-    //     ],
-    //     toolbar1: "undo redo | styleselect | fontselect | fontsizeselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
-    //     toolbar2: "fullscreen preview | forecolor backcolor emoticons | table | link image| mybutton |restoredraft",
-    //
-    // });
+    var specificationPicFilePath;
 
-
-    layui.extend({tinymce: '/js/tinymce/tinymce'}).use(['jquery', 'form', 'util', 'layer', 'tinymce'], function () {
+    layui.extend({tinymce: '/js/tinymce/tinymce'}).use(['jquery', 'form', 'util', 'layer', 'tinymce','upload'], function () {
         var $ = layui.jquery;
         var form = layui.form,
             layer = layui.layer,
             layedit = layui.layedit,
+            upload = layui.upload,
             laydate = layui.laydate;
         var util = layui.util;
         var tinymce = layui.tinymce;
@@ -207,6 +228,7 @@
             elem: "#goodsDetail",
             height: 300,
             width: '99%',
+            images_upload_url: '/goods/uploadGoods',
         }, (opt) => {
             //加载完成后回调
         });
@@ -215,10 +237,10 @@
         init();
 
         //提交表单
-        form.on('submit(doSubmit)', function (data) {
-            alert(tinymce.get("#goodsDetail").getContent());
-            return false;
-        });
+        // form.on('submit(doSubmit)', function (data) {
+        //     // alert(tinymce.get("#goodsDetail").getContent());
+        //     console.log(table2Json('attributeTable'));
+        // });
 
         //商品参数设置相关
         var attributeIndex;
@@ -234,7 +256,6 @@
         });
         //提交商品参数信息
         form.on('submit(attributeSubmit)', function(data) {
-            console.log(data);
             layer.close(attributeIndex);
             $("#attributeName").val("");
             $("#attributeValue").val("");
@@ -255,20 +276,116 @@
             var titles = $("#" + id).find("tr:first td");
             var json = "[" + $("#" + id).find("tr:not(:first)").map(function(i, e) {
                 return "{" + $(e).children("td").map(function(j, el) {
-                    return $(titles[j]).html() + ":" + $(el).html();
+                    return $(titles[j]).html() + ':"' + $(el).html() +'"';
                 }).get().join(",") + "}";
             }).get().join(",") + "]";
             var reg1 = new RegExp('参数名','g');
             json = json.replace(reg1,'"attributeName"');
             var reg2 = new RegExp('值','g');
             json = json.replace(reg2,'"attributeValue"');
-            var reg3 = new RegExp(',操作:<button class="layui-btn layui-btn-primary layui-btn-sm attributeDelete">删除</button>','g');
+            var reg3 = new RegExp(',操作:"<button class="layui-btn layui-btn-primary layui-btn-sm attributeDelete">删除</button>"','g');
             json = json.replace(reg3,'');
             return json;
         }
 
+
+        //商品宣传图片上传 限制5张
+        upload.render({
+            elem: '#goodsGalleryListUpload',
+            url: '/goods/uploadGoods',
+            multiple: true,
+            acceptMime: 'image/*',
+            auto: false,
+            size: 5120,
+            bindAction: '#submitBtn',//submitBtn
+            before: function(obj){
+
+            },
+            choose:function(obj){
+                // obj.preview(function(index, file, result){
+                //     $('#goodsGalleryPreview').append('<img id="goodsGrally'+index+'" style="width: 256px;height: 144px;margin-left: 10px" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                // });
+                var files = obj.pushFile();
+                var len = getJsonLength(files);
+                obj.preview(function (index, file, result) {
+                    if(parseInt(len)>5){
+                        layer.msg("上传商品宣传图片数量不能超过五张", {icon: 5});
+                        delete files[index];
+                        len = getJsonLength(files);
+                    }else{
+                        $('#goodsGalleryPreview').append('<img id="goodsGrallyRemove_'+index+'" style="width: 256px;' +
+                            'height: 144px;margin-left: 10px" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                        $('#goodsGrallyRemove_' + index).bind('dblclick', function () {
+                            delete files[index];
+                            len = getJsonLength(files);
+                            $(this).remove();
+                        });
+                    }
+                })
+            },
+
+            done: function(res){
+                var jsonTemp={};
+                jsonTemp.alt=res.fileName;
+                jsonTemp.pid=1;
+                jsonTemp.thumb="";
+                jsonTemp.src=res.filePath;
+                dataArray.push(jsonTemp);
+            },
+            allDone: function (res) {
+                goodsGrallyList.data=dataArray;
+                layer.msg("商品宣传图上传成功!");
+
+                specificationPicUpload.upload();
+            }
+        });
+        //图片json长度
+        function getJsonLength(jsonData){
+            var jsonLength = 0;
+            for(var item in jsonData){
+                jsonLength++;
+            }
+            return jsonLength;
+        }
+
+        //商品规格图片上传
+        var specificationPicUpload=upload.render({
+            elem: '#specificationPicUpload',
+            url: '/goods/uploadGoods',
+            acceptMime: 'image/*',
+            auto: false,
+            size: 5120,
+           // bindAction: '#submitBtn',
+            choose:function(obj){
+                var files = obj.pushFile();
+                var len = getJsonLength(files);
+                obj.preview(function (index, file, result) {
+                    if(parseInt(len)>1){
+                        layer.msg("商品规格图为一张", {icon: 5});
+                        delete files[index];
+                        len = getJsonLength(files);
+                    }else{
+                        $('#specificationPicPreview').append('<img id="specificationPicRemove_'+index+'" style="width: 256px;' +
+                            'height: 144px;margin-left: 10px" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                        $('#specificationPicRemove_' + index).bind('dblclick', function () {
+                            delete files[index];
+                            len = getJsonLength(files);
+                            $(this).remove();
+                        });
+                    }
+                })
+            },
+            done:function(res){
+                layer.msg("商品规格图片上传成功")
+                specificationPicFilePath = res.filePath;
+
+            }
+        });
+
+
+
+        //加载商品分类下拉框
         function init() {
-            //加载商品分类下拉框
             $.ajax({
                 url: '/category/getCategoryPidList',
                 type: 'get',
@@ -288,7 +405,6 @@
                 }
             });
         }
-
         //商品分类二级菜单联动
         form.on('select(category1)',function (data) {
             var v = data.value;
@@ -320,12 +436,7 @@
             }
         })
 
-
-        $("#kkkkkk").click(function(){
-            console.log(table2Json('attributeTable'));
-        });
     });
-
 
 
 </script>

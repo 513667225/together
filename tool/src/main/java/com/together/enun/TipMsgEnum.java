@@ -10,7 +10,11 @@ public enum  TipMsgEnum {
     TOKEN_OF_Excption(1002,"Token异常"),
     TOKEN_CREATE_Excption(1003,"JWT签名失败"),
     TOKEN_NULL_Excption(1004,"无Token参数"),
-    PARAMETER_NULL_Excption(1005,"缺少必须参数");
+    PARAMETER_NULL_Excption(1005,"缺少必须参数"),
+    UPDATE_MONRY_FAIL(1006,"修改金钱相关失败"),
+    INSERT_USER_ADDRESS(1007,"用户地址添加失败"),
+    UPDATE_USER_ADDRESS(1008,"用户地址修改失败"),
+    DELETE_USER_ADDRESS(1009,"用户地址删除失败");
 
     private  int code;
 

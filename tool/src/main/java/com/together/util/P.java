@@ -1,10 +1,13 @@
 package com.together.util;
 
+import com.together.entity.ShopEntity;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -14,6 +17,16 @@ import java.util.Map;
 public class P extends HashMap<String,Object> {
 
     private HttpServletRequest request;
+
+    private ShopEntity shopEntity;
+
+    public ShopEntity getShopEntity() {
+        return shopEntity;
+    }
+
+    public void setShopEntity(ShopEntity shopEntity) {
+        this.shopEntity = shopEntity;
+    }
 
     public HttpServletRequest getRequest() {
         return request;
@@ -114,6 +127,21 @@ public class P extends HashMap<String,Object> {
     }
 
 
+    /**
+     * 根据key循环移除空值
+     * @param map
+     */
+    public void removeByKey(Map map){
+        Iterator<Entry<String, String>> iterator  = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Entry<String, String> entry = iterator.next();
+            String value = entry.getValue();
+            if("".equals(value)||null==value){
+                this.remove(entry.getKey());
+            }
+        }
+    }
+
 
     /**
      * 初始化分页参数 : 当需要分页的接口，但是需要给为空的分页参数一个默认值时可以调用此方法
@@ -169,8 +197,9 @@ public class P extends HashMap<String,Object> {
     }
 
     public BigDecimal getBigDecimal(String key) {
-        String value = (String)  this.get(key);
-        if (value == null) {
+//        String.v
+        String value = String.valueOf(this.get(key));
+        if (value.equals("null")) {
             return null;
         }
         return new BigDecimal(value);

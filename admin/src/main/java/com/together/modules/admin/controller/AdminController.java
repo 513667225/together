@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
 import com.together.modules.admin.entity.AdminEntity;
 import com.together.modules.admin.service.IAdminService;
-import com.together.modules.admin.service.impl.AdminServiceImpl;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +37,7 @@ public class AdminController {
         p.remove("page");
         p.remove("limit");
         p.remove("rowIndex");
-        if(""==p.getString("admin_name")){
-            p.remove("admin_name");
-        }
-        if(""==p.getString("admin_nikename")){
-            p.remove("admin_nikename");
-        }
+        p.removeByKey(p);
         Page<AdminEntity> pageObject = adminService.page(objectPage,new QueryWrapper<AdminEntity>().allEq(p));
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }
@@ -51,8 +45,14 @@ public class AdminController {
 
 
     @GetMapping("/getProxyInfo")
-    public R getProxyInfo(@Pmap P p){
-        return R.success();
+    public R getProxyInfo(@Pmap P p) throws Exception {
+        return R.success("success",adminService.getProxyInfo(p));
+    }
+
+
+    @RequestMapping("/updateAdmin")
+    public R updateAdmin(@Pmap P p){
+        return adminService.update(p);
     }
 
 }

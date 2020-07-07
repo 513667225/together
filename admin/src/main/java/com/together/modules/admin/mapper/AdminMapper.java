@@ -3,6 +3,7 @@ package com.together.modules.admin.mapper;
 import com.together.modules.admin.entity.AdminEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.together.util.P;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface AdminMapper extends BaseMapper<AdminEntity> {
 
-    List<AdminEntity> getProxyInfo(int adminId);
+    List<Integer> getProxyInfo(@Param("adminId") int adminId);
 
     List getOrderList(int adminId);
 

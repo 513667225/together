@@ -1,6 +1,9 @@
 package com.together.modules.admin.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -48,6 +51,20 @@ public class AdminEntity implements Serializable {
      * 更新时间
      */
     private Date updateTime;
+
+    /**
+     * 余额
+     */
+@TableField(update="%s+#{balance}")
+    private BigDecimal balance;
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
 
     public Integer getAdminId() {
         return adminId;

@@ -2,6 +2,9 @@ package com.together.modules.userAddress.service;
 
 import com.together.modules.userAddress.entity.UserAddressEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.together.util.P;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserAddressService extends IService<UserAddressEntity> {
 
+    List<UserAddressEntity> selectAllUserAddress(P p);
 }

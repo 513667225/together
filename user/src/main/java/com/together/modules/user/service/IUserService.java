@@ -8,6 +8,7 @@ import com.together.util.R;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +30,7 @@ public interface IUserService extends IService<UserEntity> {
     UserEntity getUserByName(P p);
     UserEntity getUserLogin(Map<String,Object> param);
     Map<String, Object> getGroupUserState(P p);
-    Map<String, Object> selectUserReferrer(P p) throws Exception;
+    Map<String, Object> selectUserReferrerTo(P p) throws Exception;
 
     void test(P p);
 
@@ -40,4 +41,9 @@ public interface IUserService extends IService<UserEntity> {
     ArrayList<UserSuperstratumRelationDo> userReferrerDorecursion(P p) throws Exception;
 
     void createCodeImag(String path, String user_id, HttpServletResponse response);
+
+
+    void updateMoney(P p) throws Exception;
+
+    List<UserEntity> selectUserALlInviter(P p);
 }

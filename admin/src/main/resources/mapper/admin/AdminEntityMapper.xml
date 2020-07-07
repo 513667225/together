@@ -12,7 +12,7 @@
         <result property="adminBoss" column="admin_boss"/>
     </resultMap>
 
-    <select id="getProxyInfo" resultType="java.util.List">
+    <select id="getProxyInfo" resultType="java.lang.Integer">
         SELECT admin_id
         FROM
             (
@@ -34,9 +34,9 @@
             admin_id
     </select>
 
-    <select id="getOrderList" resultType="java.util.List">
-        select admin.admin_id,admin.admin_name,admin.admin_level,shop.shop_id,goods.* from goods left join shop on goods.shop_id = shop.shop_id LEFT JOIN admin
-        on admin.admin_id = shop.admin_id where admin.admin_id = 1
+    <select id="getOrderList" resultType="java.util.Map">
+        select admin.admin_id,admin.admin_name,admin.admin_level,shop.shop_id,orders.* from order_bot orders left join shop on orders.shop_id = shop.shop_id LEFT JOIN admin
+        on admin.admin_id = shop.admin_id where admin.admin_id = #{adminId}
     </select>
 
 
