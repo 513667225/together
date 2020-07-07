@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * @author Agu
  */
-@FeignClient("USER_SERVER")
+@FeignClient("SERVER-USER")
 @RequestMapping("/user")
 public interface UserServiceClient {
 
