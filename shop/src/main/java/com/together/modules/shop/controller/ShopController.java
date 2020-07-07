@@ -72,14 +72,6 @@ public class ShopController {
         return R.success("操作成功", api.getOrderTracesByJson(p.getString("ship_channel"), p.getString("ship_sn")));
     }
 
-    @PostMapping("/newOrder")
-    public R newOrder(@Pmap P p) throws Exception {
-        ShopEntity shopEntity = new ShopEntity();
-        p.thisToEntity(shopEntity);
-        return R.success("success",shopService.save(shopEntity));
-    }
-
-
     /**
      * 精选店铺推荐
      * @param p
