@@ -10,6 +10,7 @@ import com.together.util.MapUtil;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -33,6 +35,10 @@ import java.util.Date;
 public class GoodsController {
     @Autowired
     IGoodsService iGoodsService;
+
+    @Autowired
+    ListOperations<String,GoodsEntity> listOperations;
+
 
     @GetMapping("/getGoodsPage")
     public R getGoodsPage(@Pmap P p) throws Exception {
@@ -101,6 +107,29 @@ public class GoodsController {
     public R updateAdmin(@Pmap P p) throws Exception {
         GoodsEntity goodsEntity = p.thisToEntity(GoodsEntity.class);
         return R.success("操作成功",iGoodsService.update(goodsEntity,new QueryWrapper<GoodsEntity>().eq("goods_id",p.getInt("goodsId"))));
+    }
+
+
+    /**
+     * 查询热门商品推荐接口
+     * @param p
+     * @return
+     */
+    @GetMapping("/queryhotGoods")
+    public R queryhotGoods(@Pmap P p) {
+        List<GoodsEntity> goodshot = listOperations.range("goodshot", 0, -1);
+        return R.success().data(goodshot);
+    }
+
+    /**
+     * 查询拼团商品推荐
+     * @param p
+     * @return
+     */
+    @GetMapping("/queryCommonGoods")
+    public R queryCommonGoods(@Pmap P p){
+        List<GoodsEntity> goodshot = listOperations.range("goodsCommon", 0, -1);
+        return R.success().data(goodshot);
     }
 
 }

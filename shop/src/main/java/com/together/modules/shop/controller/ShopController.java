@@ -9,10 +9,14 @@ import com.together.annotation.Pmap;
 import com.together.config.KdniaoTrackQueryAPI;
 import com.together.modules.shop.entity.ShopEntity;
 import com.together.modules.shop.service.IShopService;
+import com.together.modules.shopUser.entity.ShopUserEntity;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -28,6 +32,9 @@ public class ShopController {
 
     @Autowired
     private IShopService shopService;
+
+    @Autowired
+    ListOperations<String, ShopEntity> listOperations;
 
     /**
      * 根据user_id查询店铺信息
@@ -71,6 +78,20 @@ public class ShopController {
         p.thisToEntity(shopEntity);
         return R.success("success",shopService.save(shopEntity));
     }
+
+
+    /**
+     * 精选店铺推荐
+     * @param p
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/queryLimitHotShop")
+    public R queryLimitHotShop(@Pmap P p) throws Exception {
+        List<ShopEntity> goodshot = listOperations.range("popularShops", 0, -1);
+        return R.success().data(goodshot);
+    }
+
 
 
 }

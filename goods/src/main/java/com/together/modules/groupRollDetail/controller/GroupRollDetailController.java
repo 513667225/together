@@ -47,6 +47,7 @@ public class GroupRollDetailController {
     /**
      * 根据拼团卷id  查询此拼团卷明细
      */
+    @RequestMapping("/selectRollDetail")
     public R selectRollDetail(@Pmap P p){
         p.batchToInt("rowIndex","limit");
         return groupRollDetailService.selectRollDetail(p);

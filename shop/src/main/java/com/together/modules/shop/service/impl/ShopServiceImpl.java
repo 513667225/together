@@ -57,4 +57,10 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
         queryWrapper.eq("user_id",shopEntity.getShopId());
         return baseMapper.update(shopEntity,queryWrapper);
     }
+
+    @Override
+    public List<ShopEntity> queryLimitHotShop(P p) {
+        List<ShopEntity> shopEntities=shopMapper.queryLimitHotShop(p);
+        return shopEntities;
+    }
 }

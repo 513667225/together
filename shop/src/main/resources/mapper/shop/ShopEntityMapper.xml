@@ -14,4 +14,9 @@
         select COUNT(0) from shop a left join shop_aptitude b on a.shop_id=b.shop_id
     </select>
 
+
+    <select id="queryLimitHotShop" resultType="com.together.modules.shop.entity.ShopEntity">
+        select * from shop order by update_time desc  limit #{limit}
+    </select>
+
 </mapper>
