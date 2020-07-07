@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @author Agu
  */
-@FeignClient("ADMIN-SERVER")
+@FeignClient("SERVER-ADMIN")
 @RequestMapping("/admin")
 public interface AdminServiceClient {
 

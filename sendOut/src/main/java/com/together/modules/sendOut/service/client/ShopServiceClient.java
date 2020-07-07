@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Agu
  */
 
-@FeignClient("SHOP-SERVER")
+@FeignClient("SERVER-SHOP")
 @RequestMapping("/shopUser")
 public interface ShopServiceClient {
 

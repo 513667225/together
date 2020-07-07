@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @author Agu
  */
-@FeignClient("ORDER-SERVER")
+@FeignClient("SERVER-ORDER")
 @RequestMapping("/order")
 public interface OrderServiceClient {
 
