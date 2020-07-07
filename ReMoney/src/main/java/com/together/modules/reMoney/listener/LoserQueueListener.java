@@ -30,12 +30,12 @@ public class LoserQueueListener {
         //遍历
         for (Spell member : members) {
 //          TODO  member.getUserId() 给这个用户返钱
-            reMoneyService.reMoney(member.getUserId(),member.getGoodsLevel());
+            reMoneyService.reMoney(member.getUser_id(),member.getGoods_level());
             //拼团的次数+1
-            member.setGameCount(member.getGameCount()+1);
-            Integer gameCount = member.getGameCount();
-            if (member.getTogetherNumber()!= TogetherNumber.ONCE){
-                if (gameCount < member.getTogetherNumber().getNumber() ){
+            member.setGame_count(member.getGame_count()+1);
+            Integer gameCount = member.getGame_count();
+            if (member.getTogether_number()!= TogetherNumber.ONCE){
+                if (gameCount < member.getTogether_number().getNumber() ){
 
                 }
             }
