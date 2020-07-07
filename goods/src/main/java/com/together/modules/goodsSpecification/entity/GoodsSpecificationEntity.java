@@ -27,11 +27,6 @@ public class GoodsSpecificationEntity implements Serializable {
     private String specificationName;
 
     /**
-     * 商品规格值
-     */
-    private String specificationValue;
-
-    /**
      * 商品规格图片
      */
     private String picUrl;
@@ -70,14 +65,6 @@ public class GoodsSpecificationEntity implements Serializable {
         this.specificationName = specificationName;
         return this;
     }
-    public String getSpecificationValue() {
-        return specificationValue;
-    }
-
-    public GoodsSpecificationEntity setSpecificationValue(String specificationValue) {
-        this.specificationValue = specificationValue;
-        return this;
-    }
     public String getPicUrl() {
         return picUrl;
     }
@@ -109,7 +96,6 @@ public class GoodsSpecificationEntity implements Serializable {
             "specificationId=" + specificationId +
             ", goodsId=" + goodsId +
             ", specificationName=" + specificationName +
-            ", specificationValue=" + specificationValue +
             ", picUrl=" + picUrl +
             ", addTime=" + addTime +
             ", updateTime=" + updateTime +

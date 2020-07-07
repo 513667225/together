@@ -24,11 +24,6 @@ public class GoodsEntity implements Serializable {
     private Integer goodsId;
 
     /**
-     * 商品编号
-     */
-    private String goodsSn;
-
-    /**
      * 商品名称
      */
     private String goodsName;
@@ -47,11 +42,6 @@ public class GoodsEntity implements Serializable {
      * 商品宣传图片列表，采用JSON数组格式
      */
     private String goodsGallery;
-
-    /**
-     * 商品关键字，采用逗号间隔
-     */
-    private String goodsKeywords;
 
     /**
      * 商品价格
@@ -145,14 +135,6 @@ public class GoodsEntity implements Serializable {
         this.goodsId = goodsId;
         return this;
     }
-    public String getGoodsSn() {
-        return goodsSn;
-    }
-
-    public GoodsEntity setGoodsSn(String goodsSn) {
-        this.goodsSn = goodsSn;
-        return this;
-    }
     public String getGoodsName() {
         return goodsName;
     }
@@ -184,14 +166,6 @@ public class GoodsEntity implements Serializable {
 
     public GoodsEntity setGoodsGallery(String goodsGallery) {
         this.goodsGallery = goodsGallery;
-        return this;
-    }
-    public String getGoodsKeywords() {
-        return goodsKeywords;
-    }
-
-    public GoodsEntity setGoodsKeywords(String goodsKeywords) {
-        this.goodsKeywords = goodsKeywords;
         return this;
     }
     public BigDecimal getGoodsPrice() {
@@ -279,12 +253,10 @@ public class GoodsEntity implements Serializable {
     public String toString() {
         return "GoodsEntity{" +
                 "goodsId=" + goodsId +
-                ", goodsSn='" + goodsSn + '\'' +
                 ", goodsName='" + goodsName + '\'' +
                 ", categoryId=" + categoryId +
                 ", shopId=" + shopId +
                 ", goodsGallery='" + goodsGallery + '\'' +
-                ", goodsKeywords='" + goodsKeywords + '\'' +
                 ", goodsPrice=" + goodsPrice +
                 ", goodsBrief='" + goodsBrief + '\'' +
                 ", isOnSale=" + isOnSale +

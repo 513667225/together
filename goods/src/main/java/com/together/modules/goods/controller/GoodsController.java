@@ -56,10 +56,10 @@ public class GoodsController {
         return R.success("操作成功",goodsId);
     }
 
-    //图片上传
     @RequestMapping("/addGoods")
     public R addGoods(@Pmap P p) throws Exception {
         MapUtil.mapKeySetUpper2Line(p);
+        p.put("shopId",1);
         return iGoodsService.addGoods(p);
     }
 
