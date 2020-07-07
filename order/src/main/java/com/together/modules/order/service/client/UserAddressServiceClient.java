@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/userAddress")
 public interface UserAddressServiceClient {
 
-    @RequestMapping(value = "/getUserPage" )
-    public R selectAllUserAddress(@Pmap P p);
+    @RequestMapping("/selectByuserAddress")
+    public R selectByuserAddress(@Pmap P p);
 
 }

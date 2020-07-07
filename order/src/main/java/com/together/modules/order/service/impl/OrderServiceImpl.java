@@ -67,7 +67,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
 
     @Override
     public int newOrder(P p) throws Exception {
-        R r = client.selectAllUserAddress(p);
+        R r = client.selectByuserAddress(p);
         OrderEntity orderEntity = new OrderEntity();
         p.thisToEntity(orderEntity);
         return 0;
