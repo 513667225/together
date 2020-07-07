@@ -6,6 +6,7 @@ import com.together.modules.shop.entity.ShopEntity;
 import com.together.util.P;
 import com.together.util.R;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,4 +34,12 @@ public interface IShopService extends IService<ShopEntity> {
      * 根据用户id修改店铺信息
      */
     int updShopById(P p);
+
+
+    /**
+     * 查询店铺按时间排序
+     * @param p
+     * @return
+     */
+    List<ShopEntity> queryLimitHotShop(P p);
 }

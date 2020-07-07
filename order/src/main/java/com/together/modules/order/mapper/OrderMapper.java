@@ -3,6 +3,7 @@ package com.together.modules.order.mapper;
 import com.together.modules.order.entity.OrderEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.together.modules.order.provider.SqlProvider;
+import com.together.util.P;
 import com.together.util.R;
 import org.apache.ibatis.annotations.SelectProvider;
 
@@ -33,4 +34,7 @@ public interface OrderMapper extends BaseMapper<OrderEntity> {
 
     public List<Map<String,Object>>  queryOrderByShopId(Map<String, Object> map);
 
+    List<Map<String, Object>> queryOrderByUserId(P p);
+
+    List<Map<String, Object>> getUserOrdersEqStatus(P p);
 }

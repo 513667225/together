@@ -45,6 +45,19 @@ public class UserAddressController {
         return R.success().data(userAddressEntities);
     }
 
+    /**
+     * 根据用户id查询所有用户地址
+     * @param p
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/selectByuserAddress")
+    public R selectByuserAddress(@Pmap P p) throws Exception {
+        ValidateUtli.validateParams(p,"addressId");
+        UserAddressEntity userAddressEntity= userAddressService.getById(p.getInt("addressId"));
+        return R.success().data(userAddressEntity);
+    }
+
 
     /**
      * 用户地址新增

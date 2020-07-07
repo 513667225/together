@@ -148,6 +148,14 @@ public class OrderEntity implements Serializable {
      */
     private Integer userId;
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     //商品列表
     /**
      * 属于冗余字段

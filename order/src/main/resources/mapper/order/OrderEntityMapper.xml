@@ -5,4 +5,12 @@
     <select id="queryOrderByShopId" resultType="java.util.Map" parameterType="java.util.Map">
         SELECT s.shop_id,o.* FROM shop s LEFT JOIN order_bot o ON s.shop_id = o.shop_id WHERE s.shop_id=#{shop_id} limit #{rowIndex},#{limit}
     </select>
+
+    <select id="queryOrderByUserId" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT * from order_bot WHERE user_id=#{userId} limit #{rowIndex},#{limit} order by add_time desc
+    </select>
+
+    <select id="getUserOrdersEqStatus" resultType="java.util.Map" parameterType="java.util.Map">
+        select * from order_bot WHERE user_id=#{userId} and order_status=#{orderStatus} limit #{rowIndex},#{limit}  order by add_time desc
+    </select>
 </mapper>

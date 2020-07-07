@@ -29,7 +29,5 @@ public interface IOrderService extends IService<OrderEntity> {
     int newOrder(P p) throws Exception;
 
 
-
-
-
+    R getUserOrdersEqStatus(P p) throws Exception;
 }

@@ -4,6 +4,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8488
+        server-addr: localhost:8848
   application:
     name: SERVER-GOODS
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
