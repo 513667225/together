@@ -117,8 +117,10 @@ public class MapUtil {
         Map map1 = new HashMap();
         for (Map.Entry entry : set) {
             String s = Map2JavaBeanUtil.transUpper2UnderLine(entry.getKey().toString());
-            map1.put(s, entry.getValue());
-            removeSet.add(entry.getKey());
+            if (!entry.getKey().equals(s)) {
+                map1.put(s, entry.getValue());
+                removeSet.add(entry.getKey());
+            }
         }
         map.putAll(map1);
         map.keySet().removeAll(removeSet);
