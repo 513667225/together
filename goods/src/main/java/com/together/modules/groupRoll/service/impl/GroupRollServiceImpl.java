@@ -26,9 +26,9 @@ public class GroupRollServiceImpl extends ServiceImpl<GroupRollMapper, GroupRoll
 
     @Override
     public R selectGroupRollByShopId(P p) {
-        Integer userId = p.getInt("userId");
+        Integer shopId = p.getInt("shopId");
         Integer limit = p.getInt("limit");
-        QueryWrapper<GroupRollEntity> queryWrapper = new QueryWrapper<GroupRollEntity>().eq("shop_id", userId);
+        QueryWrapper<GroupRollEntity> queryWrapper = new QueryWrapper<GroupRollEntity>().eq("shop_id", shopId);
         Page<GroupRollEntity> objectPage = new Page<>(p.getInt("page"),limit);
         Page<GroupRollEntity> groupRollEntityPage = baseMapper.selectPage(objectPage, queryWrapper);
         List<GroupRollEntity> records = groupRollEntityPage.getRecords();

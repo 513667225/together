@@ -1,6 +1,7 @@
 package com.together.modules.groupRollDetail.service.impl;
 
 import com.together.modules.groupRollDetail.entity.GroupRollDetailEntity;
+import com.together.modules.groupRollDetail.entity.GroupRollDetailUserDo;
 import com.together.modules.groupRollDetail.entity.RollDetailDo;
 import com.together.modules.groupRollDetail.mapper.GroupRollDetailMapper;
 import com.together.modules.groupRollDetail.service.IGroupRollDetailService;
@@ -26,5 +27,11 @@ public class GroupRollDetailServiceImpl extends ServiceImpl<GroupRollDetailMappe
     public R selectRollDetail(P p) {
         int rollDetailCount = baseMapper.selectRollDetailCount(p);
         return R.success().data(baseMapper.selectRollDetail(p)).set("total",rollDetailCount);
+    }
+
+    @Override
+    public R selectRollDetailByUserId(P p) {
+        List<GroupRollDetailUserDo> groupRollDetailUserDos=baseMapper.selectRollDetailByUserId(p.getInt("userId"));
+        return null;
     }
 }

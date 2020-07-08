@@ -49,7 +49,7 @@ public class GroupRollController {
     //根据店铺ID查询发行的所有优惠卷
     @RequestMapping("/selectGroupRollByShopId")
     public R selectGroupRollByShopId(@Pmap P p) throws Exception {
-        ValidateUtli.validateParams(p,"shopId","rowIndex","limit");
+        ValidateUtli.validateParams(p,"shopId","page","limit");
         return groupRollService.selectGroupRollByShopId(p);
     }
 

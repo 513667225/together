@@ -11,6 +11,7 @@ import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +38,7 @@ public class GoodsController {
     IGoodsService iGoodsService;
 
     @Autowired
-    ListOperations<String,GoodsEntity> listOperations;
+    ValueOperations<String,Object> valueOperations;
 
 
     @GetMapping("/getGoodsPage")
@@ -117,7 +118,7 @@ public class GoodsController {
      */
     @GetMapping("/queryhotGoods")
     public R queryhotGoods(@Pmap P p) {
-        List<GoodsEntity> goodshot = listOperations.range("goodshot", 0, -1);
+        List<GoodsEntity> goodshot = (List<GoodsEntity>) valueOperations.get("goodshot");
         return R.success().data(goodshot);
     }
 
@@ -128,7 +129,7 @@ public class GoodsController {
      */
     @GetMapping("/queryCommonGoods")
     public R queryCommonGoods(@Pmap P p){
-        List<GoodsEntity> goodshot = listOperations.range("goodsCommon", 0, -1);
+        List<GoodsEntity> goodshot = (List<GoodsEntity>) valueOperations.get("goodsgroup");
         return R.success().data(goodshot);
     }
 

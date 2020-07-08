@@ -13,7 +13,9 @@ import com.together.modules.shopUser.entity.ShopUserEntity;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +35,11 @@ public class ShopController {
     @Autowired
     private IShopService shopService;
 
+//    @Autowired
+//    ListOperations<String, Object> listOperations;
+
     @Autowired
-    ListOperations<String, ShopEntity> listOperations;
+    ValueOperations<String, Object> valueOperations;
 
     /**
      * 根据user_id查询店铺信息
@@ -47,6 +52,12 @@ public class ShopController {
         return R.success("xxx",shopPage.getRecords()).set("count",shopPage.getTotal());
     }
 
+    /**
+     * 查询所有店铺 和  根据店铺的类型查询
+     * @param p
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/getAllShop")
     public R getAllShop(@Pmap P p)throws Exception {
         Integer page = p.getInt("page");
@@ -88,8 +99,13 @@ public class ShopController {
      */
     @GetMapping("/queryLimitHotShop")
     public R queryLimitHotShop(@Pmap P p) throws Exception {
-        List<ShopEntity> goodshot = listOperations.range("popularShops", 0, -1);
-        return R.success().data(goodshot);
+        Object popularShops = valueOperations.get("popularShops");
+        if(popularShops instanceof List){
+            List<ShopEntity> shopEntityList= (List<ShopEntity>) popularShops;
+            return R.success().data(shopEntityList);
+        }
+//        List<Object> goodshot = listOperations.range("popularShops", 0, -1);
+        return R.success().data(null);
     }
 
 

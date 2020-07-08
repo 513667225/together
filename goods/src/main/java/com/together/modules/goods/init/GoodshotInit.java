@@ -1,5 +1,6 @@
 package com.together.modules.goods.init;
 
+import com.alibaba.fastjson.JSON;
 import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.service.IGoodsService;
 import com.together.modules.goods.service.impl.GoodsServiceImpl;
@@ -16,7 +17,7 @@ import java.util.List;
 public class GoodshotInit implements InitializingBean {
 
     @Autowired
-    ListOperations<String,GoodsEntity> listOperations;
+    ValueOperations valueOperations;
 
     @Autowired
     IGoodsService goodsService;
@@ -28,15 +29,11 @@ public class GoodshotInit implements InitializingBean {
         p.put("goods_nature",2);
         p.put("limit",5);
         List<GoodsEntity> goodsEntities = goodsService.queryLimitNature(p);
-        for (GoodsEntity goodsEntity : goodsEntities) {
-            listOperations.leftPush("goodsgroup",goodsEntity);
-        }
+        valueOperations.set("goodsgroup",goodsEntities);
         p=new P();
         p.put("goods_nature",3);
         p.put("limit",5);
         List<GoodsEntity> goodsEntityList = goodsService.queryLimitNature(p);
-        for (GoodsEntity goodsEntity : goodsEntityList) {
-            listOperations.leftPush("goodshot",goodsEntity);
-        }
+        valueOperations.set("goodshot",goodsEntityList);
     }
 }

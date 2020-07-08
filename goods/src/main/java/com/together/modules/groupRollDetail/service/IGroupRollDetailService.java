@@ -19,4 +19,6 @@ import java.util.List;
 public interface IGroupRollDetailService extends IService<GroupRollDetailEntity> {
 
     R selectRollDetail(P p);
+
+    R selectRollDetailByUserId(P p);
 }

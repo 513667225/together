@@ -8,6 +8,7 @@ import com.together.modules.groupRollDetail.service.IGroupRollDetailService;
 import com.together.modules.groupRollDetail.service.impl.GroupRollDetailServiceImpl;
 import com.together.util.P;
 import com.together.util.R;
+import com.together.util.utli.ValidateUtli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -49,8 +50,15 @@ public class GroupRollDetailController {
      */
     @RequestMapping("/selectRollDetail")
     public R selectRollDetail(@Pmap P p){
-        p.batchToInt("rowIndex","limit");
+        p.batchToInt("limit");
         return groupRollDetailService.selectRollDetail(p);
+    }
+
+    //查询用户可以使用的优惠卷
+    @RequestMapping("/selectRollDetailByUserId")
+    public R selectRollDetailByUserId(@Pmap P p) throws Exception {
+        ValidateUtli.validateParams(p,"userId");
+        return groupRollDetailService.selectRollDetailByUserId(p);
     }
 
 
