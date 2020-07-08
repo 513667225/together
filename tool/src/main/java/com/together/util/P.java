@@ -176,6 +176,16 @@ public class P extends HashMap<String,Object> {
     }
 
 
+    public  Boolean getBoolean(String key){
+            return getBoolean(key,"true");
+    }
+
+    public  Boolean getBoolean(String key,String trues){
+        String string = MapUtil.getString(this, key);
+
+        return string.equals(trues);
+    }
+
     public String getString(String key) {
         return MapUtil.getString(this,key);
     }
