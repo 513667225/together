@@ -45,7 +45,7 @@ public class MapUtil {
 
     public static String mapToSql(Map map) {
 
-        return mapToSql(map);
+        return mapToSql(map,new ArrayList<>());
     }
 
     public static String mapToAddSql(Map map) {
@@ -75,6 +75,7 @@ public class MapUtil {
         String sql = "";
         String rowIndex = "";
         String limitSql = "limit";
+        boolean isLimit = false;
         String limitTemp = "";
         List<String> list = new ArrayList<>();
         if (set.size() > 0) {
@@ -84,6 +85,7 @@ public class MapUtil {
             String key = String.valueOf(entry.getKey());
             String value = String.valueOf(entry.getValue());
             if (key.equals("rowIndex")) {
+                isLimit = true;
                 rowIndex = " " + value + ",";
                 continue;
             }
@@ -99,7 +101,9 @@ public class MapUtil {
         }
         sql = sql.substring(0, sql.lastIndexOf("and"));
 
-        sql += " " + limitSql + rowIndex + limitTemp;
+        if (isLimit){
+            sql += " " + limitSql + rowIndex + limitTemp;
+        }
         return sql;
     }
 
