@@ -19,4 +19,8 @@
         select * from shop order by update_time desc  limit #{limit}
     </select>
 
+    <select id="queryLimitRollShop" resultType="com.together.modules.shop.entity.ShopEntity">
+        select * from shop where shop_id in (select distinct shop_id from group_roll where inventory>0) and shop_type=1
+    </select>
+
 </mapper>

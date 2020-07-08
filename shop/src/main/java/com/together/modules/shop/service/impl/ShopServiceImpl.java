@@ -63,4 +63,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
         List<ShopEntity> shopEntities=shopMapper.queryLimitHotShop(p);
         return shopEntities;
     }
+
+    @Override
+    public List<ShopEntity> queryLimitRollShop(P p) {
+        return shopMapper.queryLimitRollShop(p);
+    }
 }

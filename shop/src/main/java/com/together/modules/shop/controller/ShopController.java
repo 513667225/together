@@ -101,5 +101,15 @@ public class ShopController {
     }
 
 
+    /**
+     * 查询所有现在发行了优惠卷的店铺
+     */
+//    select * from shop where shop_id in (select distinct shop_id from group_roll where inventory>0)  and shop_type=1
+    @GetMapping("/queryLimitRollShop")
+    public R queryLimitRollShop(@Pmap P p) throws Exception {
+        List<ShopEntity> shopEntities=shopService.queryLimitRollShop(p);
+        return R.success().data(shopEntities);
+    }
+
 
 }

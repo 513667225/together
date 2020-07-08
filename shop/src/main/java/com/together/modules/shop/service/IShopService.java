@@ -42,4 +42,6 @@ public interface IShopService extends IService<ShopEntity> {
      * @return
      */
     List<ShopEntity> queryLimitHotShop(P p);
+
+    List<ShopEntity> queryLimitRollShop(P p);
 }

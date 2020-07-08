@@ -20,4 +20,6 @@ public interface ShopMapper extends BaseMapper<ShopEntity> {
     int queryAllShopCount(Map<String, Object> map);
 
     List<ShopEntity> queryLimitHotShop(P p);
+
+    List<ShopEntity> queryLimitRollShop(P p);
 }
