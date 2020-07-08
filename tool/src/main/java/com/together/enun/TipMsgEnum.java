@@ -15,7 +15,9 @@ public enum  TipMsgEnum {
     INSERT_USER_ADDRESS(1007,"用户地址添加失败"),
     UPDATE_USER_ADDRESS(1008,"用户地址修改失败"),
     DELETE_USER_ADDRESS(1009,"用户地址删除失败"),
-    MONEY_MAX(1010,"成本金额大于5折");
+    MONEY_MAX(1010,"成本金额大于5折"),
+    SHOP_USER_NOT_LOGIN(1011,"商家用户未登录"),
+    ADMIN_USER_NOT_LOGIN(1012,"系统用户未登录");
 
     private  int code;
 
