@@ -51,7 +51,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
 
     @Override
     public R queryOrderByShopId(P p) throws Exception {
-        List<Map<String, Object>> maps = orderMapper.queryOrderByUserId(p);
+        List<Map<String, Object>> maps = orderMapper.queryOrderByShopId(p);
         for (Map<String, Object> map : maps) {
             MapUtil.mapKeySetLine2Upper(map);
         }
