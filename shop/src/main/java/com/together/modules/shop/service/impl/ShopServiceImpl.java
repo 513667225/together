@@ -68,4 +68,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
     public List<ShopEntity> queryLimitRollShop(P p) {
         return shopMapper.queryLimitRollShop(p);
     }
+
+    @Override
+    public R queryRegion(P p) {
+        return R.success("success",shopMapper.queryRegion(p));
+    }
 }

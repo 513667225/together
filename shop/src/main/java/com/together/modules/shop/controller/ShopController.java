@@ -107,8 +107,15 @@ public class ShopController {
 //    select * from shop where shop_id in (select distinct shop_id from group_roll where inventory>0)  and shop_type=1
     @GetMapping("/queryLimitRollShop")
     public R queryLimitRollShop(@Pmap P p) throws Exception {
+
         List<ShopEntity> shopEntities=shopService.queryLimitRollShop(p);
         return R.success().data(shopEntities);
+    }
+
+    @RequestMapping("/queryRegion")
+    public R queryRegion(@Pmap P p){
+        p.batchToInt("pid");
+        return shopService.queryRegion(p);
     }
 
 

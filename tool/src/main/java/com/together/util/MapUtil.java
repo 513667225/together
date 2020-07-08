@@ -84,6 +84,8 @@ public class MapUtil {
         for (Map.Entry entry : set) {
             String key = String.valueOf(entry.getKey());
             String value = String.valueOf(entry.getValue());
+            if(key.equals("page"))
+                continue;
             if (key.equals("rowIndex")) {
                 isLimit = true;
                 rowIndex = " " + value + ",";

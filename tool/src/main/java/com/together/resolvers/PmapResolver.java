@@ -37,6 +37,7 @@ public class PmapResolver extends RequestParamMapMethodArgumentResolver {
         Integer page = p.getInt("page");
         if (limit!=null&&page!=null)
         p.put("rowIndex",(page-1)*limit);
+
 //        p.batchToInt("limit","page");
         return p;
     }
