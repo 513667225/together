@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加店铺</title>
+    <!--设置div居中 -->
+    <style type="text/css">
+        .center-in-center {
+            position: absolute;
+            top: 0%;
+            left: 10%;
+        }
+    </style>
+</head>
+<link rel="stylesheet" href="/js/layui/css/layui.css">
+<script src="/js/layui/layui.all.js"></script>
+<body>
+<div class="center-in-center">
+    <blockquote class="layui-elem-quote">
+        店铺信息增加>>>
+    </blockquote>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">商家名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" name="shopuserName" id="shopuserName" lay-verify="shopuserName" placeholder="必填" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">商家密码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="shopuserPassword" id="shopuserPassword" lay-verify="shopuserPassword" placeholder="必填" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="requirePassword" id="requirePassword" lay-verify="requirePassword" placeholder="必填" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <!--提交按钮-->
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    layui.use(['form'],function () {
+      var  $ = layui.jquery;
+      var form = layui.form
+      ,layer = layui.layer
+        //自定义验证规则
+        form.verify({
+            shopuserName:function (value) {//验证用户名
+                if (value.length<5){
+                    return '用户名不能为空且长度不能小于5！';
+                }
+            }
+            ,shopuserPassword: [/(.+){6,12}$/, '密码必须6到12位'],
+            requirePassword:function (value) {
+                if ($('#shopuserPassword').val()!=$('#requirePassword').val()){
+                    return '两次密码不一致！';
+                }
+            }
+        });
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            layer.msg('登录成功....',{icon:1,time:500,shade:0.1},function() {
+                // location.href = "https://www.baidu.com";
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

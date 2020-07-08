@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.together.annotation.Pmap;
 import com.together.modules.admin.entity.AdminEntity;
 import com.together.modules.admin.service.IAdminService;
+import com.together.modules.region.entity.RegionEntity;
+import com.together.modules.region.service.IRegionService;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
     @Autowired
     private IAdminService adminService;
+    @Autowired
+    private IRegionService regionService;
 
     @GetMapping("/getAdminPage")
     public R getAdminPage(@Pmap P p) throws Exception {
@@ -71,5 +75,16 @@ public class AdminController {
             }
         }
         return R.success("当前用户不存在，请注册信息");
+    }
+
+    /**
+     * 根据region_id获取Admin
+     * @return
+     */
+    @GetMapping("getAdminByRegId")
+    public R getAdminByRegId(@Pmap P p) throws Exception {
+        RegionEntity code = regionService.getRegionByCode(p.getString("code"));
+        AdminEntity entity = adminService.getOne(new QueryWrapper<AdminEntity>().eq("region_id", code.getId()));
+        return R.success("success",entity);
     }
 }

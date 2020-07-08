@@ -16,4 +16,5 @@ import java.util.List;
  */
 public interface IRegionService extends IService<RegionEntity> {
 
+    RegionEntity getRegionByCode(String code) throws Exception;
 }
