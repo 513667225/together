@@ -1,5 +1,6 @@
 package com.together.modules.region.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.together.modules.region.entity.RegionEntity;
 import com.together.modules.region.mapper.RegionMapper;
 import com.together.modules.region.service.IRegionService;
@@ -21,4 +22,12 @@ import java.util.List;
  */
 @Service
 public class RegionServiceImpl extends ServiceImpl<RegionMapper, RegionEntity> implements IRegionService {
+
+    @Override
+    public RegionEntity getRegionByCode(String code) throws Exception {
+        code = code.substring(0, 4);
+        code = code+"00";
+        int i = Integer.parseInt(code);
+        return baseMapper.selectOne(new QueryWrapper<RegionEntity>().eq("code",i));
+    }
 }
