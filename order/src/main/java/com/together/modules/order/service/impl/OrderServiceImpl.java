@@ -55,7 +55,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         for (Map<String, Object> map : maps) {
             MapUtil.mapKeySetLine2Upper(map);
         }
-        return R.success().data(maps);
+        int i = orderMapper.queryOrderByShopIdCount(p);
+        return R.success().data(maps).set("count",i);
     }
 
     @Override

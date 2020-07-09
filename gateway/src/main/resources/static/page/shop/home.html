@@ -57,13 +57,11 @@
             type: "get",
             dataType: "json",
             success: function (data) {
-                console.log(data)
                 var menuHtml = "";
                 $.each(data.data, function () {
                     var _data = this;
                     if (_data.children != null) {
                         menuHtml += "<li class='layui-nav-item layui-nav-itemed'><a  href='javascript:;'>" + _data.name + "</a><dl class='layui-nav-child'>";
-                        console.log(menuHtml)
                         $.each(_data.children, function () {
                             menuHtml += "<dd><a onclick='addTab(\"" + this.name + "\",\"" + this.id + "\",\"" + this.href + "\")' href='javascript:;' data-url='"+this.href+"' data-id='"+this.id+"' data-title='"+this.name+"''>" + this.name + "</a></dd>";
                         })
@@ -72,7 +70,6 @@
                         menuHtml += "<li class='layui-nav-item'><a href='javascript:;'>" + _data.name + "</a></li>";
                     }
                 })
-                console.log(menuHtml)
                 $("#menuBody").html(menuHtml);
                 element.render("nav");
             }

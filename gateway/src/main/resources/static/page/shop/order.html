@@ -6,9 +6,6 @@
 </head>
 <link rel="stylesheet" href="/js/layui/css/layui.css">
 <script src="/js/layui/layui.all.js"></script>
-<!--<script src="/js/layer/layer.js"></script>-->
-<script src="/js/tinymce4.7.5/tinymce.min.js"></script>
-
 <body>
 
 <table class="layui-hide" id="orders_table" lay-skin="line" lay-filter="orders_table">
@@ -21,6 +18,12 @@
 
 <script type="text/html" id="orderDetail">
     <a class="layui-btn layui-btn-xs" lay-event="orderDetail">查看详情</a>
+</script>
+
+<script type="text/html" id="toolbarDemo">
+    <label>发货情况:</label>
+    <input type="radio" name="shipStatus" id="ship101" lay-filter="shipStatus" value="101" title="未发货" checked="">
+    <input type="radio" name="shipStatus" id="ship102" lay-filter="shipStatus" value="102" title="已上传物流信息">
 </script>
 
 <div class="layui-row" id="upShipMessage" style="display:none;">
@@ -55,86 +58,5 @@
 </div>
 
 </body>
-<script>
-    var data;
-    layui.use(['table','form'], function () {
-        var $ = layui.jquery;
-        var table = layui.table;
-        var form = layui.form
-            ,layer = layui.layer
-            ,layedit = layui.layedit
-            ,laydate = layui.laydate;
-        var order_id;
-
-        form.render();
-
-        form.on('submit(shipSubmit)', function(data) {
-            $.ajax({
-                url: '/orders/updateOrders',
-                type: 'get',
-                dataType: 'json',
-                data: {'order_id':order_id,'ship_sn': data.field.shipSn,'ship_channel':data.field.shipChannel},
-                success: function (suc) {
-                    console.log("------"+suc);
-                }
-            })
-        })
-
-        table.render({
-            elem: '#orders_table',
-            url: '/orders/getShopOrders',
-            method: 'get',
-            where:{
-                shop_id:'1',
-            },
-            cols: [[
-                {type: 'checkbox'},
-                {field: 'orderId', width: 80, title: 'id'},
-                {field: 'orderTel', width: 150, title: '会员号码'},
-                {field: 'orderSn', width: 120, title: '订单编号', sort: true},
-                {field: 'orderStatus', width: 80, title: '状态', sort: true},
-                {field: 'orderConsignee', width: 100,title: '收货人'},
-                {field: 'orderAddress', title: '具体地址'},
-                {field: 'orderMessage', title: '用户留言'},
-                {field: 'orderDetail', title: '订单详情', width: 120, toolbar: '#orderDetail', align: 'center'},
-                {fixed: 'right', title: '操作', toolbar: '#shipBar', align: 'center'}
-            ]],
-            page: true,
-            limits: [5, 10, 20, 50],
-            limit: 5,
-            loading: true,
-            count: 1000,
-            request: {
-                pageName: 'page',
-                limitName: 'limit'
-            },
-        });
-
-        table.on('tool(orders_table)', function (obj) {
-            data = obj.data;
-            if (obj.event === 'orderDetail') {
-                var orderId =data.orderId;
-                var index = layer.open({
-                    type:2,
-                    title:'查看订单详情',
-                    area : ['1000px' , '800px'],
-                    shadeClose:true,
-                    content: "orderDetail.html?orderId="+orderId
-                });
-            }else if(obj.event === 'editShip'){
-                order_id = data.orderId;
-                layer.open({
-                    type:1,
-                    title:'上传物流信息',
-                    area : ['420px', '250px'],
-                    shadeClose:true,
-                    content: $("#upShipMessage")
-                });
-            }
-        });
-
-    })
-
-
-</script>
+<script src="js/order.js"></script>
 </html>

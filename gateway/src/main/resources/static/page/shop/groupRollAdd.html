@@ -8,27 +8,48 @@
 <script src="/js/layui/layui.all.js"></script>
 <body>
     <form action="" method="post" class="layui-form layui-form-pane" id="groupRollForm">
+        <blockquote class="layui-elem-quote layui-text">
+            Tips:拼团券成本为商家拼出拼团券所得,其所得不得超过拼团券面额的50%
+        </blockquote>
         <div class="layui-form-item">
             <label class="layui-form-label">拼团券面额</label>
-            <div class="layui-input-inline">
-                <input name="money" id="money" type="text" placeholder="￥" class="layui-input"
-                       lay-verify="required|number" autocomplete="off">
+            <div class="layui-input-block">
+                <input name="money" id="money" type="text" placeholder="￥ 请输入拼团券面额,只能输入整数" class="layui-input"
+                       lay-verify="required" autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')">
             </div>
         </div>
-
 
         <div class="layui-form-item">
             <label class="layui-form-label">拼团券成本</label>
-            <div class="layui-input-inline">
-                <input name="shopPublishMoney" id="shopPublishMoney" type="text" placeholder="￥" class="layui-input"
-                       lay-verify="required|number" autocomplete="off">
+            <div class="layui-input-block">
+                <input name="shopPublishMoney" id="shopPublishMoney" type="text" placeholder="￥ 请输入拼团券成本,只能输入整数" class="layui-input"
+                       lay-verify="required" autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')">
             </div>
         </div>
 
+        <div class="layui-form-item">
+            <label class="layui-form-label">库存</label>
+            <div class="layui-input-block">
+                <input name="inventory" id="inventory" type="text" placeholder="￥ 请输入发布拼团券个数,只能输入整数" class="layui-input"
+                       lay-verify="required" autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')">
+            </div>
+        </div>
 
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注信息</label>
+            <div class="layui-input-block">
+                <input name="remark" id="remark" type="text" placeholder="请输入备注信息" class="layui-input"
+                       lay-verify="required" autocomplete="off" oninput="value=value.replace(/[^\d]/g,'')">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-top:40px">
+            <div class="layui-input-block">
+                <button class="layui-btn  layui-btn-submit " lay-submit="" lay-filter="groupRollSubmit">添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
     </form>
-<script>
-
-</script>
 </body>
+<script src="js/groupRollAdd.js"></script>
 </html>
