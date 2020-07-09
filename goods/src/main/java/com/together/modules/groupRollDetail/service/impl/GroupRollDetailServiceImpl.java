@@ -32,6 +32,6 @@ public class GroupRollDetailServiceImpl extends ServiceImpl<GroupRollDetailMappe
     @Override
     public R selectRollDetailByUserId(P p) {
         List<GroupRollDetailUserDo> groupRollDetailUserDos=baseMapper.selectRollDetailByUserId(p.getInt("userId"));
-        return null;
+        return R.success().data(groupRollDetailUserDos);
     }
 }

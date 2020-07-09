@@ -8,7 +8,7 @@ public class SQLProvider {
 
     public String  queryAllGoods(Map<String, Object> map){
 //        String wheresql = MapUtil.mapToSql(map);
-        String likeSql = MapUtil.mapToSqlByLike(map);
+        String likeSql = MapUtil.mapToSqlByLike(map,"goods_name");
 //        System.out.println();
         String sql ="SELECT * FROM goods "+likeSql;
         return sql;

@@ -52,6 +52,20 @@ public class GroupRollDetailEntity implements Serializable {
      */
     private Date useTime;
 
+    /**
+     * 店铺ID
+     * @return
+     */
+    private Integer shopId;
+
+    public Integer getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Integer shopId) {
+        this.shopId = shopId;
+    }
+
     public Date getUseTime() {
         return useTime;
     }

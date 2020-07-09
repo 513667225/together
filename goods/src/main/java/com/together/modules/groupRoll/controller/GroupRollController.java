@@ -4,6 +4,7 @@ package com.together.modules.groupRoll.controller;
 import com.together.annotation.Pmap;
 import com.together.modules.groupRoll.entity.GroupRollEntity;
 import com.together.modules.groupRoll.service.IGroupRollService;
+import com.together.modules.groupRollDetail.service.IGroupRollDetailService;
 import com.together.util.P;
 import com.together.util.R;
 import com.together.util.utli.ValidateUtli;
@@ -31,18 +32,9 @@ public class GroupRollController {
 
     //店铺发行拼团卷
     @RequestMapping("/groupRollInsert")
-    public R GroupRollInsert(@Pmap P p) throws Exception {
+    public R groupRollInsert(@Pmap P p) throws Exception {
         ValidateUtli.validateParams(p,"shopId","money","shopPublishMoney","shopAddress","inventory");
-        GroupRollEntity groupRollEntity = p.thisToEntity(GroupRollEntity.class);
-        Date date=new Date();  //添加时间
-        String remark="";     //备注
-        if(p.getString("remark")==null){
-            remark=p.getString("remark");
-        }
-        groupRollEntity.setAddTime(date);
-        groupRollEntity.setStatus(0);
-        groupRollEntity.setRemark(remark);
-        groupRollService.save(groupRollEntity);
+        groupRollService.groupRollInsert(p);
         return R.success();
     }
 
