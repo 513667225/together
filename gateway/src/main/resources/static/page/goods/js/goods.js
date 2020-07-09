@@ -55,7 +55,14 @@ layui.use(['table','form'], function () {
             {field: 'goodsGallery', title: '宣传图片', width: 120, toolbar: '#checkGoodsPicDetail', align: 'center'},
             {field: 'goodsPrice', width: 80, title: '价格(元)', align: 'center'},
             {field: 'goodsBrief', title: '商品简介'},
-            {field: 'isOnSale', width: 100, title: '是否上架', align: 'center'},
+            {field: 'isOnSale', width: 89, title: '上架', align: 'center',
+                templet: function (d) {
+                    if(d.isOnSale==false){
+                        return "<a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"upSale\">已下架</a>"
+                    }else {
+                        return "<a class=\"layui-btn layui-btn-xs\" lay-event=\"disSale\">已上架</a>"
+                    }
+                }},
             {
                 field: 'picUrl',
                 width: 165,
@@ -214,8 +221,36 @@ layui.use(['table','form'], function () {
                     }
                 }
             })
+        }else if(obj.event=='disSale'){//修改商品下架
+            $.ajax({
+                url: '/goods/updateGoods',
+                type: 'get',
+                dataType: 'json',
+                data: {'goods_id': data.goodsId,'is_on_sale':false},
+                success: function (suc) {
+                    if(suc.code=='0'){
+                        tableReload();
+                        layer.msg("下架成功", {icon: 1});
+                    }
+                }
+            })
+
+        }else if(obj.event=='upSale'){//修改商品为上架
+            $.ajax({
+                url: '/goods/updateGoods',
+                type: 'get',
+                dataType: 'json',
+                data: {'goods_id': data.goodsId,'is_on_sale':true},
+                success: function (suc) {
+                    if(suc.code=='0'){
+                        tableReload();
+                        layer.msg("下架成功", {icon: 1});
+                    }
+                }
+            })
 
         }
+
     });
 })
 
