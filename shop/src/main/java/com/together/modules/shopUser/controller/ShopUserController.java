@@ -10,6 +10,7 @@ import com.together.modules.shopUser.service.IShopUserService;
 import com.together.util.MapUtil;
 import com.together.util.P;
 import com.together.util.R;
+import com.together.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * <p>
@@ -67,5 +69,29 @@ public class ShopUserController {
         }
         return R.success("当前用户不存在，请注册信息");
     }
+
+//用户名验证
+    @GetMapping("/queyByName")
+    public R queyByName(@Pmap P p){
+        ShopUserEntity shopUserEntity = shopUserService.getOne(new QueryWrapper<ShopUserEntity>().eq("shopuser_name", p.getString("shopuser_name")));
+        if (shopUserEntity==null){
+            return R.success("");
+
+        }else {
+            return R.success("用户名已存在！请重新输入！");
+        }
+    }
+
+    @RequestMapping("/addShopUser")
+    //增加商家用户的方法
+    public R addShopUser(@Pmap P p){
+        ShopUserEntity shopUserEntity = new ShopUserEntity();
+        shopUserEntity.setShopuserName(p.getString("shopuser_name"));
+        shopUserEntity.setShopuserPassword(p.getString("shopuser_password"));
+        shopUserEntity.setAddTime(new Date());
+        shopUserEntity.setUpdateTime(new Date());
+        return R.success("success",shopUserService.save(shopUserEntity));
+    }
+
 }
 
