@@ -54,8 +54,6 @@
             ,laydate = layui.laydate;
         form.on('submit(admin_login)', function(data){
           var forms = $("#loginform").serialize();
-        var adminName = $("#adminName").val();
-        var adminPassword =  $("#adminPassword").val();
             $.ajax({
                 url: '/admin/adminLogin',
                 type: 'get',
