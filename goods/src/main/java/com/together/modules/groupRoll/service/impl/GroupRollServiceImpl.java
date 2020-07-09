@@ -2,14 +2,19 @@ package com.together.modules.groupRoll.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.together.enun.TipMsgEnum;
 import com.together.modules.groupRoll.entity.GroupRollEntity;
 import com.together.modules.groupRoll.mapper.GroupRollMapper;
 import com.together.modules.groupRoll.service.IGroupRollService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.together.modules.groupRollDetail.entity.GroupRollDetailEntity;
+import com.together.modules.groupRollDetail.service.IGroupRollDetailService;
 import com.together.util.P;
 import com.together.util.R;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +28,9 @@ import java.util.Map;
  */
 @Service
 public class GroupRollServiceImpl extends ServiceImpl<GroupRollMapper, GroupRollEntity> implements IGroupRollService {
+
+    @Autowired
+    IGroupRollDetailService groupRollDetailService;
 
     @Override
     public R selectGroupRollByShopId(P p) {
@@ -39,5 +47,33 @@ public class GroupRollServiceImpl extends ServiceImpl<GroupRollMapper, GroupRoll
 
         //根据Issue_number分组按时间排序，
         return R.success().data(records).set("total",groupRollEntityPage.getTotal());
+    }
+
+    @Override
+    public void groupRollInsert(P p) throws Exception {
+        GroupRollEntity groupRollEntity = p.thisToEntity(GroupRollEntity.class);
+        if((groupRollEntity.getMoney()/2)<groupRollEntity.getShopPublishMoney()){
+            throw new Exception(TipMsgEnum.MONEY_MAX.getMsg());
+        }
+        Date date=new Date();  //添加时间
+        String remark="";     //备注
+        if(p.getString("remark")!=null){
+            remark=p.getString("remark");
+        }
+        groupRollEntity.setAddTime(date);
+        groupRollEntity.setStatus(0);
+        groupRollEntity.setRemark(remark);
+        baseMapper.insert(groupRollEntity);
+
+        GroupRollDetailEntity groupRollDetailEntity;
+
+        for (Integer i = 0; i < groupRollEntity.getInventory(); i++) {
+            groupRollDetailEntity=new GroupRollDetailEntity();
+            groupRollDetailEntity.setGid(groupRollEntity.getGrouprollId());
+            groupRollDetailEntity.setStatus(1);
+            groupRollDetailEntity.setShopId(groupRollEntity.getShopId());
+            groupRollDetailService.save(groupRollDetailEntity);
+        }
+
     }
 }

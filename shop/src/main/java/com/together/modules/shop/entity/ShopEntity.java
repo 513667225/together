@@ -1,5 +1,6 @@
 package com.together.modules.shop.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
@@ -18,7 +19,7 @@ public class ShopEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "shop_id")
+    @TableId(value = "shop_id",type = IdType.AUTO)
     private Integer shopId;
 
     /**
@@ -52,9 +53,35 @@ public class ShopEntity implements Serializable {
     private String shopCategory;
 
     /**
-     * 商家地址
+     * 商家省份
      */
     private String shopAddress;
+
+    /**
+     * 商家城市
+     */
+    private String city;
+
+    /**
+     * 商家城市
+     */
+    private String area;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
 
     /**
      * 商家电话
@@ -86,6 +113,16 @@ public class ShopEntity implements Serializable {
      */
     private Integer adminId;
 
+    private Integer shopType;
+
+    public Integer getShopType() {
+        return shopType;
+    }
+
+    public void setShopType(Integer shopType) {
+        this.shopType = shopType;
+    }
+
     public Integer getAdminId() {
         return adminId;
     }
@@ -93,6 +130,7 @@ public class ShopEntity implements Serializable {
     public void setAdminId(Integer adminId) {
         this.adminId = adminId;
     }
+
 
     public Integer getShopId() {
         return shopId;
@@ -215,6 +253,11 @@ public class ShopEntity implements Serializable {
             ", aptitudeId=" + aptitudeId +
             ", addTime=" + addTime +
             ", updateTime=" + updateTime +
+            ", shopType=" + shopType +
+            ", city=" + city +
+            ", area=" + area +
+
+
         "}";
     }
 }

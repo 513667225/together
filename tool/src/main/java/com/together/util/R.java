@@ -17,7 +17,8 @@ public class R extends HashMap {
     public static String DATA_KEY = "data";
     public static String CODE_KEY = "code";
     public static String MSG_KEY = "msg";
-   
+    public Object val;
+
 
     private R() {
 
