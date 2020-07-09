@@ -85,12 +85,12 @@ public class AdminController {
                 Cookie cookie = new Cookie(RedisParamenter.ADMIN_LOING_USER_REDIS_KEY,id);
                 HttpServletResponse response = p.getResponse();
                 response.addCookie(cookie);
-                return R.success("登录成功",cookie);
+                return R.success("0",cookie);
             }else{
-                return R.success("密码错误,请重新输入");
+                return R.success("1");
             }
         }
-        return R.success("当前用户不存在，请注册信息");
+        return R.success("-1");
     }
 
     /**

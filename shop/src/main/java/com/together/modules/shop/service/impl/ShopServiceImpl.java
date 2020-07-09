@@ -83,9 +83,16 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
     @Override
     public int addShop(P p) throws Exception {
         ShopUserEntity shopUserEntity = new ShopUserEntity();
+        p.thisToEntityUpper2Line(shopUserEntity);
         p.thisToEntity(shopUserEntity);
         iShopUserService.save(shopUserEntity);
         ShopEntity shopEntity = new ShopEntity();
+        if(p.getString("shop_type").equals("on")){
+            p.put("shop_type",0);
+        }else {
+            p.put("shop_type",1);
+        }
+        p.thisToEntityUpper2Line(shopEntity);
         p.thisToEntity(shopEntity);
         baseMapper.insert(shopEntity);
         R r = adminServiceClient.getAdminByRegId(p);

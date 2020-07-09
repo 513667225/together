@@ -129,8 +129,13 @@ public class ShopController {
 
     //增加店铺，商家，查询市代方法
     @RequestMapping("/addShop")
-    public R addShop(@Pmap P p){
-        return R.success("success");
+    public R addShop(@Pmap P p) throws Exception {
+        int addShops = shopService.addShop(p);
+        if (0!=addShops){
+          return R.success("增加成功！");
+        }
+        return R.success("增加失败！");
+
     }
 
 }

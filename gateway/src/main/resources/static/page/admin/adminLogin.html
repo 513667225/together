@@ -52,17 +52,27 @@
             ,layer = layui.layer
             ,layedit = layui.layedit
             ,laydate = layui.laydate;
-        //监听提交  /shopUser/loinShopUsers
         form.on('submit(admin_login)', function(data){
+          var forms = $("#loginform").serialize();
+        var adminName = $("#adminName").val();
+        var adminPassword =  $("#adminPassword").val();
             $.ajax({
                 url: '/admin/adminLogin',
                 type: 'get',
-                data: {'adminName': data.field.adminName,'adminPassword':data.field.adminPassword},
+                data: forms,
                 success: function (suc) {
-                    layer.msg('登录成功....',{icon:1,time:500,shade:0.1},function() {
-                        location.href = "home.html";
-                    });
+                    if (suc.msg == "0"){
+                        layui.messages("登录成功！")
+                        location.href = 'home.html'
+                    }
+                    else if (suc.msg=="1"){
+                        layui.messages("密码错误")
+                        return false;
+                    }else {
+                        layui.messages("用户名不存在")
+                    }
                 }
+
             });
             return false;
         });
