@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.together.entity.AdminEntity;
 import com.together.modules.shop.entity.ShopEntity;
 import com.together.modules.shop.mapper.ShopMapper;
 import com.together.modules.shop.service.IShopService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.together.modules.shop.service.client.AdminServiceClient;
 import com.together.modules.shopUser.entity.ShopUserEntity;
 import com.together.modules.shopUser.service.IShopUserService;
 import com.together.util.P;
@@ -36,6 +38,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
     ShopMapper shopMapper;
     @Autowired
     private IShopUserService iShopUserService;
+
+    @Autowired
+    private AdminServiceClient adminServiceClient;
 
 
     @Override
@@ -79,9 +84,14 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
     public int addShop(P p) throws Exception {
         ShopUserEntity shopUserEntity = new ShopUserEntity();
         p.thisToEntity(shopUserEntity);
+        iShopUserService.save(shopUserEntity);
         ShopEntity shopEntity = new ShopEntity();
         p.thisToEntity(shopEntity);
-
+        baseMapper.insert(shopEntity);
+        R r = adminServiceClient.getAdminByRegId(p);
+        AdminEntity adminEntity = new AdminEntity();
+        r.thisToEntity(adminEntity);
+        shopEntity.setAdminId(adminEntity.getAdminId());
         return 0;
     }
 
