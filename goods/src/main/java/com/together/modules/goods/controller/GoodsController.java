@@ -106,7 +106,7 @@ public class GoodsController {
 
     @RequestMapping("/updateGoods")
     public R updateAdmin(@Pmap P p) throws Exception {
-        GoodsEntity goodsEntity = p.thisToEntity(GoodsEntity.class);
+        GoodsEntity goodsEntity = p.thisToEntityLine2Upper(GoodsEntity.class);
         return R.success("操作成功",iGoodsService.update(goodsEntity,new QueryWrapper<GoodsEntity>().eq("goods_id",p.getInt("goodsId"))));
     }
 
