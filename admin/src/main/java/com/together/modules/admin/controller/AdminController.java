@@ -12,6 +12,7 @@ import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -82,7 +83,7 @@ public class AdminController {
      * @return
      */
     @GetMapping("getAdminByRegId")
-    public R getAdminByRegId(@Pmap P p) throws Exception {
+    public R getAdminByRegId(@Pmap @RequestBody P p) throws Exception {
         RegionEntity code = regionService.getRegionByCode(p.getString("code"));
         AdminEntity entity = adminService.getOne(new QueryWrapper<AdminEntity>().eq("region_id", code.getId()));
         return R.success("success",entity);
