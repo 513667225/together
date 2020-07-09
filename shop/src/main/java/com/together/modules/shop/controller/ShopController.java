@@ -11,6 +11,7 @@ import com.together.modules.shop.entity.ShopEntity;
 import com.together.modules.shop.service.IShopService;
 import com.together.modules.shopUser.entity.ShopUserEntity;
 import com.together.modules.shopUser.service.IShopUserService;
+import com.together.util.FileUtil;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -137,5 +141,21 @@ public class ShopController {
         return R.success("增加失败！");
 
     }
+
+
+
+
+    //图片上传 店铺
+    @RequestMapping("/uploadShopPic")
+    public R uploadShopPic(@RequestParam MultipartFile file) throws IOException {
+        FileUtil fileUtil = new FileUtil();
+        String basePath = this.getClass().getResource("/static").getPath();
+        String prefix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        String filePath = basePath + "/upload/store/" + new Date().getTime() + prefix;
+        File desFile = new File(filePath);
+        File outfile = fileUtil.write(desFile,file.getInputStream(),file.getSize(),1024*40);
+        return R.success().set("fileName",outfile.getName()).set("filePath",outfile.getName());
+    }
+
 
 }
