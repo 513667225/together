@@ -75,6 +75,7 @@ layui.use(['table','form'], function () {
                 shadeClose:true,
                 content: "groupRollDetail.html"
             });
+            layer.full(index);
         }
     });
 
@@ -89,6 +90,7 @@ function addGroupRoll() {
         shadeClose:true,
         content: "groupRollAdd.html"
     });
+    layer.full(index);
 }
 
 function createTime(v) {
