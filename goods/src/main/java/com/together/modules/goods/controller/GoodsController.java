@@ -101,7 +101,7 @@ public class GoodsController {
     @GetMapping("/queryAllGoods")
     public R queryAllGoods(@Pmap P p) throws Exception {
         p.batchToInt("page","limit");
-        return  iGoodsService.queryGoodsByShopId(p);
+        return  iGoodsService.queryAllGoods(p);
     }
 
     @RequestMapping("/updateGoods")

@@ -19,4 +19,6 @@ import java.util.Map;
 public interface IGroupRollService extends IService<GroupRollEntity> {
 
     R selectGroupRollByShopId(P p);
+
+    void groupRollInsert(P p) throws Exception;
 }
