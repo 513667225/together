@@ -27,4 +27,12 @@ public interface IGoodsService extends IService<GoodsEntity> {
     R addGoods(Map<String, Object> map);
 
     List<GoodsEntity> queryLimitNature(P p);
+
+    /**
+     * 根据ID查看商品的详细信息 包括规格和参数
+     * @param p
+     * @return
+     */
+    R queryGoodsDetailById (P p);
+
 }
