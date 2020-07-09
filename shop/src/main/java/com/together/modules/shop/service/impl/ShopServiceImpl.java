@@ -9,12 +9,15 @@ import com.together.modules.shop.entity.ShopEntity;
 import com.together.modules.shop.mapper.ShopMapper;
 import com.together.modules.shop.service.IShopService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.together.modules.shopUser.entity.ShopUserEntity;
+import com.together.modules.shopUser.service.IShopUserService;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +34,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
 
     @Autowired
     ShopMapper shopMapper;
+    @Autowired
+    private IShopUserService iShopUserService;
+
 
     @Override
     public IPage getShopPage(P p) {
@@ -67,6 +73,16 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
     @Override
     public List<ShopEntity> queryLimitRollShop(P p) {
         return shopMapper.queryLimitRollShop(p);
+    }
+
+    @Override
+    public int addShop(P p) throws Exception {
+        ShopUserEntity shopUserEntity = new ShopUserEntity();
+        p.thisToEntity(shopUserEntity);
+        ShopEntity shopEntity = new ShopEntity();
+        p.thisToEntity(shopEntity);
+
+        return 0;
     }
 
     @Override

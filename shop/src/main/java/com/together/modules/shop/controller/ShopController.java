@@ -10,6 +10,7 @@ import com.together.config.KdniaoTrackQueryAPI;
 import com.together.modules.shop.entity.ShopEntity;
 import com.together.modules.shop.service.IShopService;
 import com.together.modules.shopUser.entity.ShopUserEntity;
+import com.together.modules.shopUser.service.IShopUserService;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +36,7 @@ public class ShopController {
 
     @Autowired
     private IShopService shopService;
+
 
 //    @Autowired
 //    ListOperations<String, Object> listOperations;
@@ -113,5 +116,21 @@ public class ShopController {
         return shopService.queryRegion(p);
     }
 
+    @GetMapping("/queryShopByShopName")
+    public R queryShopByShopName(@Pmap P p){
+        ShopEntity shopEntity = shopService.getOne(new QueryWrapper<ShopEntity>().eq("shop_name", p.getString("shop_name")));
+        if (shopEntity==null) {
+            return R.success("");
+        }
+        else {
+            return R.success("店铺已存在！请重新输入！");
+        }
+    }
+
+    //增加店铺，商家，查询市代方法
+    @RequestMapping("/addShop")
+    public R addShop(@Pmap P p){
+        return R.success("success");
+    }
 
 }
