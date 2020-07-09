@@ -83,6 +83,8 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
     @Override
     public int addShop(P p) throws Exception {
         ShopUserEntity shopUserEntity = new ShopUserEntity();
+        shopUserEntity.setAddTime(new Date());
+        shopUserEntity.setUpdateTime(new Date());
         p.thisToEntityUpper2Line(shopUserEntity);
         p.thisToEntity(shopUserEntity);
         iShopUserService.save(shopUserEntity);
@@ -92,6 +94,8 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
         }else {
             p.put("shop_type",1);
         }
+        shopEntity.setAddTime(new Date());
+        shopEntity.setUpdateTime(new Date());
         p.thisToEntityUpper2Line(shopEntity);
         p.thisToEntity(shopEntity);
         baseMapper.insert(shopEntity);
