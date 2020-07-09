@@ -14,69 +14,53 @@
         <legend>商品基本信息</legend>
     </fieldset>
 
+    <blockquote class="layui-elem-quote layui-text" id="message" style="color: red">
+        提示信息
+    </blockquote>
     <div class="layui-form-item">
         <label class="layui-form-label">商家账号</label>
-        <div class="layui-input-block">
-            <input name="shopuser_name" id="shopuser_name" type="text" class="layui-input"
-                   placeholder="请输入账号名称,不超过20个字" lay-verify="required" autocomplete="off">
+        <div class="layui-input-inline">
+            <input name="shopuser_name" id="shopuser_name" type="text" class="layui-input" placeholder="请输入商家名" lay-verify="required" autocomplete="off">
         </div>
-    </div>
-
-
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">密码</label>
+        <label class="layui-form-label">商家密码</label>
         <div class="layui-input-inlin">
             <div class="layui-input-inline">
-                <input name="shopuser_password" id="shopuser_password" type="text" class="layui-input"
-                       placeholder="密码长度不能小于6" lay-verify="required" autocomplete="off">
+                <input name="shopuser_password" id="shopuser_password" type="password" class="layui-input" placeholder="请输入密码" lay-verify="password" autocomplete="off">
             </div>
             <label class="layui-form-label">确认密码</label>
             <div class="layui-input-inline">
-                <input name="shopuser_password1" id="shopuser_password1" type="text" class="layui-input"
-                       placeholder="密码长度不能小于6" lay-verify="required" autocomplete="off">
+                <input name="shopuser_password1" id="shopuser_password1" type="password" class="layui-input" placeholder="请再输入密码" lay-verify="required" autocomplete="off">
             </div>
         </div>
     </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">店铺名称</label>
-        <div class="layui-input-inline">
-            <input name="shop_name" id="shop_name" type="text" placeholder="请输入商品单位,例如件、盒" class="layui-input"
-                   lay-verify="required" autocomplete="off">
+        <div class="layui-form-item">
+            <label class="layui-form-label">店铺名称</label>
+            <div class="layui-input-inline">
+                <input name="shop_name" id="shop_name" type="text" placeholder="请输入店铺名称" class="layui-input" lay-verify="required" autocomplete="off">
+            </div>
+            <label class="layui-form-label">店铺标语</label>
+            <div class="layui-input-inline">
+                <input name="shop_slogan" id="shop_slogan" type="text" placeholder="请输入店铺标语" class="layui-input" lay-verify="required" autocomplete="off">
+            </div>
+
         </div>
     </div>
-    <div class="layui-form-item" pane="">
+
+    <div class="layui-form-item">
         <label class="layui-form-label">是否线上</label>
-        <div class="layui-input-block">
-            <input type="checkbox" checked name="shop_type" lay-skin="switch" lay-text="是|否">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">店铺标语</label>
         <div class="layui-input-inline">
-            <input name="shop_slogan" id="shop_slogan" type="text" placeholder="￥" class="layui-input"
-                   lay-verify="required|number" autocomplete="off">
+            <input type="checkbox" checked name="shop_type" id="shop_type" lay-skin="switch" lay-text="是|否">
         </div>
-    </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">店铺详细介绍</label>
-        <div class="layui-input-block">
-            <textarea name="shop_detail" id="shop_detail"></textarea>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
         <label class="layui-form-label">经营范围</label>
         <div class="layui-input-inline">
-            <input name=shop_category" id="shop_category" type="text" placeholder="请输入商品库存" class="layui-input">
+            <input name=shop_category" id="shop_category" type="text" placeholder="请输入经营范围" class="layui-input">
         </div>
-    </div>
-
-
-    <div class="layui-form-item">
+        <label class="layui-form-label">电话号码</label>
+        <div class="layui-input-inline">
+            <input name="shop_tel" id="shop_tel" type="tel" class="layui-input" placeholder="请输入电话号码" lay-verify="required" autocomplete="off">
+        </div>
         <label class="layui-form-label">所属地区</label>
         <div class="layui-input-inlin">
             <div class="layui-input-inline">
@@ -93,15 +77,20 @@
                     <option value="">选择区域</option>
                 </select>
             </div>
+
         </div>
     </div>
 
-
-
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 60px">店铺详情</label>
+        <div class="layui-input-block">
+            <textarea name="shop_detail" id="shop_detail" placeholder="介绍一下你的店铺吧！" style="width: 1200px;height: 60px"></textarea>
+        </div>
+    </div>
 
     <!-- 商品宣传图片上传 -->
-    <blockquote class="layui-elem-quote layui-text">
-        Tips:店铺图片列表,建议图片比列为16:9,店铺图片数量不可超过5张
+    <blockquote class="layui-elem-quote layui-text" id="tipsacc">
+        请上传你的商品宣传图片，店铺图片数量不可超过5张！
     </blockquote>
     <div class="layui-form-item">
         <label class="layui-form-label">店铺图片</label>
@@ -115,44 +104,11 @@
         <div class="layui-upload-list" id="goodsGalleryPreview"></div>
     </blockquote>
 
-
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">电话号码</label>
-        <div class="layui-input-block">
-            <input name="shop_tel" id="shop_tel" type="text" class="layui-input"
-                   placeholder="请输入商品名称,不超过20个字" lay-verify="required" autocomplete="off">
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-    <div class="layui-form-item" style="display: none">
-        <div class="layui-input-block">
-            <input id="picUrl" name="picUrl" type="text" class="layui-input" autocomplete="off"> <input>
-            <input id="specificationPic" name="specificationPic" type="text" class="layui-input" autocomplete="off"> <input>
-            <input id="goodsGallery" name="goodsGallery" type="text" class="layui-input" autocomplete="off"> <input>
-            <input id="attributeEntity" name="attributeEntity" type="text" class="layui-input" autocomplete="off"> <input>
-        </div>
-    </div>
-
     <!-- 提交按钮 -->
     <div class="layui-form-item" style="margin-top:40px">
         <div class="layui-input-block" style="text-align: center;">
-            <button type="button" class="layui-btn" lay-filter="doSubmit" id="submitBtn">
-                <span class="layui-icon layui-icon-add-1"></span>
-                提交
-            </button>
-            <button type="reset" class="layui-btn layui-btn-warm">
-                <span class="layui-icon layui-icon-refresh-1"></span>
-                重置
-            </button>
+            <button type="button" class="layui-btn" lay-filter="doSubmit" id="submitBtn"><span class="layui-icon layui-icon-add-1"></span>提交</button>
+            <button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh-1"></span>重置</button>
         </div>
     </div>
 
@@ -419,8 +375,6 @@
             }
         })
 
-
-
         //地区二级菜单联动
         form.on('select(city)',function (data) {
 
@@ -451,6 +405,107 @@
                 form.render("select");
             }
         })
+
+    //    用户名失去焦点事件
+        $("#shopuser_name").blur(function (data) {
+            var value = $("#shopuser_name").val();
+            $.ajax({
+                url: '/shopUser/queyByName?shopuser_name='+value,
+                type: 'get',
+                dataType: 'json',
+                success:function (suc) {
+                    if(!isEmpty(suc.msg)){
+                        $("#shopuser_name").focus();
+                       $("#message").html(suc.msg);
+                    }else {
+                        if(isEmpty(suc.msg)){
+                            // $("#shopuser_name").focus();
+                            $("#message").html("");
+                        }
+                    }
+                }
+
+            });
+        })
+        //判断返回的对象是否为空
+        function isEmpty(obj){
+            if(typeof obj == "undefined" || obj == null || obj == ""){
+                return true;
+            }else{
+                return false;
+            }
+        };
+    //验证规则-------------------------------------------------------------------
+        //密码验证
+        $("#shopuser_password").blur(function (data) {
+            var shopuser_password = $("#shopuser_password").val();
+            if (shopuser_password.length<6){
+                $("#shopuser_password").focus();
+                return $("#message").html('密码不能小于6位数！');
+            }else {
+                return $("#message").html("");
+            }
+        });
+        //确认密码验证
+        $("#shopuser_password1").blur(function (data) {
+            var shopuser_password = $("#shopuser_password").val();
+            var shopuser_password1 = $("#shopuser_password1").val();
+            if (shopuser_password!=shopuser_password1){
+                $("#shopuser_password1").focus();
+                return $("#message").html('两次密码不一致！');
+            }else {
+                return $("#message").html("");
+            }
+        });
+        //店铺标语验证
+        $("#shop_slogan").blur(function (data) {
+            var shop_slogan = $("#shop_slogan").val();
+            if (shop_slogan==""){
+                $("#shop_slogan").focus();
+                return $("#message").html('店铺标语不能为空！');
+            }else {
+                return $("#message").html("");
+            }
+        });
+        //经营范围验证
+        $("#shop_category").blur(function (data) {
+            var shop_category = $("#shop_category").val();
+            if (shop_category==""){
+                $("#shop_category").focus();
+                return $("#message").html('请输入经营范围！');
+            }else {
+                return $("#message").html("");
+            }
+        });
+
+
+
+
+
+
+//表单监听提交
+//         form.on('submit(doSubmit)',function (data) {
+//             layer.alert(JSON.stringify(data.field), {
+//                 title: '最终的提交信息'
+//             })
+//             return false;
+//         })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     });
 
