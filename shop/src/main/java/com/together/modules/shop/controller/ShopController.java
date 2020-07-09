@@ -67,12 +67,7 @@ public class ShopController {
         p.remove("page");
         p.remove("limit");
         p.remove("rowIndex");
-        if(""==p.getString("shop_name")){
-            p.remove("shop_name");
-        }
-        if(""==p.getString("shop_category")){
-            p.remove("shop_category");
-        }
+        p.removeByKey(p);
         Page<ShopEntity> pageObject = shopService.page(objectPage,new QueryWrapper<ShopEntity>().allEq(p));
         return R.success("success",pageObject.getRecords()).set("count",pageObject.getTotal());
     }

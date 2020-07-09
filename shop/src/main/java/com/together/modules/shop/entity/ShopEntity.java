@@ -1,5 +1,6 @@
 package com.together.modules.shop.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class ShopEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "shop_id")
     private Integer shopId;
 
     /**
@@ -84,22 +86,12 @@ public class ShopEntity implements Serializable {
      */
     private Integer adminId;
 
-    private  String userId;
-
     public Integer getAdminId() {
         return adminId;
     }
 
     public void setAdminId(Integer adminId) {
         this.adminId = adminId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public Integer getShopId() {
