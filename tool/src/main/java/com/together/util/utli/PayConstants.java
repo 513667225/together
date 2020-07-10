@@ -34,7 +34,7 @@ public class PayConstants {
 	public static final String WX_NOTIFY_PAYHOUSEORDERRESULT_URL = "https://xdgxc.com/houseOrder/payHouseOrderResult";
 
 	/** 拼单购物微信支付后通知本地接口  */
-	public static final String WX_NOTIFY_PAYGROUP_URL = "https://aishanggou.utools.club/user/getGroupUserState";
+	public static final String WX_NOTIFY_PAYGROUP_URL = "https://aishanggou.utools.club/payment/test";
 
 	/** 用户扫码下单微信支付后通知本地接口  */
 	public static final String WX_NOTIFY_SCANPAYORDER_URL = "https://xdgxc.com/scan/scanPayOrderResult";
