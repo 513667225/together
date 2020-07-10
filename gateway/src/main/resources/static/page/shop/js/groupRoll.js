@@ -1,12 +1,13 @@
+var data;
+var shopId = '1';
 layui.use(['table','form'], function () {
     var table = layui.table;
     var $ = layui.jquery;
     var form = layui.form
-
     form.render();
 
     form.on('submit(serchBtn)', function(data) {
-        table.reload('goods_table', {
+        table.reload('groupRoll_table', {
             method: 'get',
             where: {
                 shopId:'1',
@@ -21,13 +22,13 @@ layui.use(['table','form'], function () {
     })
 
     table.render({
-        elem: '#groupRoll',
-        id:'groupRoll',
+        elem: '#groupRoll_table',
+        id:'groupRoll_table',
         url: '/groupRoll/selectGroupRollByShopId',
         method: 'get',
         toolbar: '#toolbarDemo',
         where:{
-            shopId:'1',
+            shopId:shopId,
         },
         cols: [[
             {field: 'grouprollId', width: 100, title: 'ID'},
@@ -65,12 +66,32 @@ layui.use(['table','form'], function () {
     });
 
     table.on('tool(groupRoll_table)', function (obj) {
-        var data = obj.data;
-        if (obj.event === 'checkGroupRoll') {
-
+        data = obj.data;
+        if (obj.event === 'checkGroupRollDetail') {
+            var index = layer.open({
+                type:2,
+                title:'查看拼团券详情',
+                area : ['1000px' , '800px'],
+                shadeClose:true,
+                content: "groupRollDetail.html"
+            });
+            layer.full(index);
         }
     });
+
+
 })
+
+function addGroupRoll() {
+    var index = layer.open({
+        type:2,
+        title:'发行拼团券',
+        area : ['1000px' , '800px'],
+        shadeClose:true,
+        content: "groupRollAdd.html"
+    });
+    layer.full(index);
+}
 
 function createTime(v) {
     var date = new Date(v);

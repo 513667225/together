@@ -1,5 +1,7 @@
 package com.together.modules.groupRollDetail.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import java.io.Serializable;
@@ -17,6 +19,7 @@ public class GroupRollDetailEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "gdetail_id", type = IdType.AUTO)
     private Integer gdetailId;
 
     /**
@@ -48,6 +51,20 @@ public class GroupRollDetailEntity implements Serializable {
      * 使用时间
      */
     private Date useTime;
+
+    /**
+     * 店铺ID
+     * @return
+     */
+    private Integer shopId;
+
+    public Integer getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Integer shopId) {
+        this.shopId = shopId;
+    }
 
     public Date getUseTime() {
         return useTime;

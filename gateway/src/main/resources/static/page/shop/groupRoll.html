@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>拼团券</title>
-
-
 </head>
 <link rel="stylesheet" href="/js/layui/css/layui.css">
 <script src="/js/layui/layui.all.js"></script>
-<script src="js/groupRoll.js"></script>
-<body>
+<!--<script src="js/groupRoll.js"></script>-->
 
-<table class="layui-hide" id="groupRoll" lay-skin="line" lay-filter="groupRoll">
+<body>
+<table class="layui-hide" id="groupRoll_table" lay-skin="line" lay-filter="groupRoll_table">
 
 </table>
 
@@ -20,28 +18,11 @@
 </script>
 
 <script type="text/html" id="toolbarDemo">
-    <form class="layui-form" action="">
-        <div class="layui-form-item" style="height:30px;width:120px;">
-            <select id="searchOption" name="searchOption" lay-filter="searchOption">
-                <option value="0" selected="">商品名字</option>
-                <option value="1">分类名称</option>
-            </select>
-        </div>
-        <div class="layui-form-item" style="margin-left: 300px;">
-            <input autocomplete="off" type="text" class="text layui-input"
-                   style="position: absolute;left: 150px;top:10px;width:157px;" name="searchKeywords"
-                   id="searchKeywords" placeholder="请输入关键词">
-            <a id="serchBtn" lay-submit="" lay-filter="serchBtn" style="position: absolute;left: 276px;top:15px;">
-                <i class="layui-icon layui-icon-search" style="background:#fff;padding:5px;"></i>
-            </a>
-        </div>
-    </form>
     <div>
-        <button onclick="addGroupRoll()" class="layui-btn layui-btn-normal"
-                style="position: absolute;left: 320px;top:10px;">发行拼团券
+        <button onclick="addGroupRoll()" class="layui-btn layui-btn-normal">发行拼团券
         </button>
     </div>
 </script>
+<script src="js/groupRoll.js"></script>
 </body>
-
 </html>

@@ -44,13 +44,24 @@ public class UserController {
     Audience audience;
 
 
-
+    /**
+     * 根据用户id查询
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "/getUserById",method = RequestMethod.GET)
     R getUserById(@RequestParam("userId") int userId){
         UserEntity userEntity = userService.getById(userId);
         return R.success().data(UserEntityToUserEntityDoUtli.userEntityToUserEntityDoUtli(userEntity));
     }
 
+
+    /**
+     * 分页查询user
+     * @param p
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/getUserPage")
     public R getUserPage(@Pmap P p) throws Exception {
         Integer page = p.getInt("page");
@@ -71,8 +82,10 @@ public class UserController {
     }
 
 
-
-
+    /**
+     * 查询所有用户
+     * @return
+     */
     @GetMapping("/getUserList")
     public R getUserList(){
         return R.success("success",userService.list());
@@ -110,28 +123,35 @@ public class UserController {
 
 
 
+    @PassToken
     @RequestMapping("/test")
     public R test(@Pmap P p){
         userService.test(p);
         return R.success();
     }
 
+    /**
+     * 用户添加修改手机号
+     * @param p
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/insertAndUpdatePhone")
     public R updateUserPhone(@Pmap P p) throws Exception {
-        R r = userService.updateUserPhone(p);
-        return r;
+        return userService.updateUserPhone(p);
     }
 
 
     //根据用户id查询推荐人和推荐人的推荐人
     @RequestMapping("/selectUserReferrerTo")
     public R selectUserReferrerTo(@Pmap P p) throws Exception {
-        ValidateUtli.validateParams(p,"userId");
+        ValidateUtli.validateParams(p,"user_id");
         Map<String, Object> stringObjectMap = userService.selectUserReferrerTo(p);
         return R.success("success").data(stringObjectMap);
     }
 
     //根据用户id查询所有邀请人
+    @PassToken
     @RequestMapping("/selectUserReferrer")
     public R selectUserALlInviter(@Pmap P p) throws Exception {
         ValidateUtli.validateParams(p,"userId");
@@ -140,8 +160,9 @@ public class UserController {
     }
 
 
-    //根据用户id查询上级服务经理
+    //根据用户id  查询上层所有经理或者总监级别以上
     @RequestMapping("/selectSeniorByUser")
+    @PassToken
     public R selectUserReferrerInManager(@Pmap P p) throws Exception {
         ArrayList<UserSuperstratumRelationDo>  userSuperstratumRelationDos=userService.userReferrerDorecursion(p);
         return R.success("success").data(userSuperstratumRelationDos);
@@ -153,14 +174,16 @@ public class UserController {
      * @param p
      * @return
      */
-    @PutMapping("/updateById")
+    @PassToken
+    @RequestMapping("/updateById")
     public R updateById(@Pmap P p) throws Exception {
         UserEntity userEntity = p.thisToEntity(UserEntity.class);
         return R.success("success",userService.updateById(userEntity));
     }
 
     //修改余额，拼豆，购物金，积分
-    @PutMapping("/updateMoney")
+    @RequestMapping("/updateMoney")
+    @PassToken
     public R updateMoney(@Pmap P p) throws Exception {
         ValidateUtli.validateParams(p,"user_id");
         userService.updateMoney(p);
@@ -168,6 +191,11 @@ public class UserController {
     }
 
 
+    /**
+     * 生成用户小程序邀请码图片
+     * @param p
+     * @throws Exception
+     */
     @RequestMapping("/createCodeImag")
     public void createCodeImag(@Pmap P p) throws Exception {
         ValidateUtli.validateParams(p,"path","user_id");

@@ -32,6 +32,8 @@ public interface OrderMapper extends BaseMapper<OrderEntity> {
     @SelectProvider(value = SqlProvider.class,method = "queryOrderGoods")
     public List<Map<String,Object>>  queryOrderGoods(Map<String, Object> map);
 
+    public int  queryOrderByShopIdCount(Map<String, Object> map);
+
     public List<Map<String,Object>>  queryOrderByShopId(Map<String, Object> map);
 
     List<Map<String, Object>> queryOrderByUserId(P p);

@@ -17,7 +17,12 @@ public enum  TipMsgEnum {
     DELETE_USER_ADDRESS(1009,"用户地址删除失败"),
     MONEY_MAX(1010,"成本金额大于5折"),
     SHOP_USER_NOT_LOGIN(1011,"商家用户未登录"),
-    ADMIN_USER_NOT_LOGIN(1012,"系统用户未登录");
+    ADMIN_USER_NOT_LOGIN(1012,"系统用户未登录"),
+    USER_EX(1011,"用户登录出错"),
+    DECIPHERING_PHONE(1011,"解密手机号失败"),
+    SESSIONKEY_STRLE(1011,"sessionkey过期"),
+    USER_EX1(1011,"用户登录出错");
+
 
     private  int code;
 

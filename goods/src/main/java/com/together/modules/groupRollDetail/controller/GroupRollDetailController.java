@@ -32,15 +32,15 @@ public class GroupRollDetailController {
     IGroupRollDetailService groupRollDetailService;
 
     /**
-     * 用户抢到卷   优惠卷订单
-     * @param p
+     * 用户抢到卷   优惠卷订单  根据优惠卷修改
+    * @param p
      * @return
      * @throws Exception
      */
-    @RequestMapping("/insertRollDetail")
+    @RequestMapping("/updateRollDetail")
     public R insertRollDetail(@Pmap P p) throws Exception {
         GroupRollDetailEntity groupRollDetailEntity = p.thisToEntity(GroupRollDetailEntity.class);
-        groupRollDetailService.save(groupRollDetailEntity);
+        groupRollDetailService.updateById(groupRollDetailEntity);
         return R.success();
     }
 

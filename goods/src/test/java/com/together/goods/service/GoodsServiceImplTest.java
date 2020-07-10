@@ -21,7 +21,7 @@ public class GoodsServiceImplTest {
     @Test
     public void queryAllGoods() throws Exception {
         P p = new P();
-        p.put("goods_name","1111111111");
+        p.put("goods_name","xx");
        // p.put("category_id",1008001);
         p.put("rowIndex",0);
         p.put("limit",5);

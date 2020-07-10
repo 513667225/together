@@ -34,9 +34,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         super.addArgumentResolvers(argumentResolvers);
     }
 
-    /**
-     * 添加拦截器
-     */
+//    /**
+//     * 添加拦截器
+//     */
 //    @Override
 //    public void addInterceptors(InterceptorRegistry registry) {
 //        //拦截路径可自行配置多个 可用 ，分隔开
@@ -48,14 +48,14 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
      *
      * @param registry
      */
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowCredentials(true)
-                .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS", "HEAD")
-                .maxAge(3600 * 24);
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedOrigins("*")
+//                .allowCredentials(true)
+//                .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS", "HEAD")
+//                .maxAge(3600 * 24);
+//    }
 
 
 

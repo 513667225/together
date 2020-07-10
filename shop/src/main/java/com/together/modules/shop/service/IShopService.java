@@ -45,5 +45,8 @@ public interface IShopService extends IService<ShopEntity> {
 
     List<ShopEntity> queryLimitRollShop(P p);
 
-   R queryRegion(P p);
+    R queryRegion(P p);
+
+    int addShop(P p) throws Exception;
+
 }

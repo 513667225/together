@@ -26,16 +26,16 @@ public class RedisConfig {
     @Bean
     public JedisPoolConfig jedisPoolConfig(){
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxTotal(1000);  //最大连接数
-        jedisPoolConfig.setMaxIdle(1000); //最大空闲连接数
-        jedisPoolConfig.setMinIdle(500);   //最小空闲连接数
-        jedisPoolConfig.setMaxWaitMillis(20000); //获取连接时最大等待时间
+//        jedisPoolConfig.setMaxTotal(1000);  //最大连接数
+//        jedisPoolConfig.setMaxIdle(1000); //最大空闲连接数
+        jedisPoolConfig.setMinIdle(1);   //最小空闲连接数
+        jedisPoolConfig.setMaxWaitMillis(-1); //获取连接时最大等待时间
 //        jedisPoolConfig.setTestOnBorrow(true); //获取连接时检查是否可用
 //        jedisPoolConfig.setTestOnReturn(true); //返回连接时检查是否可用
 //        jedisPoolConfig.setTestWhileIdle(true);  //是否开启空闲资源监测
-        jedisPoolConfig.setTimeBetweenEvictionRunsMillis(30000); //-1不检测   单位为毫秒  空闲资源监测周期
-        jedisPoolConfig.setMinEvictableIdleTimeMillis(30*1000);//资源池中资源最小空闲时间 单位为毫秒  达到此值后空闲资源将被移除
-        jedisPoolConfig.setNumTestsPerEvictionRun(300); //做空闲监测时，每次采集的样本数  -1代表对所有连接做监测
+//        jedisPoolConfig.setTimeBetweenEvictionRunsMillis(30000); //-1不检测   单位为毫秒  空闲资源监测周期
+//        jedisPoolConfig.setMinEvictableIdleTimeMillis(30*1000);//资源池中资源最小空闲时间 单位为毫秒  达到此值后空闲资源将被移除
+//        jedisPoolConfig.setNumTestsPerEvictionRun(300); //做空闲监测时，每次采集的样本数  -1代表对所有连接做监测
         return jedisPoolConfig;
     }
 
@@ -50,18 +50,18 @@ public class RedisConfig {
 //        return redisson;
 //    }
 
-    @Bean
-    public JedisPool jedisPool(JedisPoolConfig jedisPoolConfig){
-        return new JedisPool(jedisPoolConfig,"47.114.38.198",6379);
-    }
+//    @Bean
+//    public JedisPool jedisPool(JedisPoolConfig jedisPoolConfig){
+//        return new JedisPool(jedisPoolConfig,"47.114.38.198",6379);
+//    }
 
     @Bean
     public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig){
-        JedisClientConfiguration jedisClientConfiguration = JedisClientConfiguration.builder().usePooling().poolConfig(jedisPoolConfig).and().readTimeout(Duration.ofMillis(10000)).build();
+        JedisClientConfiguration jedisClientConfiguration = JedisClientConfiguration.builder().usePooling().poolConfig(jedisPoolConfig).and().readTimeout(Duration.ofMillis(100000)).build();
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setDatabase(0);
         redisStandaloneConfiguration.setPort(6379);
-        redisStandaloneConfiguration.setHostName("47.114.38.198");
+        redisStandaloneConfiguration.setHostName("203.195.134.30");
         return new JedisConnectionFactory(redisStandaloneConfiguration, jedisClientConfiguration);
     }
 

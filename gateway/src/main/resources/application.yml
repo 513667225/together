@@ -44,7 +44,7 @@ spring:
         - id: order
           uri: lb://SERVER-GOODS
           predicates:
-            - Path=/category/**,/goods/**,/goodsAttribute/**,/goodsSpecification/**,/upload/shop/**
+            - Path=/category/**,/goods/**,/goodsAttribute/**,/goodsSpecification/**,/upload/shop/**,/groupRoll/**,/groupRollDetail/**
 #            - Query=name,1
 #            - Query=age
 #

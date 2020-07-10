@@ -3,7 +3,19 @@
 <mapper namespace="com.together.modules.order.mapper.OrderMapper">
 
     <select id="queryOrderByShopId" resultType="java.util.Map" parameterType="java.util.Map">
-        SELECT s.shop_id,o.* FROM shop s LEFT JOIN order_bot o ON s.shop_id = o.shop_id WHERE s.shop_id=#{shop_id} limit #{rowIndex},#{limit}
+        SELECT s.shop_id,o.* FROM shop s LEFT JOIN order_bot o ON s.shop_id = o.shop_id WHERE s.shop_id=#{shop_id}
+        <if test="order_status !=null and order_status != ''">
+        and o.order_status = #{order_status}
+        </if>
+
+        limit #{rowIndex},#{limit}
+    </select>
+
+    <select id="queryOrderByShopIdCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT count(1) FROM shop s LEFT JOIN order_bot o ON s.shop_id = o.shop_id WHERE s.shop_id=#{shop_id}
+        <if test="order_status !=null and order_status != ''">
+            and o.order_status = #{order_status}
+        </if>
     </select>
 
     <select id="queryOrderByUserId" resultType="java.util.Map" parameterType="java.util.Map">

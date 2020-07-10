@@ -2,6 +2,7 @@ package com.together.modules.user.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.enun.TipMsgEnum;
 import com.together.modules.user.entity.UserEntity;
@@ -54,7 +55,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
 
     @Autowired
-    private ValueOperations valueOperations;
+    private ValueOperations<String,Object> valueOperations;
+
+
+
 
     @Override
     public UserEntity getUserByName(P p) {
@@ -81,7 +85,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
      * @return 用户对象
      */
     @Transactional
-    public UserEntity getUserLogin(Map<String,Object> param) {
+    public UserEntity getUserLogin(Map<String,Object> param) throws Exception {
         try {
             //code 名称 头像
             String code = (String) param.get("code");
@@ -114,7 +118,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                     map.put(entry.getKey(), entry.getValue().toString());
                 }
             }
-            QueryWrapper<UserEntity> queryWrapper =  new QueryWrapper();
+            QueryWrapper<UserEntity> queryWrapper =  new QueryWrapper<>();
             queryWrapper.eq("weixin_openid",map.get("openid").toString());
             //TODO: 查看用户是否登录过小程序,登录则直接返回,否则就插入新用户'
             UserEntity userEntity = baseMapper.selectOne(queryWrapper);
@@ -129,6 +133,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 userEntity.setUserNickname(userName);
                 userEntity.setUserAvatar(avatarUrl);
                 userEntity.setUserStatus(0);
+                userEntity.setTeamMajordomo(0);
+                userEntity.setTeamMember(0);
+
                 if(userReferrer!=null){
                     userEntity.setUserReferrer(userReferrer);//  推荐人id
                     //维护顶层推荐人
@@ -138,12 +145,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                     }else{
                         userEntity.setTopRefereeId(userReferrer);
                     }
+                    //维护所有上层人员ID
+                    if(userReferrerentity!=null&&userReferrerentity.getRelation()!=null){
+                        userEntity.setRelation(userReferrerentity.getRelation()+","+userReferrerentity.getUserId());
+                    }else{
+                        userEntity.setRelation(userReferrerentity.getRelation()+"");
+                    }
                 }
                 baseMapper.insert(userEntity);
                 //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
                 if(userReferrer!=null){
-                    //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
-                    isUpdateMessage(userReferrer,true,-1,false);
+                    //加入队列处理
+                    UserRelationDepue.linkedBlockingQueue.add(userEntity.getRelation());
                 }
             }
            //TODO: 如果登录进来的 头像/名称 与数据库保存的不同,则进行修改
@@ -158,10 +171,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             valueOperations.set(String.valueOf(userEntity.getUserId()),map.get("session_key"));
             return userEntity;
         } catch (Exception e) {
-            log.error("用户登录出错:{}",e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            throw new Exception(TipMsgEnum.USER_EX.getMsg());
         }
-        return null;
     }
 
     public void updateSessionKey(String code,String user_id) {
@@ -198,158 +210,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
 
-    //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
-    private void isUpdateMessage(Integer userReferrer,boolean isUnderling,Integer isUpdateDirectly,Boolean updateDirectly) {
-        UserEntity userEntity1 = baseMapper.selectById(userReferrer);
-        if(isUnderling){
-            //修改直邀人数+1
-            userEntity1.setUnderlingSize(userEntity1.getUnderlingSize()+1);
-        }
-        //修改团队人数+1
-        userEntity1.setGoupSize(userEntity1.getGoupSize()+1);
-        //判断是否需要更新用户等级
-        Integer updateUserLevel = isUpdateUserLevel(userEntity1);
-        boolean isupdateDirectly=false;
-        //更新直推会员，服务经理，服务总监人数
-        if(isUpdateDirectly!=-1){
-            //返回是否要修改团队服务经理人数
-            isupdateDirectly = isUpdateDirectly(userEntity1, isUpdateDirectly);
-        }
-        //修改团队服务经理人数
-        if(updateDirectly){
-            userEntity1.setTeammanagerSize(userEntity1.getTeammanagerSize()+1);
-            isupdateDirectly=true;
-        }
-        baseMapper.updateById(userEntity1);
-        if(userEntity1.getUserReferrer()!=null) {
-            //递归修改上级团队人数
-            isUpdateMessage(userEntity1.getUserReferrer(),false,updateUserLevel,isupdateDirectly);
-        }
-        return;
-    }
-
-    //修改直推会员，服务经理，服务总监
-    public boolean isUpdateDirectly(UserEntity userEntity,Integer isUpdateDirectly){
-        boolean ManagerSize=false;
-       switch (isUpdateDirectly){
-           case -1:
-               break;
-           case 1:
-               userEntity.setMemberSize(userEntity.getMemberSize()+1);
-               break;
-           case 2:
-               userEntity.setManagerSize(userEntity.getManagerSize()+1);
-               UserRelationDepue.linkedBlockingQueue.add(userEntity.getUserId());
-               ManagerSize=true;
-               break;
-           case 3:
-               userEntity.setMajordomoSize(userEntity.getMajordomoSize()+1);
-               UserRelationDepue.linkedBlockingQueue.add(userEntity.getUserId());
-               break;
-       }
-        return ManagerSize;
-    }
-
-    //判断用户级别需要要修改
-    public Integer isUpdateUserLevel(UserEntity userEntity){
-        int identification=-1;
-        if(userEntity.getUnderlingSize()>=10
-                &&userEntity.getGoupSize()>=20
-                &&userEntity.getUserLevel()==0){
-            //满足会员条件  修改用户推荐人等级
-            userEntity.setUserLevel(1);
-            identification=1;
-        }
-        if(userEntity.getMemberSize()>=10
-                &&userEntity.getGoupSize()>=30
-                &&userEntity.getUserLevel()==1){
-            //满足会员条件  修改用户推荐人等级
-            userEntity.setUserLevel(2);
-            identification=2;
-        }
-        if(userEntity.getMajordomoSize()>=15
-                &&userEntity.getTeammanagerSize()>=30
-                &&userEntity.getUserLevel()==2){
-            //满足会员条件  修改用户推荐人等级
-            userEntity.setUserLevel(3);
-            identification=3;
-        }
-        baseMapper.updateById(userEntity);
-        return identification;
-    }
-
-    //判断用户级别是否要修改为服务经理
-//    public UserEntity isUpdateManager(UserEntity userEntity){
-//        if(userEntity.getMemberSize()>=10
-//                &&userEntity.getGoupSize()>=30
-//                &&userEntity.getUserLevel()==1){
-//            //满足会员条件  修改用户推荐人等级
-//            userEntity.setUserLevel(2);
-//            baseMapper.updateById(userEntity);
-//            Integer userReferrer = userEntity.getUserReferrer();
-//            UserEntity userEntity1 = baseMapper.selectById(userReferrer);
-//            UserEntity updateTeammanager = isUpdateTeammanager(userEntity1);
-//            isUpdateMajordomo(updateTeammanager);
-//
-//        }
-//        return userEntity;
-//    }
-//
-//    //判断用户级别是否要修改为服务总监
-//    public void isUpdateMajordomo(UserEntity userEntity){
-//        if(userEntity.getMajordomoSize()>=15
-//                &&userEntity.getTeammanagerSize()>=30
-//                &&userEntity.getUserLevel()==2){
-//            //满足会员条件  修改用户推荐人等级
-//            userEntity.setUserLevel(3);
-//            baseMapper.updateById(userEntity);
-//        }
-//    }
-//
-//    //修改团队服务经理人数
-//    public UserEntity isUpdateTeammanager(UserEntity userEntity){
-//        userEntity.setTeammanagerSize(userEntity.getTeammanagerSize()+1);
-//        baseMapper.updateById(userEntity);
-//        return userEntity;
-//    }
-
-    //递归修改用户等级
-
-
-    //递归修改团队人数
-    public void isUpdateGoup(UserEntity userEntity){
-        userEntity.setGoupSize(userEntity.getGoupSize()+1);
-        //修改团队人数+1  判断团队人数+1后  能否升级
-        Integer updateUserLevel = isUpdateUserLevel(userEntity);
-        UserEntity userEntity1 = baseMapper.selectById(userEntity.getUserReferrer());
-        if(userEntity1.getUserReferrer()!=null){
-            isUpdateGoup(userEntity1);
-        }
-        if(updateUserLevel!=-1){
-            isUpdateUserLevel(userEntity1);
-        }
-        return;
-    }
-
-    //修改团队人数
-    public void isUpdateGoup(Integer userReferrerId){
-        if(userReferrerId!=null){
-            UserEntity userEntity1 = baseMapper.selectById(userReferrerId);
-            isUpdateGoup(userEntity1);
-        }
-        return;
-    }
-
-
-    @Override
-    public Map<String, Object> getGroupUserState(P p) {
-        System.out.println(p);
-        return ResponseUtli.NullToMap();
-    }
 
     @Override
     public Map<String, Object> selectUserReferrerTo(P p) throws Exception {
-        ValidateUtli.validateParams(p,"user_id");
         Map<String,Object> map=new HashMap<>();
         UserEntity userEntity = baseMapper.selectById(p.getInt("user_id"));
         if(userEntity!=null){
@@ -380,20 +243,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     @Override
     public void test(P p) {
-        UserEntity userEntity = baseMapper.selectById(10002);
-        UserRelationDepue.linkedBlockingQueue.add(userEntity.getUserId());
+        UserEntity userEntity = new UserEntity();
+//        UserRelationDepue.linkedBlockingQueue.add(userEntity.getUserId());
 //        for (int i = p.getInt("start"); i <= (p.getInt("size")+p.getInt("start")); i++) {
-//            userEntity.setUserId(i);
-//            userEntity.setMajordomoSize(0);
-//            userEntity.setManagerSize(0);
-//            userEntity.setMemberSize(0);
-//            userEntity.setTeammanagerSize(0);
-//            userEntity.setGoupSize(0);
-//            userEntity.setUnderlingSize(0);
-//            userEntity.setUserReferrer(p.getInt("referrer_id"));
-//            userEntity.setUserLevel(0);
-//            baseMapper.insert(userEntity);
-//            //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
+//            userEntity.setUserId(""setUserId);userEntity.
+        userEntity.setUserNickname(p.getString("n"));
+            userEntity.setMajordomoSize(0);
+            userEntity.setManagerSize(0);
+            userEntity.setMemberSize(0);
+            userEntity.setTeammanagerSize(0);
+            userEntity.setGoupSize(0);
+            userEntity.setUnderlingSize(0);
+            userEntity.setUserReferrer(p.getInt("referrer_id"));
+            userEntity.setUserLevel(p.getInt("x"));//0普通人  1会员 2经理 3总监
+            baseMapper.insert(userEntity);
+            //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
 //            if(userEntity.getUserReferrer()!=null){
 //                //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
 //                isUpdateMessage(userEntity.getUserReferrer(),true,-1,false);
@@ -401,10 +265,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 //        }
     }
 
-    @Override
-    public Map<String, Object> selectUserReferrerInManager(P p) {
-        return null;
-    }
 
     @Override
     public R updateUserPhone(P p) throws Exception {
@@ -416,7 +276,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             try {
                 ValidateUtli.validateParams(p,"user_id","encryptedData","iv");
             }catch (Exception e){
-                return R.error("参数错误");
+                throw new Exception(TipMsgEnum.PARAMETER_NULL_Excption.getMsg());
             }
         }
         String encryptedData = p.getString("encryptedData");
@@ -435,11 +295,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                     return R.success("success");
                 }
             }catch (Exception e){
-                e.printStackTrace();
-                return R.error("解密手机号失败");
+                throw new Exception(TipMsgEnum.DECIPHERING_PHONE.getMsg());
             }
         }
-        return R.error("sessionkey过期");
+        throw new Exception(TipMsgEnum.SESSIONKEY_STRLE.getMsg());
     }
 
     @Override
@@ -458,6 +317,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     //根据用户id  查询上层所有经理或者总监级别以上
     public void selectUserSuperstratum(ArrayList<UserSuperstratumRelationDo> userSuperstratumRelationDos,Integer user_id){
         UserSuperstratumRelationDo userSuperstratumRelationDo = baseMapper.selectUserSuperstratum(user_id);
+        if(userSuperstratumRelationDo==null){
+            return;
+        }
         if(userSuperstratumRelationDo.getUserLevel()==2 || userSuperstratumRelationDo.getUserLevel()==3){
             userSuperstratumRelationDos.add(userSuperstratumRelationDo);
         }
@@ -515,34 +377,51 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         Double integral = p.getDouble("integral");
         Double spell_bean = p.getDouble("spell_bean");
         Double balance = p.getDouble("balance");
+
         if(shopping_gold1==null&&integral==null&&spell_bean==null&&balance==null){
             return;
         }
         UserEntity userEntity=new UserEntity();
+        UpdateWrapper<UserEntity> userEntityUpdateWrapper = new UpdateWrapper<>();
+
         if(shopping_gold1!=null){
-            userEntity.setShopping_gold(shopping_gold1);
+//            userEntity.setShopping_gold(shopping_gold1);
+//            userEntityUpdateWrapper.eq("shopping_gold",shopping_gold1);
+            userEntityUpdateWrapper.setSql("shopping_gold=shopping_gold+"+p.getBigDecimal("shopping_gold"));
         }
         if(integral!=null){
-            userEntity.setIntegral(integral);
+//            userEntity.setIntegral(integral);
+//            userEntityUpdateWrapper.eq("integral",integral);
+            userEntityUpdateWrapper.setSql("integral=integral+"+p.getBigDecimal("integral"));
         }
         if(spell_bean!=null){
-            userEntity.setSpell_bean(spell_bean);
+//            userEntity.setSpell_bean(spell_bean);
+//            userEntityUpdateWrapper.eq("spell_bean",spell_bean+);
+            userEntityUpdateWrapper.setSql("spell_bean=spell_bean+"+p.getBigDecimal("spell_bean"));
         }
         if(balance!=null){
             userEntity.setBalance(balance);
+            userEntityUpdateWrapper.setSql("balance=balance+"+p.getBigDecimal("balance"));
+//            userEntityUpdateWrapper.eq("balance",balance);
         }
         try {
-            baseMapper.updateById(userEntity);
+//            setSql("balance=balance+"+p.getBigDecimal("balance")).eq("admin_id",p.getInt("admin_id"));
+            userEntityUpdateWrapper.eq("user_id",p.getInt("user_id"));
+            update(userEntityUpdateWrapper);
         }catch (Exception e){
             throw new Exception(TipMsgEnum.UPDATE_MONRY_FAIL.getMsg());
         }
-
     }
 
     @Override
     public List<UserEntity> selectUserALlInviter(P p) {
         List<UserEntity> lists = baseMapper.selectUserALlInviter(p.getInt("user_id"));
         return lists;
+    }
+
+    @Override
+    public List<UserEntity> selectUserByids(String[] ids) {
+        return baseMapper.selectUserByids(ids);
     }
 
     /**
