@@ -2,6 +2,7 @@ package com.together.resolvers;
 
 import com.together.annotation.Pmap;
 import com.together.entity.ShopEntity;
+import com.together.local.RequestThreadLocal;
 import com.together.util.P;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -37,7 +38,7 @@ public class PmapResolver extends RequestParamMapMethodArgumentResolver {
         Integer page = p.getInt("page");
         if (limit!=null&&page!=null)
         p.put("rowIndex",(page-1)*limit);
-
+        RequestThreadLocal.REQUEST_THREAD_LOCAL.set(nativeRequest);
 //        p.batchToInt("limit","page");
         return p;
     }

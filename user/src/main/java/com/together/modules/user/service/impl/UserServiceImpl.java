@@ -2,7 +2,6 @@ package com.together.modules.user.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.enun.TipMsgEnum;
 import com.together.modules.user.entity.UserEntity;
@@ -171,9 +170,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             valueOperations.set(String.valueOf(userEntity.getUserId()),map.get("session_key"));
             return userEntity;
         } catch (Exception e) {
+            log.error("用户登录出错:{}",e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            throw new Exception(TipMsgEnum.USER_EX.getMsg());
         }
+        return null;
     }
 
     public void updateSessionKey(String code,String user_id) {

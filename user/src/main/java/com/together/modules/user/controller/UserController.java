@@ -125,7 +125,7 @@ public class UserController {
 
     @PassToken
     @RequestMapping("/test")
-    public R test(@Pmap P p){
+    public R test(@Pmap P p) throws Exception{
         userService.test(p);
         return R.success();
     }
