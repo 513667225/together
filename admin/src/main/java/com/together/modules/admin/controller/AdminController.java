@@ -97,7 +97,7 @@ public class AdminController {
      * 根据region_id获取Admin
      * @return
      */
-    @GetMapping("getAdminByRegId")
+    @RequestMapping("getAdminByRegId")
     public R getAdminByRegId(@Pmap @RequestBody P p) throws Exception {
         AdminEntity entity = adminService.getOne(new QueryWrapper<AdminEntity>().eq("region_id", p.getInt("city")));
         return R.success("success",entity);

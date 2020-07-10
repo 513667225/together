@@ -134,6 +134,7 @@ public class OrderController {
         orderEntity.setShipChannel(p.getString("ship_channel"));
         orderEntity.setShipTime(date);
         orderEntity.setUpdateTime(date);
+        orderEntity.setOrderStatus(102);
         return R.success("success",iOrderService.updateById(orderEntity));
     }
 

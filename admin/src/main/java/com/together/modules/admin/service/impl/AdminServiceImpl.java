@@ -50,7 +50,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         AdminEntity admin_id = mapper.selectById(p.getInt("admin_id"));
         String adminLevel = admin_id.getAdminLevel();
         if (adminLevel.equals("2")) {
-            p.put("admin_id",admin_id.getBossId());
+            p.put("admin_id",admin_id.getAdminBoss());
             return  update(p);
         }
         return R.success("success", update(adminEntityUpdateWrapper));
