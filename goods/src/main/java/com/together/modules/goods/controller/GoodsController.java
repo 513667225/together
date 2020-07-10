@@ -5,6 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.together.annotation.Pmap;
 import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.service.IGoodsService;
+import com.together.modules.goodsAttribute.entity.GoodsAttributeEntity;
+import com.together.modules.goodsAttribute.service.IGoodsAttributeService;
+import com.together.modules.goodsSpecification.entity.GoodsSpecificationEntity;
+import com.together.modules.goodsSpecification.service.IGoodsSpecificationService;
 import com.together.util.FileUtil;
 import com.together.util.MapUtil;
 import com.together.util.P;
@@ -40,7 +44,6 @@ public class GoodsController {
     @Autowired
     ValueOperations<String,Object> valueOperations;
 
-
     @GetMapping("/getGoodsPage")
     public R getGoodsPage(@Pmap P p) throws Exception {
         System.out.println(p);
@@ -60,8 +63,7 @@ public class GoodsController {
 
     @RequestMapping("/queryGoodsById")
     public R queryGoodsById(@Pmap P p){
-        GoodsEntity goodsId = iGoodsService.getById(p.getInt("goodsId"));
-        return R.success("操作成功",goodsId);
+        return R.success("操作成功",iGoodsService.queryGoodsDetailById(p));
     }
 
     @RequestMapping("/addGoods")
@@ -105,8 +107,9 @@ public class GoodsController {
     }
 
     @RequestMapping("/updateGoods")
-    public R updateAdmin(@Pmap P p) throws Exception {
-        GoodsEntity goodsEntity = p.thisToEntity(GoodsEntity.class);
+    public R updateGoods(@Pmap P p) throws Exception {
+        GoodsEntity goodsEntity = p.thisToEntityLine2Upper(GoodsEntity.class);
+        goodsEntity.setIsOnSale(p.getBoolean("isOnSale"));
         return R.success("操作成功",iGoodsService.update(goodsEntity,new QueryWrapper<GoodsEntity>().eq("goods_id",p.getInt("goodsId"))));
     }
 

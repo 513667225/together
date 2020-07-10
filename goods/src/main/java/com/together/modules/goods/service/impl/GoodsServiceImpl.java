@@ -3,6 +3,7 @@ package com.together.modules.goods.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.together.modules.goods.entity.GoodsEntity;
 import com.together.modules.goods.mapper.GoodsMapper;
 import com.together.modules.goods.service.IGoodsService;
@@ -116,6 +117,14 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
     public List<GoodsEntity> queryLimitNature(P p) {
         List<GoodsEntity> goodsEntities=baseMapper.queryLimitNature(p);
         return goodsEntities;
+    }
+
+    @Override
+    public R queryGoodsDetailById(P p) {
+        GoodsEntity goodsEntity = goodsMapper.selectById(p.getInt("goodsId"));
+        List<GoodsSpecificationEntity> goodsSpecificationList = goodsSpecificationMapper.selectList(new QueryWrapper<GoodsSpecificationEntity>().eq("goods_id", goodsEntity.getGoodsId()));
+        List<GoodsAttributeEntity> goodsAttributeList = goodsAttributeMapper.selectList(new QueryWrapper<GoodsAttributeEntity>().eq("goods_id", goodsEntity.getGoodsId()));
+        return R.success("操作成功",goodsEntity).set("gsList",goodsSpecificationList).set("gaList",goodsAttributeList);
     }
 
 

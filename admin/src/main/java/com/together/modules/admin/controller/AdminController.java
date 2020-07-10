@@ -3,19 +3,24 @@ package com.together.modules.admin.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.together.annotation.Login;
 import com.together.annotation.Pmap;
 import com.together.modules.admin.entity.AdminEntity;
 import com.together.modules.admin.service.IAdminService;
 import com.together.modules.region.entity.RegionEntity;
 import com.together.modules.region.service.IRegionService;
+import com.together.parameter.RedisParamenter;
 import com.together.util.P;
 import com.together.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Response;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 /**
  * <p>
@@ -27,11 +32,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/admin")
+@Login
 public class AdminController {
     @Autowired
     private IAdminService adminService;
     @Autowired
     private IRegionService regionService;
+    @Autowired
+    ValueOperations operations;
 
     @GetMapping("/getAdminPage")
     public R getAdminPage(@Pmap P p) throws Exception {
@@ -70,12 +78,19 @@ public class AdminController {
         AdminEntity one = adminService.getOne(new QueryWrapper<AdminEntity>().eq("admin_name",p.getString("adminName")));
         if(null!=one){
             if(one.getAdminPassword().equals(adminPassword)){
-                return R.success("登录成功",p);
+                //生成uuid
+                String id = UUID.randomUUID().toString().replaceAll("-", "");
+                //将对象放入redis
+                operations.set(id,one);
+                Cookie cookie = new Cookie(RedisParamenter.ADMIN_LOING_USER_REDIS_KEY,id);
+                HttpServletResponse response = p.getResponse();
+                response.addCookie(cookie);
+                return R.success("0",cookie);
             }else{
-                return R.success("密码错误,请重新输入");
+                return R.success("1");
             }
         }
-        return R.success("当前用户不存在，请注册信息");
+        return R.success("-1");
     }
 
     /**
@@ -84,8 +99,7 @@ public class AdminController {
      */
     @GetMapping("getAdminByRegId")
     public R getAdminByRegId(@Pmap @RequestBody P p) throws Exception {
-        RegionEntity code = regionService.getRegionByCode(p.getString("code"));
-        AdminEntity entity = adminService.getOne(new QueryWrapper<AdminEntity>().eq("region_id", code.getId()));
+        AdminEntity entity = adminService.getOne(new QueryWrapper<AdminEntity>().eq("region_id", p.getInt("city")));
         return R.success("success",entity);
     }
 }
