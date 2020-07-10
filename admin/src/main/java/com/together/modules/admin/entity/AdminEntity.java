@@ -53,6 +53,11 @@ public class AdminEntity implements Serializable {
     private Date updateTime;
 
     /**
+     * boss Id
+     */
+    private  Integer bossId;
+
+    /**
      * 余额
      */
 @TableField(update="%s+#{balance}")
@@ -121,6 +126,15 @@ public class AdminEntity implements Serializable {
     public AdminEntity setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
         return this;
+    }
+
+
+    public Integer getBossId() {
+        return bossId;
+    }
+
+    public void setBossId(Integer bossId) {
+        this.bossId = bossId;
     }
 
     @Override

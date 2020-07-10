@@ -18,7 +18,7 @@ public class MqConfig {
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("192.168.0.111", 5672);
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("47.114.38.198", 5672);
         //我这里直接在构造方法传入了
         //        connectionFactory.setHost();
         //        connectionFactory.setPort();

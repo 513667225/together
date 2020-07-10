@@ -8,7 +8,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableAspectJAutoProxy
+//@EnableAspectJAutoProxy
 public class AppSpell {
 
     public static void main(String[] args) {

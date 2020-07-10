@@ -1,7 +1,9 @@
 package com.together.modules.spell.listener;
 
 
+import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.Channel;
+import com.together.entity.Spell;
 import com.together.parameter.MqParameter;
 import com.together.parameter.SystemParameter;
 import com.together.util.MqUtil;
@@ -15,9 +17,9 @@ import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 @Component
 public class CreateGroupQueue  {
@@ -35,11 +37,14 @@ public class CreateGroupQueue  {
     public  void get(List<Message> listMessage, Channel channel) throws Exception{
 
         long deliveryTag =listMessage.get(listMessage.size()-1).getMessageProperties().getDeliveryTag();
+        Set<Spell> list = new HashSet<>();
         if (listMessage.size()!=100) {
             System.out.println("组团人数不够 size:"+listMessage.size());
             channel.basicNack(deliveryTag,true,true);
         }else {
-            zSetOperations.add(SystemParameter.i.toString(),listMessage);
+            for (Message message : listMessage) {
+                System.out.println(zSetOperations.add(SystemParameter.i.toString(), JSON.parseObject(new String(message.getBody()), Spell.class)));
+            }
             System.out.println("第"+SystemParameter.i.get()+"团组团成功");
             mqUtil.testSend(MqParameter.SPELL_EXCHANGE_NAME,MqParameter.SPELL_EXCHANGE_KEY_NAME,SystemParameter.i.get());
             SystemParameter.i.addAndGet(1);

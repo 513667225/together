@@ -1,5 +1,6 @@
 package com.together.enun;
 
+import com.together.parameter.DeclineParameter;
 import com.together.parameter.ReMoney;
 
 /**
@@ -26,6 +27,16 @@ public enum GoodsLevel {
 
     public double getDirectPush() {
         return directPush;
+    }
+
+    public  double getBalance(){
+
+        return reward* ReMoney.balanceRate;
+    }
+
+    public  double getIntegral(){
+
+        return reward *ReMoney.integralRate;
     }
 
     public void setDirectPush(double directPush) {

@@ -34,6 +34,7 @@ public class LoserQueueListener {
         Set<Spell> members = setOperations.members(message);
         //遍历
         for (Spell member : members) {
+            System.out.println("没中奖的ID"+member.getUser_id());
 //          TODO  member.getUserId() 给这个用户返钱
             reMoneyService.reMoney(member.getUser_id(),member.getGoods_level());
             //拼团的次数+1
@@ -46,6 +47,5 @@ public class LoserQueueListener {
                 }
             }
         }
-
     }
 }

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.together.util.MapUtil;
 import com.together.util.P;
 import com.together.util.R;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ import java.util.Map;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> implements IAdminService {
 
+    @Autowired
+    AdminMapper mapper;
+
     @Override
     public List getProxyInfo(P p) throws Exception {
         List<Map<String,Object>> returnList = new ArrayList();
@@ -41,7 +45,14 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
 
     @Override
     public R update(P p) {
-        UpdateWrapper<AdminEntity> adminEntityUpdateWrapper = new UpdateWrapper<AdminEntity>().setSql("balance=balance+"+p.getBigDecimal("balance")).eq("admin_id",p.getInt("admin_id"));
+        UpdateWrapper<AdminEntity> adminEntityUpdateWrapper =
+                new UpdateWrapper<AdminEntity>().setSql("balance=balance+"+p.getBigDecimal("balance")).eq("admin_id",p.getInt("admin_id"));
+        AdminEntity admin_id = mapper.selectById(p.getInt("admin_id"));
+        String adminLevel = admin_id.getAdminLevel();
+        if (adminLevel.equals("2")) {
+            p.put("admin_id",admin_id.getBossId());
+            return  update(p);
+        }
         return R.success("success", update(adminEntityUpdateWrapper));
     }
 }

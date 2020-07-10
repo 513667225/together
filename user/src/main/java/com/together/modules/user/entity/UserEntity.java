@@ -190,6 +190,26 @@ public class UserEntity implements Serializable {
      */
     private int teammanagerSize;
 
+    private  int decline_count;
+
+    private  int decline_number;
+
+
+    public int getDecline_count() {
+        return decline_count;
+    }
+
+    public void setDecline_count(int decline_count) {
+        this.decline_count = decline_count;
+    }
+
+    public int getDecline_number() {
+        return decline_number;
+    }
+
+    public void setDecline_number(int decline_number) {
+        this.decline_number = decline_number;
+    }
 
     public int getUnderlingSize() {
         return underlingSize;

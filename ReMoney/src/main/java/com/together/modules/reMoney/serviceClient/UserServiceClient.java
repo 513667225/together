@@ -12,11 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/user")
 public interface UserServiceClient {
 
-    @RequestMapping("/selectUserReferrer")
-    R selectUserReferrer(@RequestParam("user_id") int user_id);
+    @RequestMapping("/selectUserReferrerTo")
+    R selectUserReferrer(@RequestParam("user_id") int userId);
 
     @RequestMapping("/selectSeniorByUser")
-    R selectSeniorByUser(@RequestParam("user_id") int user_id);
+    R selectSeniorByUser(@RequestParam("user_id") int userId);
+
+    @RequestMapping("/updateMoney")
+    R updateMoney(@RequestParam("user_id") int userId,@RequestParam("balance")double balance);
+
+    @RequestMapping("/updateMoney")
+    R updateBalance(@RequestParam("user_id") int userId,@RequestParam("balance")double balance,@RequestParam("integral") double integral);
 
 
 //    @RequestMapping

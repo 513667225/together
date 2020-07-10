@@ -32,7 +32,7 @@ public interface IUserService extends IService<UserEntity> {
     Map<String, Object> getGroupUserState(P p);
     Map<String, Object> selectUserReferrerTo(P p) throws Exception;
 
-    void test(P p);
+    void test(P p) throws Exception;
 
     Map<String, Object> selectUserReferrerInManager(P p);
 

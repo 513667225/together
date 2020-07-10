@@ -190,7 +190,11 @@ public class MapUtil {
      * @return
      */
     public static Double getDouble(Map map, String key) {
-        return Double.parseDouble(getString(map, key));
+        String string = getString(map, key);
+        if (string == null) {
+            return null;
+        }
+        return Double.parseDouble(string);
     }
 
     /**

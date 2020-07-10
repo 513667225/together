@@ -5,15 +5,20 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
+
 /**
  * @author Agu
  */
+@FeignClient("SERVER-USER")
+@RequestMapping("/user")
+public interface UserServiceClient {
 
-@FeignClient("SERVER-SHOP")
-@RequestMapping("/shopUser")
-public interface ShopServiceClient {
+    @RequestMapping("/updateMoney")
+    R updateMoney(@RequestParam("user_id") int userId,@RequestParam("integral") BigDecimal integral);
 
-    @RequestMapping("/shopShare")
-    R shopShare(@RequestParam("shopuser_id") int shopuser_id, @RequestParam("balance")double balance);
+
+//    @RequestMapping
+
 
 }

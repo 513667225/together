@@ -36,10 +36,12 @@ public class SpellController {
 
     @RequestMapping("/together")
     public R together(@Pmap P p) throws Exception {
-
-        Integer userId = p.getInt("userId");
-        Integer goodsId = p.getInt("goodsId");
-        Spell spell = p.thisToEntity(Spell.class);
+//        Spell spell = p.thisToEntity(Spell.class);
+        Spell spell = new Spell();
+        spell.setUser_id(p.getInt("user_id"));
+        spell.setGoods_id(p.getInt("goods_id"));
+        spell.setGoods_level(GoodsLevel.ONE);
+        spell.setTogether_number(TogetherNumber.ONCE);
 //        R goodsResult = goodsServiceClient.queryGoodsById(goodsId);
 //        GoodsEntity goodsEntity = goodsResult.thisToEntity(GoodsEntity.class);
 ////        System.out.println(goodsResult.get("data"));

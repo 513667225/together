@@ -22,43 +22,47 @@ public class HttpTest {
 
     public static void main(String[] args) throws Exception{
 //        delKey();
-//        testThread();
-//        list(2,true);
-        LinkedList linkedList = new LinkedList();
-        UserSuperstratumRelationDo userSuperstratumRelationDo = new UserSuperstratumRelationDo();
-        userSuperstratumRelationDo.setUser_id(1);
-        userSuperstratumRelationDo.setUserLevel(2);
-        linkedList.add(userSuperstratumRelationDo);
 
-        UserSuperstratumRelationDo userSuperstratumRelationDo1 = new UserSuperstratumRelationDo();
-        userSuperstratumRelationDo1.setUser_id(2);
-        userSuperstratumRelationDo1.setUserLevel(2);
-        linkedList.add(userSuperstratumRelationDo1);
-
-        UserSuperstratumRelationDo userSuperstratumRelationDo5 = new UserSuperstratumRelationDo();
-        userSuperstratumRelationDo5.setUser_id(5);
-        userSuperstratumRelationDo5.setUserLevel(3);
-        linkedList.add(userSuperstratumRelationDo5);
-
-        UserSuperstratumRelationDo userSuperstratumRelationDo2 = new UserSuperstratumRelationDo();
-        userSuperstratumRelationDo2.setUser_id(3);
-        userSuperstratumRelationDo2.setUserLevel(3);
-            linkedList.add(userSuperstratumRelationDo2);
-
-        UserSuperstratumRelationDo userSuperstratumRelationDo3 = new UserSuperstratumRelationDo();
-        userSuperstratumRelationDo3.setUser_id(4);
-        userSuperstratumRelationDo3.setUserLevel(3);
-        linkedList.add(userSuperstratumRelationDo3);
-
-        UserSuperstratumRelationDo userSuperstratumRelationDo4 = new UserSuperstratumRelationDo();
-        userSuperstratumRelationDo4.setUser_id(4);
-        userSuperstratumRelationDo4.setUserLevel(3);
-        linkedList.add(userSuperstratumRelationDo4);
-
-
-
-
-        getUserForNeedAllowance(linkedList.iterator(),null,new CaseEntity(UserRelationshipCase.CASE1,true,true),GoodsLevel.ONE);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getForObject("http://localhost:2001/spell/together?user_id="+10248+"&goods_id=1",Object.class);
+        restTemplate.getForObject("http://localhost:2001/spell/together?user_id="+10249+"&goods_id=1",Object.class);
+        testThread();
+        //        list(2,true);
+//        LinkedList linkedList = new LinkedList();
+//        UserSuperstratumRelationDo userSuperstratumRelationDo = new UserSuperstratumRelationDo();
+//        userSuperstratumRelationDo.setUser_id(1);
+//        userSuperstratumRelationDo.setUserLevel(2);
+//        linkedList.add(userSuperstratumRelationDo);
+//
+//        UserSuperstratumRelationDo userSuperstratumRelationDo1 = new UserSuperstratumRelationDo();
+//        userSuperstratumRelationDo1.setUser_id(2);
+//        userSuperstratumRelationDo1.setUserLevel(2);
+//        linkedList.add(userSuperstratumRelationDo1);
+//
+//        UserSuperstratumRelationDo userSuperstratumRelationDo5 = new UserSuperstratumRelationDo();
+//        userSuperstratumRelationDo5.setUser_id(5);
+//        userSuperstratumRelationDo5.setUserLevel(3);
+//        linkedList.add(userSuperstratumRelationDo5);
+//
+//        UserSuperstratumRelationDo userSuperstratumRelationDo2 = new UserSuperstratumRelationDo();
+//        userSuperstratumRelationDo2.setUser_id(3);
+//        userSuperstratumRelationDo2.setUserLevel(3);
+//            linkedList.add(userSuperstratumRelationDo2);
+//
+//        UserSuperstratumRelationDo userSuperstratumRelationDo3 = new UserSuperstratumRelationDo();
+//        userSuperstratumRelationDo3.setUser_id(4);
+//        userSuperstratumRelationDo3.setUserLevel(3);
+//        linkedList.add(userSuperstratumRelationDo3);
+//
+//        UserSuperstratumRelationDo userSuperstratumRelationDo4 = new UserSuperstratumRelationDo();
+//        userSuperstratumRelationDo4.setUser_id(4);
+//        userSuperstratumRelationDo4.setUserLevel(3);
+//        linkedList.add(userSuperstratumRelationDo4);
+//
+//
+//
+//
+//        getUserForNeedAllowance(linkedList.iterator(),null,new CaseEntity(UserRelationshipCase.CASE1,true,true),GoodsLevel.ONE);
 
     }
 
@@ -197,7 +201,7 @@ public class HttpTest {
         RestTemplate restTemplate = new RestTemplate();
         CountDownLatch downLatch = new CountDownLatch(1);
 
-        for (int i = 0; i <57 ; i++) {
+        for (int i = 0; i <99 ; i++) {
             Thread thread = new Thread(){
                 @Override
                 public void run() {
@@ -209,7 +213,7 @@ public class HttpTest {
                     Random random = new Random();
                     int i = random.nextInt(11111111);
 //                    System.out.println(i);
-                    restTemplate.getForObject("http://localhost:2001/spell/together?userId="+i+"&goodsId=1",Object.class);
+                    restTemplate.getForObject("http://localhost:2001/spell/together?user_id="+i+"&goods_id=1",Object.class);
 
                 }
             };

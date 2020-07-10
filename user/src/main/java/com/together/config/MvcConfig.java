@@ -37,11 +37,11 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     /**
      * 添加拦截器
      */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        //拦截路径可自行配置多个 可用 ，分隔开
-        registry.addInterceptor(new JwtInterceptor()).addPathPatterns("/**");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        //拦截路径可自行配置多个 可用 ，分隔开
+//        registry.addInterceptor(new JwtInterceptor()).addPathPatterns("/**");
+//    }
 
     /**
      * 跨域支持

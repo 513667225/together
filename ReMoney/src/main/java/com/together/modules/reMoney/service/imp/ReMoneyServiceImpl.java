@@ -25,18 +25,21 @@ public class ReMoneyServiceImpl implements ReMoneyService {
 
     @Override
     public void reMoney(int user_id, GoodsLevel goodsLevel) {
+        //给当前用户自己返钱 80%余额 20%积分
+        addBalance(user_id,goodsLevel.getBalance(),goodsLevel.getIntegral());
         //计算推荐津贴：直推：5% 间推：5%
         R r = userServiceClient.selectUserReferrer(user_id);
         P p = new P((Map) r.get("data"));
         Integer directReferrerId = p.getInt("directReferrerId");
         Integer managerReferrerId = p.getInt("managerReferrerId");
-        //TODO 给直推人和间推人分发推荐津贴
+        //给直推人和间推人分发推荐津贴
         if (directReferrerId != null) {
-            //TODO 调用用户修改钱接口 直推人分红： goodsLevel.getDirectPush()
-
+            System.out.println("直推人分钱,直推人ID："+directReferrerId);
+            userServiceClient.updateMoney(directReferrerId,goodsLevel.getDirectPush());
         }
         if (managerReferrerId != null) {
-            //TODO 调用用户修改钱接口  间推人分成: goodsLevel.getIndirectPush()
+            System.out.println("间推人分钱,间推人ID："+managerReferrerId);
+            userServiceClient.updateMoney(managerReferrerId,goodsLevel.getIndirectPush());
         }
         //计算团队津贴 : 向上查询  {false},{true}  总监{}
         // 第一个经理5% 第二个经理2% 只查2级   经理层最大波比5%+2%=7%
@@ -46,10 +49,15 @@ public class ReMoneyServiceImpl implements ReMoneyService {
         //  case3: 中途无经理  --> 9%
         //  第二个总监: 2%
         R SeniorByUserReust = userServiceClient.selectSeniorByUser(user_id);
-        List<UserSuperstratumRelationDo> data = (List<UserSuperstratumRelationDo>) SeniorByUserReust.get("data");
-        List userForNeedAllowance = getUserForNeedAllowance(data.iterator(), null, new CaseEntity(UserRelationshipCase.CASE1,true,true), goodsLevel);
-        //TODO userForNeedAllowance存入缓存
+        List<Map> data = (List<Map>) SeniorByUserReust.get("data");
+        if (data != null) {
+            List userForNeedAllowance = getUserForNeedAllowance(data.iterator(), null, new CaseEntity(UserRelationshipCase.CASE1,true,true), goodsLevel);
+        }
+
+        //TODO userForNeedAllowance存入缓
     }
+
+
 
 
     /**
@@ -59,13 +67,18 @@ public class ReMoneyServiceImpl implements ReMoneyService {
      * @param goodsLevel           本次拼团的档位 {@link GoodsLevel}
      * @return
      */
-    public  List getUserForNeedAllowance(Iterator<UserSuperstratumRelationDo> iterator, List<AllowanceCache> returnList, CaseEntity caseEntity, GoodsLevel goodsLevel) {
+    public  List getUserForNeedAllowance(Iterator<Map> iterator, List<AllowanceCache> returnList, CaseEntity caseEntity, GoodsLevel goodsLevel) {
         if (returnList == null) {
             returnList = new LinkedList<AllowanceCache>();
         }
 
         while (iterator.hasNext() && caseEntity.isCaseController()) {
-            UserSuperstratumRelationDo next = iterator.next();
+            UserSuperstratumRelationDo next = null;
+            try {
+                next = new P(iterator.next()).thisToEntity(UserSuperstratumRelationDo.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             do{
                 userRelationshipCase(next,returnList,caseEntity,goodsLevel);
             }while (caseEntity.isAgain());
@@ -129,9 +142,9 @@ public class ReMoneyServiceImpl implements ReMoneyService {
                     isNeedAdd = true;
                     moneyNum = caseEntity.getUserRelationshipCase().reMoneyNum(goodsLevel);
                     if (caseEntity.getUserRelationshipCase().equals(UserRelationshipCase.CASE6)) {
-                        caseEntity.setAgain(false);
                         caseEntity.setCaseController(false);
                     }
+                    caseEntity.setAgain(false);
                     caseEntity.setUserRelationshipCase(UserRelationshipCase.CASE6);
                     break;
                 }
@@ -164,7 +177,18 @@ public class ReMoneyServiceImpl implements ReMoneyService {
      */
     public boolean addMoney(int user_id, double addMoney) {
         //TODO 调用用户修改金额接口
+        R r = userServiceClient.updateMoney(user_id, addMoney);
+        System.out.println("团队津贴分成ID:"+user_id+"分红:"+addMoney);
         return true;
     }
+
+
+    public boolean addBalance(int user_id, double balance,double integral) {
+        //TODO 调用用户修改金额接口
+        R r = userServiceClient.updateBalance(user_id, balance,integral);
+        System.out.println("个人返现分成ID:"+user_id+"分红:"+balance+"integral:"+integral);
+        return true;
+    }
+
 
 }
