@@ -122,6 +122,59 @@ public class UserEntity implements Serializable {
     //余额
     private double balance;
 
+    /**
+     * 关系
+     */
+    private String relation;
+
+    /**
+     * 银行卡
+     */
+    private String bank_card;
+
+    /**
+     * 团队会员人数
+     */
+    private Integer teamMember;
+
+    /**
+     * 团队总监人数
+     * @return
+     */
+    private Integer teamMajordomo;
+
+    public Integer getTeamMajordomo() {
+        return teamMajordomo;
+    }
+
+    public void setTeamMajordomo(Integer teamMajordomo) {
+        this.teamMajordomo = teamMajordomo;
+    }
+
+    public Integer getTeamMember() {
+        return teamMember;
+    }
+
+    public void setTeamMember(Integer teamMember) {
+        this.teamMember = teamMember;
+    }
+
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
+
+    public String getBank_card() {
+        return bank_card;
+    }
+
+    public void setBank_card(String bank_card) {
+        this.bank_card = bank_card;
+    }
+
     public double getShopping_gold() {
         return shopping_gold;
     }
@@ -355,21 +408,36 @@ public class UserEntity implements Serializable {
     @Override
     public String toString() {
         return "UserEntity{" +
-            "userId=" + userId +
-            ", userPassword=" + userPassword +
-            ", userGender=" + userGender +
-            ", userBirthday=" + userBirthday +
-            ", userLastLoginTime=" + userLastLoginTime +
-            ", userLastLoginIp=" + userLastLoginIp +
-            ", userLevel=" + userLevel +
-            ", userNickname=" + userNickname +
-            ", userMobile=" + userMobile +
-            ", userAvatar=" + userAvatar +
-            ", weixinOpenid=" + weixinOpenid +
-            ", userStatus=" + userStatus +
-            ", userReferrer=" + userReferrer +
-            ", addTime=" + addTime +
-            ", updateTime=" + updateTime +
-        "}";
+                "userId=" + userId +
+                ", userPassword='" + userPassword + '\'' +
+                ", userGender=" + userGender +
+                ", userBirthday=" + userBirthday +
+                ", userLastLoginTime=" + userLastLoginTime +
+                ", userLastLoginIp='" + userLastLoginIp + '\'' +
+                ", userLevel=" + userLevel +
+                ", userNickname='" + userNickname + '\'' +
+                ", userMobile='" + userMobile + '\'' +
+                ", userAvatar='" + userAvatar + '\'' +
+                ", weixinOpenid='" + weixinOpenid + '\'' +
+                ", userStatus=" + userStatus +
+                ", userReferrer=" + userReferrer +
+                ", addTime=" + addTime +
+                ", updateTime=" + updateTime +
+                ", goupSize=" + goupSize +
+                ", underlingSize=" + underlingSize +
+                ", topRefereeId=" + topRefereeId +
+                ", shopping_gold=" + shopping_gold +
+                ", integral=" + integral +
+                ", spell_bean=" + spell_bean +
+                ", balance=" + balance +
+                ", relation='" + relation + '\'' +
+                ", bank_card='" + bank_card + '\'' +
+                ", teamMember=" + teamMember +
+                ", teamMajordomo=" + teamMajordomo +
+                ", memberSize=" + memberSize +
+                ", managerSize=" + managerSize +
+                ", majordomoSize=" + majordomoSize +
+                ", teammanagerSize=" + teammanagerSize +
+                '}';
     }
 }

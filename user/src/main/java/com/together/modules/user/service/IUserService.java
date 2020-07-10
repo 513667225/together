@@ -28,22 +28,13 @@ public interface IUserService extends IService<UserEntity> {
      * @return
      */
     UserEntity getUserByName(P p);
-    UserEntity getUserLogin(Map<String,Object> param);
-    Map<String, Object> getGroupUserState(P p);
+    UserEntity getUserLogin(Map<String,Object> param) throws Exception;
     Map<String, Object> selectUserReferrerTo(P p) throws Exception;
-
     void test(P p);
-
-    Map<String, Object> selectUserReferrerInManager(P p);
-
     R updateUserPhone(P p) throws Exception;
-
     ArrayList<UserSuperstratumRelationDo> userReferrerDorecursion(P p) throws Exception;
-
     void createCodeImag(String path, String user_id, HttpServletResponse response);
-
-
     void updateMoney(P p) throws Exception;
-
     List<UserEntity> selectUserALlInviter(P p);
+    List<UserEntity> selectUserByids(String[] ids);
 }

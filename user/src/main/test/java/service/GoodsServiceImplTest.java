@@ -1,28 +1,27 @@
-package com.together.modules.user.timing;
+package service;
 
-import com.alibaba.druid.sql.visitor.functions.Reverse;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.together.AppUser;
 import com.together.modules.user.entity.UserEntity;
-import com.together.modules.user.entity.UserReferrerDo;
-import com.together.entity.UserSuperstratumRelationDo;
-import com.together.modules.user.mapper.UserMapper;
 import com.together.modules.user.service.IUserService;
-import org.springframework.beans.factory.InitializingBean;
+import com.together.modules.user.timing.UserRelationDepue;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
-//@Component
-public class ExecuteUserRelationDepue extends ServiceImpl<UserMapper, UserEntity> implements InitializingBean{
-
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes={AppUser.class})// 指定启动类
+public class GoodsServiceImplTest {
     @Autowired
-    private IUserService userService;
+    IUserService iUserService;
 
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    @Test
+    public void testUserInsert() throws Exception {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
@@ -31,9 +30,8 @@ public class ExecuteUserRelationDepue extends ServiceImpl<UserMapper, UserEntity
                 }
                 String relation = UserRelationDepue.linkedBlockingQueue.poll();
                 String[] split = relation.split(",");
-                Collections.reverse(Arrays.asList(split));
-                List<UserEntity> userEntities=userService.selectUserByids(split);
-
+//                Collections.reverse(Arrays.asList(split));
+                List<UserEntity> userEntities=iUserService.selectUserByids(split);
                 List<UserEntity> list=new ArrayList<>();
 
                 Map<String,UserEntity> map=new HashMap<>();
@@ -43,16 +41,54 @@ public class ExecuteUserRelationDepue extends ServiceImpl<UserMapper, UserEntity
                 for (int i = 0; i < userEntities.size(); i++) {
                     //修改直邀人数+1
                     UserEntity userEntity = userEntities.get(i);
+                    System.err.println(userEntities);
                     if(i==0){
                         userEntity.setUnderlingSize(userEntity.getUnderlingSize()+1);
                     }
                     isUpdateMessage(userEntity,list,map);
                 }
-                userService.saveBatch(list);
+                System.err.println(list);
+                for (UserEntity userEntity : list) {
+                    iUserService.getBaseMapper().updateById(userEntity);
+                }
             }
         }, 1000, 1000);
+        for (int i = 0; i <1; i++) {
+            Integer userReferrer=10271;
+            UserEntity userEntity=new UserEntity();
+            userEntity.setUserNickname("癫子i");
+            userEntity.setMajordomoSize(0);
+            userEntity.setManagerSize(0);
+            userEntity.setMemberSize(0);
+            userEntity.setTeammanagerSize(0);
+            userEntity.setGoupSize(0);
+            userEntity.setUnderlingSize(0);
+            userEntity.setUserLevel(0);//0普通人  1会员 2经理 3总监
+            if(userReferrer!=null){
+                userEntity.setUserReferrer(userReferrer);//  推荐人id
+                //维护顶层推荐人
+                UserEntity userReferrerentity = iUserService.getBaseMapper().selectById(userReferrer);
+                if(userReferrerentity!=null&&userReferrerentity.getTopRefereeId()!=null){
+                    userEntity.setTopRefereeId(userReferrerentity.getTopRefereeId());
+                }else{
+                    userEntity.setTopRefereeId(userReferrer);
+                }
+                //维护所有上层人员ID
+                if(userReferrerentity!=null&&userReferrerentity.getRelation()!=null){
+                    userEntity.setRelation(userReferrerentity.getRelation()+","+userReferrerentity.getUserId());
+                }else{
+                    userEntity.setRelation(userReferrerentity.getRelation()+"");
+                }
+            }
+            iUserService.getBaseMapper().insert(userEntity);
+            //TODO: 如果被推荐人id为不空，给推荐人+邀请人加一，看是否需要改变用户等级
+            if(userReferrer!=null){
+                //加入队列处理
+                UserRelationDepue.linkedBlockingQueue.add(userEntity.getRelation());
+            }
+        }
+        System.in.read();
     }
-
 
 
     //修改推荐人及上层用户 直接邀请人数及团队邀请人数，判断是否满足升级条件
@@ -125,4 +161,44 @@ public class ExecuteUserRelationDepue extends ServiceImpl<UserMapper, UserEntity
         }
         return identification;
     }
+
+
+    @Test
+    public void queryAllGoods() throws Exception {
+
+        String str="1111";
+        System.out.println(str.split(",")[0]);
+
+        Map<String, UserEntity> map=new HashMap<>();
+        map.put("1111",new UserEntity());
+        map.put("2222",new UserEntity());
+        Set<Map.Entry<String, UserEntity>> entries = map.entrySet();
+        for (Map.Entry<String, UserEntity> entry : entries) {
+            String key = entry.getKey();
+            UserEntity value = entry.getValue();
+            System.out.println(key+"----"+value);
+        }
+        UserEntity userEntity = map.get("1111");
+        userEntity.setUserNickname("谈加薪");
+        Set<Map.Entry<String, UserEntity>> entries2 = map.entrySet();
+        for (Map.Entry<String, UserEntity> entry : entries2) {
+            String key = entry.getKey();
+            UserEntity value = entry.getValue();
+            System.out.println(key+"----"+value);
+        }
+
+
+//        List<UserEntity> userEntities = iGoodsService.selectUserByids(new String[]{
+//                "10236","10241","10242"
+//        });
+//        System.out.println(userEntities);
+//        P p = new P();
+//        p.put("referrer_id",10235);
+//        p.put("x",0);
+//        p.put("n","普通新");
+//        iGoodsService.test(p);
+    }
+
+
+
 }

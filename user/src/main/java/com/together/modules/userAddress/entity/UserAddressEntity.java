@@ -162,11 +162,11 @@ public class UserAddressEntity implements Serializable {
         this.tel = tel;
         return this;
     }
-    public Boolean getDefault() {
+    public Boolean getIsDefault() {
         return isDefault;
     }
 
-    public UserAddressEntity setDefault(Boolean isDefault) {
+    public UserAddressEntity setIsDefault(Boolean isDefault) {
         this.isDefault = isDefault;
         return this;
     }
