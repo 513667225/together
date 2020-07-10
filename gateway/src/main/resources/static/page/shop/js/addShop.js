@@ -170,6 +170,7 @@ layui.extend({tinymce: '/js/tinymce/tinymce'}).use(['jquery', 'form', 'util', 'l
     var picUrlUpload=upload.render({
         elem: '#uploadShopPic',
         url: '/shop/uploadShopPic',
+        type:"post",
         acceptMime: 'image/*',
         auto: true,
         size: 5120,
@@ -401,10 +402,9 @@ layui.extend({tinymce: '/js/tinymce/tinymce'}).use(['jquery', 'form', 'util', 'l
     //表单监听提交
     $("form").submit(function(data){
         var formdata = $('#addShopForm').serialize();
-
         $.ajax({
             url: '/shop/addShop',
-            type: 'get',
+            type: 'post',
             dataType: 'json',
             data:formdata,
             success:function (suc) {
