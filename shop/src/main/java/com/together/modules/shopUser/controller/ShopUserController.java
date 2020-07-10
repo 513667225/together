@@ -7,18 +7,22 @@ import com.together.annotation.Pmap;
 import com.together.modules.shop.service.impl.ShopServiceImpl;
 import com.together.modules.shopUser.entity.ShopUserEntity;
 import com.together.modules.shopUser.service.IShopUserService;
+import com.together.parameter.RedisParamenter;
 import com.together.util.MapUtil;
 import com.together.util.P;
 import com.together.util.R;
 import com.together.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.UUID;
 
@@ -36,6 +40,9 @@ public class ShopUserController {
 
     @Autowired
     IShopUserService shopUserService;
+    @Autowired
+    ValueOperations operations;
+
 
     @GetMapping("/getShopUserPage")
     public R getShopUserPage(@Pmap P p) throws Exception {
@@ -62,12 +69,17 @@ public class ShopUserController {
         ShopUserEntity one = shopUserService.getOne(new QueryWrapper<ShopUserEntity>().eq("shopuser_name",p.getString("shopuserName")));
         if(null!=one){
             if(one.getShopuserPassword().equals(shopuserPassword)){
-                return R.success("登录成功",p);
+                String uuid = UUID.randomUUID().toString().replaceAll("-", "");//生成uuid
+                operations.set(uuid,one);//将对象放在redis
+                Cookie cookie = new Cookie(RedisParamenter.SHOP_LOING_USER_REDIS_KEY,uuid);
+                HttpServletResponse response = p.getResponse();
+                response.addCookie(cookie);
+                return R.success("0",cookie);
             }else{
-                return R.success("密码错误,请重新输入");
+                return R.success("1");
             }
         }
-        return R.success("当前用户不存在，请注册信息");
+        return R.success("-1");
     }
 
 //用户名验证

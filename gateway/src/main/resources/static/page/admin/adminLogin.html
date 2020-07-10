@@ -60,14 +60,14 @@
                 data: forms,
                 success: function (suc) {
                     if (suc.msg == "0"){
-                        layui.messages("登录成功！")
+                        alert("登录成功！")
                         location.href = 'home.html'
                     }
                     else if (suc.msg=="1"){
-                        layui.messages("密码错误")
+                        alert("密码错误")
                         return false;
                     }else {
-                        layui.messages("用户名不存在")
+                        alert("用户名不存在")
                     }
                 }
 
