@@ -101,10 +101,15 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, ShopEntity> impleme
         baseMapper.insert(shopEntity);
         R r = adminServiceClient.getAdminByRegId(p);
         AdminEntity adminEntity = new AdminEntity();
-        r.thisToEntity(adminEntity);
-        shopEntity.setShopuserId(shopUserEntity.getShopuserId());
-        shopEntity.setAdminId(adminEntity.getAdminId());
-        shopEntity.setShopAddress(shopEntity.getShopAddress()+shopEntity.getCity()+shopEntity.getArea());
+        if (null!=r){
+            r.thisToEntity(adminEntity);
+            shopEntity.setAdminId(adminEntity.getAdminId());
+            shopEntity.setShopuserId(shopUserEntity.getShopuserId());
+            shopEntity.setShopAddress(shopEntity.getShopAddress()+shopEntity.getCity()+shopEntity.getArea());
+        }else {
+            shopEntity.setShopuserId(shopUserEntity.getShopuserId());
+            shopEntity.setShopAddress(shopEntity.getShopAddress()+shopEntity.getCity()+shopEntity.getArea());
+        }
         return 0;
     }
 

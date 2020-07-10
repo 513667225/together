@@ -404,7 +404,7 @@ layui.extend({tinymce: '/js/tinymce/tinymce'}).use(['jquery', 'form', 'util', 'l
         var formdata = $('#addShopForm').serialize();
         $.ajax({
             url: '/shop/addShop',
-            type: 'post',
+            type: 'get',
             dataType: 'json',
             data:formdata,
             success:function (suc) {

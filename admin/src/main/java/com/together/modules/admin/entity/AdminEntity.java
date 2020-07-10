@@ -55,7 +55,15 @@ public class AdminEntity implements Serializable {
     /**
      * boss Id
      */
-    private  Integer bossId;
+    private  Integer adminBoss;
+
+    public Integer getAdminBoss() {
+        return adminBoss;
+    }
+
+    public void setAdminBoss(Integer adminBoss) {
+        this.adminBoss = adminBoss;
+    }
 
     /**
      * 余额
@@ -129,14 +137,6 @@ public class AdminEntity implements Serializable {
     }
 
 
-    public Integer getBossId() {
-        return bossId;
-    }
-
-    public void setBossId(Integer bossId) {
-        this.bossId = bossId;
-    }
-
     @Override
     public String toString() {
         return "AdminEntity{" +
@@ -147,6 +147,7 @@ public class AdminEntity implements Serializable {
             ", adminLevel=" + adminLevel +
             ", addTime=" + addTime +
             ", updateTime=" + updateTime +
+            ", adminBoss=" + adminBoss +
         "}";
     }
 }
