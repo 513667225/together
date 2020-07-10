@@ -115,6 +115,17 @@ public class ShopEntity implements Serializable {
 
     private Integer shopType;
 
+    private Integer shopuserId;
+
+
+    public Integer getShopuserId() {
+        return shopuserId;
+    }
+
+    public void setShopuserId(Integer shopuserId) {
+        this.shopuserId = shopuserId;
+    }
+
     public Integer getShopType() {
         return shopType;
     }
@@ -256,6 +267,8 @@ public class ShopEntity implements Serializable {
             ", shopType=" + shopType +
             ", city=" + city +
             ", area=" + area +
+            ", shopuserId=" + shopuserId +
+            ", adminId=" + adminId +
 
 
         "}";
